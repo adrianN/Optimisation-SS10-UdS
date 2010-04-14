@@ -20,21 +20,21 @@ The proof is easy: Let $w_{max}$ be the size of the maximal job. No schedule can
 \item Linear and Integer Linear Programming. We have a number of variables $\nthings{x}\in \R$ subject to linear constraints $1\leq j\leq m$
 \[a_{j1}x_1 + \ldots + a_{jn} x_n \leq b_j \qquad a_{ij},b_i \in \R\]
 
-\begin{Ex}{The diet problem.} We have $x_i$ of food $i$. Different foods have different features, e.g. calories, price. You can write down different constraints, for example the amount of fat. The example objective function could be price. If the packaging is discrete we need an integer solution. There are of course instances which require mixed integer/real answers.
+\begin{Ex}[The diet problem.] We have $x_i$ of food $i$. Different foods have different features, e.g. calories, price. You can write down different constraints, for example the amount of fat. The example objective function could be price. If the packaging is discrete we need an integer solution. There are of course instances which require mixed integer/real answers.
 \end{Ex}
 
 There are a large number of problems that can be formulated using LPs. There are efficient solution for normal LPs, ILPs however are NP-complete (but still can be solved comparatively efficient). There is also a large body of knowledege about linear programs. Lastly LPs and ILPs are a good basis for developing approximation algorithms, for example by dropping integrality constraints and rounding cleverly.
 
-\begin{Ex}{Max-Flow as LP.} We want to maximise the flow through a network from source to sink. A flow has to satisfy the capacity and the flow conservation constraints. Those constraints can be formulated as a LP.
+\begin{Ex}[Max-Flow as LP] We want to maximise the flow through a network from source to sink. A flow has to satisfy the capacity and the flow conservation constraints. Those constraints can be formulated as a LP.
 \begin{align*}
-\forall e\ 0\leq f(e)\leq cap(e)\\
-\forall v\in V\backslash \{s,t\}\ \sum_{e=(u,v)} f(e) = \sum_{e=(v,u)} f(e)\\
+\forall e\qquad & 0\leq f(e)\leq cap(e)\\
+\forall v\in V\backslash \{s,t\}\qquad & \sum_{e=(u,v)} f(e) = \sum_{e=(v,u)} f(e)\\
 \intertext{The coal is to maximise the flow out of s:}
-\sum_{e=(s,v)} f(e)
+ &\sum_{e=(s,v)} f(e)
 \end{align*}
 \end{Ex}
 
-\begin{Ex}{Min (s,t)-cut problem.} The Min-Cut problem is similar to the Max-Flow problem. We want to remove a set of edges with minimal weight s.t. no path from $s$ to $t$ remains. Let $y_e=1$ mean $e$ is in the cut: the $y_i$ are integral and either 0 or 1.
+\begin{Ex}[Min (s,t)-cut problem] The Min-Cut problem is similar to the Max-Flow problem. We want to remove a set of edges with minimal weight s.t. no path from $s$ to $t$ remains. Let $y_e=1$ mean $e$ is in the cut: the $y_i$ are integral and either 0 or 1.
 \[\forall \mbox{paths}\ p: \sum_{e\in p} y_e \geq 1\]
 The objective is to minimize 
 
@@ -43,7 +43,7 @@ The objective is to minimize
 The value of the mit-cut and max-flow problems are always the same and the LPs are duals of each other. Also the integrality constraints are unnecessary. Some kinds of LPs always have a integral optimal solution (besides potential fractional solutions).
 \end{Ex}
 
-\begin{Ex}{Satisfiability.} We're given a boolean formula in CNF and want to check if it is satisfiable. Let $\nthings x$ be booleon variables and $\nthings y$ and $\nthings z$ were $y_i=1$ iff $x_i$ and $z_i=1$ iff $C_i$.
+\begin{Ex}[Satisfiability] We're given a boolean formula in CNF and want to check if it is satisfiable. Let $\nthings x$ be booleon variables and $\nthings y$ and $\nthings z$ were $y_i=1$ iff $x_i$ and $z_i=1$ iff $C_i$.
 
 We simplify by asking how many clauses can be satisfied:
 

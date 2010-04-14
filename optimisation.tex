@@ -1,6 +1,6 @@
 \documentclass[12pt,a4paper]{article}
 \usepackage[bottom=2.5cm,top=3.5cm]{geometry}
-\usepackage{ngerman}
+%\usepackage{ngerman}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
@@ -35,10 +35,18 @@
 \begin{document}
 \lstset{language=Java, basicstyle=\ttfamily\small\upshape, commentstyle=\slshape\sffamily, keywordstyle=\em, breaklines=true}
 
-\theoremstyle{leplain}
+\theoremstyle{definition}
 \newtheorem{Def}{Definition}
+
+\theoremstyle{leplain}
 \newtheorem{Ex}{Example}
+
+\theoremstyle{theorem}
+\newtheorem{thm}{Theorem}
+
 \maketitle
 \marginpar{Lecture 1}
 \input{./lecture1}
+\marginpar{Lecture 2}
+\input{./lecture2}
 \end{document}
