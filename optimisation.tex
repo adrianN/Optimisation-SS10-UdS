@@ -8,6 +8,7 @@
 \usepackage{ae}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{amsthm}
 %\usepackage[pdftex]{graphicx}
 \usepackage{listings}
 %\linespread{1.25}
@@ -18,14 +19,25 @@
 \newcommand{\R}[0]{\mathbb{R}}
 \newcommand{\C}[0]{\mathbb{C}}
 \newcommand{\im}[0]{\mathit{i}}
-
+\newcommand{\nthings}[1]{{#1}_1,\ldots,{#1}_n}
+\newtheoremstyle{leplain} %name
+    {3pt} %above
+    {3pt} %below
+    {} %body font
+    {} %indent
+    {\bfseries} %head font
+    {:} %punctuation after head
+    {0.5em} %space after head
+    {} %head spec
 \title{Optimisation}
 \author{Adrian Neumann and Sebastian Steenbruck}
 \date{}
 \begin{document}
 \lstset{language=Java, basicstyle=\ttfamily\small\upshape, commentstyle=\slshape\sffamily, keywordstyle=\em, breaklines=true}
+
+\theoremstyle{leplain}
 \newtheorem{Def}{Definition}
-\newtheorem{Bsp}{Beispiel}
+\newtheorem{Ex}{Example}
 \maketitle
 \marginpar{Lecture 1}
 \input{./lecture1}
