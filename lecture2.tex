@@ -96,7 +96,7 @@ Now we want to prove that the three definitions \ref{Def:Vertex}, \ref{Def:Extre
 
 \[\exists \delta \in \R^n, \delta \neq 0:\ B\delta =0\]
 
-With $\delta$ we define two vectors:
+See figure \ref{Fig:extremeBfs}. With $\delta$ we define two vectors:
 
 \[y=x+\epsilon \delta \quad z = x-\epsilon \delta\]
 
@@ -109,6 +109,14 @@ Since $B\delta = 0$ so the active constraints are still active. For the inactive
 \[\forall i: \epsilon |c_i z| < c_i x - f_i\]
 
 Hence $z$ (and analogous $y$) are still in the polyhedron and $x$ is not an extreme point.
+
+\begin{figure}
+\begin{center}
+\includegraphics{./images/extreme_bfs.pdf}
+\end{center}
+\caption{$x$, active constraint $b_i$ and orthogonal vector $\delta$}
+\label{Fig:extremeBfs}
+\end{figure}
 
 \item bfs $\Rightarrow$ vertex: Let $I$ be the indices of all active constraints and $c=\sum{i \in I} a_i$. Then $c x = \sum_{i \in I} b_i$, this follows from definition \ref{Def:ActiveConstraint}. Also $\forall y\in P, i\in I$ s.t. $a_i x \geq b_i$, as the constraint $i$ is active. Therefore $c y \geq c x$. The greater then is sharp as $x$ is the unique solution to the active constraints (Theorem 2.2 in the Linear Optimization book). 
 \end{itemize}
