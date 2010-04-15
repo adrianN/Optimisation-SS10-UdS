@@ -1,5 +1,5 @@
 \section{Solving Linear Programs}
-A linear problem in general has the form:
+A linear program in general has the form:
 \begin{eqnarray*}
 \text{minimize:}& \vec c \cdot \vec x \\
 \text{subject to:} & A \cdot \vec x \geq \vec b
@@ -26,7 +26,7 @@ Solving LPs with just two variables is rather easy. We can use a graphical appro
 \label{Fig:graphSolutionEx}
 \end{figure}
 
-How can we derive an algorithm from this method? We use the idea of silding down, but just look at the corners of the feasible region, to get discrete steps (continuous sliding can't be implemented well). We start with any corner of the feasible region (a basic feasible solution) and look at its neighbours. Should they have a better objective value we move, else we're finished. 
+How can we derive an algorithm from this method? We use the idea of sliding down, but just look at the corners of the feasible region, to get discrete steps (continuous sliding can't be implemented well). We start with any corner of the feasible region (a basic feasible solution) and look at its neighbours. Should they have a better objective value we move, else we're finished. 
 
 To formalize the intuition from the 2D-space we need a notion of a corner in a (usually highdimensional) feasible region. To use it in a algorithm it should be a nongraphical definition. First we give some general definitions and then three different alternative definitions of a corner. We finish by proving that they are all equivalent.
 
@@ -80,7 +80,7 @@ In particular there never is a b.f.s. if we have less than $n$ constraints. (Exa
 
 Now we want to prove that the three definitions \ref{Def:Vertex}, \ref{Def:ExtremePoint} and \ref{Def:BFS} all are equivalent to each other.
 
-\begin{thm} Let $P$ be a polyhedron and $x\in P$. The following are equivalent
+\begin{thm} \label{Thm:cornerEquiv} Let $P$ be a polyhedron and $x\in P$. The following are equivalent
 \begin{enumerate}
 \item $x$ is a vertex
 \item $x$ is an extreme point
@@ -88,8 +88,12 @@ Now we want to prove that the three definitions \ref{Def:Vertex}, \ref{Def:Extre
 \end{enumerate}
 \end{thm}
 
-\paragraph*{$1 \Rightarrow 2$:} Proof by contradiction. Assume the existence of $y,z \in P| y,z\neq x$ with $x= \lambda y + (1-\lambda )z$. That is $x$ does not satisfy definition \ref{Def:ExtremePoint}. From definition \ref{Def:Vertex} we know that some $c$ must exist such that $c x > c \lambda y  + c (1-\lambda) z$ which is a contradiction to the assumption $x= \lambda y + (1-\lambda )z$.   
+\begin{pr}[Theorem \ref{Thm:cornerEquiv}] The proof goes in three steps
+\begin{itemize}
+\item vertex $\Rightarrow$ extreme point: Proof by contradiction. Assume the existence of $y,z \in P$ s.t. $y,z\neq x$ with $x= \lambda y + (1-\lambda )z$. That is, $x$ does not satisfy definition \ref{Def:ExtremePoint}. From definition \ref{Def:Vertex} we know that some $c$ must exist such that $c x > c \lambda y  + c (1-\lambda) z$ which is a contradiction to the assumption $x= \lambda y + (1-\lambda )z$.   
 
-\paragraph*{$2 \Rightarrow 3$:} 
+\item extreme point $\Rightarrow$ bsf:
 
-\paragraph*{$3 \Rightarrow 1$:} Let $I$ be the indices of all active constraints and $c=\sum{i \in I} a_i$. Then $c x = \sum_{i \in I} b_i$, this follows from definition \ref{Def:ActiveConstraint}. Also $\forall y\in P, i\in I| a_i x \geq b_i$, as the constraint $i$ is active. Therefore $c y \geq c x$. The greater then is sharp as $x$ is the unique solution to the active constraints (Theorem 2.2 in the Linear Optimization book). 
+\item bfs $\Rightarrow$ vertex: Let $I$ be the indices of all active constraints and $c=\sum{i \in I} a_i$. Then $c x = \sum_{i \in I} b_i$, this follows from definition \ref{Def:ActiveConstraint}. Also $\forall y\in P, i\in I$ s.t. $a_i x \geq b_i$, as the constraint $i$ is active. Therefore $c y \geq c x$. The greater then is sharp as $x$ is the unique solution to the active constraints (Theorem 2.2 in the Linear Optimization book). 
+\end{itemize}
+\end{pr}

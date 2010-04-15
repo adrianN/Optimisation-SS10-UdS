@@ -51,7 +51,7 @@ We simplify by asking how many clauses can be satisfied:
 
 To relate clauses with their variables define $C_j^+$ to be the positive variables in $C_j$, $C_j^-$ analogous. Then we can write 
 
-\[\sum_{x_j\in C_j^+} \sum x_j + \sum_{x_i \in C_j^-} (1-x_i) \geq z_j\]
+\[\sum_{x_j\in C_j^+} x_j + \sum_{x_i \in C_j^-} (1-x_i) \geq z_j\]
 
 With these constraints $z_j$ can only be 1 if at least one of the positive variables is 1 or one of the negatives is 0.
 
