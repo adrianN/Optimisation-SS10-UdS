@@ -92,7 +92,23 @@ Now we want to prove that the three definitions \ref{Def:Vertex}, \ref{Def:Extre
 \begin{itemize}
 \item vertex $\Rightarrow$ extreme point: Proof by contradiction. Assume the existence of $y,z \in P$ s.t. $y,z\neq x$ with $x= \lambda y + (1-\lambda )z$. That is, $x$ does not satisfy definition \ref{Def:ExtremePoint}. From definition \ref{Def:Vertex} we know that some $c$ must exist such that $c x > c \lambda y  + c (1-\lambda) z$ which is a contradiction to the assumption $x= \lambda y + (1-\lambda )z$.   
 
-\item extreme point $\Rightarrow$ bsf:
+\item extreme point $\Rightarrow$ bsf: Suppose $x\in P$ is not a basic feasible solution. Let $B$ be a matrix of active constraints at $x$ and $C$ the matrix of the inactive constraints such that $Bx=d$, $Cx\gneq f$ and $A = \left[B\atop C\right]$. Since $x$ is not a bfs the matrix $B$ hasn't full rank and its kernel is nonempty. Hence
+
+\[\exists \delta \in \R^n, \delta \neq 0:\ B\delta =0\]
+
+With $\delta$ we define two vectors:
+
+\[y=x+\epsilon \delta \quad z = x-\epsilon \delta\]
+
+Note that $x=(z+y)/2$. That means that $x$ is not an extreme point if $z,y \in P$, because $x$ is a convex combination of the two. Consider 
+
+\[Bz = B(x+\epsilon \delta) = Bx + \epsilon B\delta = Bx\]
+
+Since $B\delta = 0$ so the active constraints are still active. For the inactive constraints we have some slack before we leave the polyhedron. If we choose $\epsilon$ small enough we're still within. It suffices to choose $\epsilon$ such that 
+
+\[\forall i: \epsilon |c_i z| < c_i x - f_i\]
+
+Hence $z$ (and analogous $y$) are still in the polyhedron and $x$ is not an extreme point.
 
 \item bfs $\Rightarrow$ vertex: Let $I$ be the indices of all active constraints and $c=\sum{i \in I} a_i$. Then $c x = \sum_{i \in I} b_i$, this follows from definition \ref{Def:ActiveConstraint}. Also $\forall y\in P, i\in I$ s.t. $a_i x \geq b_i$, as the constraint $i$ is active. Therefore $c y \geq c x$. The greater then is sharp as $x$ is the unique solution to the active constraints (Theorem 2.2 in the Linear Optimization book). 
 \end{itemize}
