@@ -92,7 +92,7 @@ Now we want to prove that the three definitions \ref{Def:Vertex}, \ref{Def:Extre
 \begin{itemize}
 \item vertex $\Rightarrow$ extreme point: Proof by contradiction. Assume the existence of $y,z \in P$ s.t. $y,z\neq x$ with $x= \lambda y + (1-\lambda )z$. That is, $x$ does not satisfy definition \ref{Def:ExtremePoint}. From definition \ref{Def:Vertex} we know that some $c$ must exist such that $c x > c \lambda y  + c (1-\lambda) z$ which is a contradiction to the assumption $x= \lambda y + (1-\lambda )z$.   
 
-\item extreme point $\Rightarrow$ bsf: Suppose $x\in P$ is not a basic feasible solution. Let $B$ be a matrix of active constraints at $x$ and $C$ the matrix of the inactive constraints such that $Bx=d$, $Cx\gneq f$ and $A = \left[B\atop C\right]$. Since $x$ is not a bfs the matrix $B$ hasn't full rank and its kernel is nonempty. Hence
+\item extreme point $\Rightarrow$ bsf (we show $\neg \text{bsf} \Rightarrow \neg \text{extreme point}$): Suppose $x\in P$ is not a basic feasible solution. Let $B$ be a matrix of active constraints at $x$ and $C$ the matrix of the inactive constraints such that $Bx=d$, $Cx\gneq f$ and $A = \left[B\atop C\right]$. Since $x$ is not a bfs the matrix $B$ hasn't full rank and its kernel is nonempty. Hence
 
 \[\exists \delta \in \R^n, \delta \neq 0:\ B\delta =0\]
 
@@ -120,4 +120,19 @@ Hence $z$ (and analogous $y$) are still in the polyhedron and $x$ is not an extr
 
 \item bfs $\Rightarrow$ vertex: Let $I$ be the indices of all active constraints and $c=\sum{i \in I} a_i$. Then $c x = \sum_{i \in I} b_i$, this follows from definition \ref{Def:ActiveConstraint}. Also $\forall y\in P, i\in I$ s.t. $a_i x \geq b_i$, as the constraint $i$ is active. Therefore $c y \geq c x$. The greater then is sharp as $x$ is the unique solution to the active constraints (Theorem 2.2 in the Linear Optimization book). 
 \end{itemize}
+
+\subsection*{Standard Form}
+A LP in standard form is of the form:
+\begin{eqnarray*}
+\text{minimize:}& \vec c \cdot \vec x \\
+\text{subject to:} & A \cdot \vec x = \vec b \\
+& x\geq0
+\end{eqnarray*}
+
+Any LP can be transformed into an equivalent LP in standard form. Two steps are needed for this, one to add non negativity constraints for all variables and a second to transform any inequalities into an equality.
+
+\paragraph*{Add non negativitiy constraints:} Suppose a variable $x$ has no non negativity constraint. Then the variable can be replaced with two variables $x'$ and $x''$ such that $x=x'-x''$ and $x',x''\geq 0$, as any negative number can be written as a combination of two non negative numbers.
+
+\paragraph*{Remove inequalities:} Suppose a constraint to be $x_1+2x_2 \geq 15$. By adding a new variable $s\in \R : x_1+2x_2-s=15$ we can remove the inequality. So by adding a new vector $s\in \R^n$ with $A \cdot \vec x - s = \vec b$ the inequalities can be removed.
+
 \end{pr}
