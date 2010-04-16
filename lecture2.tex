@@ -62,8 +62,16 @@ Convex sets have a lot of nice properties. Luckily feasible regions are always c
 The following three defintions formalize the notion of a corner.
 
 \begin{Def}[Vertex]\label{Def:Vertex} Let P be a polyhedron. A vector $x\in P$ is a \emph{vertex} of P if $\exists \vec c\in \R^n$
- s.t. $cx < cy$ for all $y\in P, y \neq x $; that is $x$ is the minimal point for some cost vector (the unique optimal solution for some LP with the feasible set P).
+ s.t. $cx < cy$ for all $y\in P, y \neq x $; that is $x$ is the minimal point for some cost vector (the unique optimal solution for some LP with the feasible set P). See figure \ref{Fig:vertex}
 \end{Def}
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics{./images/vertex.pdf}
+\end{center}
+\caption{A vertex $x$ is the optimal solution for a cost vector $c$}
+\label{Fig:vertex}
+\end{figure}
 
 \begin{Def}[Extreme Point]\label{Def:ExtremePoint} An \emph{extreme point} of a ployhedron P is a vector $x\in P$ s.t. $x$ is not a convex combination of any two vectors $y,z\in P$ different from $x$. 
 \end{Def}
@@ -90,9 +98,16 @@ Now we want to prove that the three definitions \ref{Def:Vertex}, \ref{Def:Extre
 
 \begin{pr}[Theorem \ref{Thm:cornerEquiv}] The proof goes in three steps
 \begin{itemize}
-\item vertex $\Rightarrow$ extreme point: Proof by contradiction. Assume the existence of $y,z \in P$ s.t. $y,z\neq x$ with $x= \lambda y + (1-\lambda )z$. That is, $x$ does not satisfy definition \ref{Def:ExtremePoint}. From definition \ref{Def:Vertex} we know that some $c$ must exist such that $c x > c \lambda y  + c (1-\lambda) z$ which is a contradiction to the assumption $x= \lambda y + (1-\lambda )z$.   
+\item vertex $\Rightarrow$ extreme point: Proof by contraposition. Assume the existence of $y,z \in P$ s.t. $y,z\neq x$ with $x= \lambda y + (1-\lambda )z$. That is, $x$ is not an extreme point (definition \ref{Def:ExtremePoint}). We want to show that it's not a vertex either.
 
-\item extreme point $\Rightarrow$ bsf (we show $\neg \text{bsf} \Rightarrow \neg \text{extreme point}$): Suppose $x\in P$ is not a basic feasible solution. Let $B$ be a matrix of active constraints at $x$ and $C$ the matrix of the inactive constraints such that $Bx=d$, $Cx\gneq f$ and $A = \left[B\atop C\right]$. Since $x$ is not a bfs the matrix $B$ hasn't full rank and its kernel is nonempty. Hence
+From definition a vertex (def. \ref{Def:Vertex}) we know that some $c$ should exist such that $c x < c \lambda y  + c (1-\lambda) z$. That however is a contradiction to the assumption $x= \lambda y + (1-\lambda )z$.
+\begin{align*}
+cx &= \lambda cy +(1-\lambda)cz\\
+   &< \lambda cx + (1-\lambda)cx\\
+   &< cx
+\end{align*}
+
+\item extreme point $\Rightarrow$ bsf (proof by contraposition; we show $\neg \text{bsf} \Rightarrow \neg \text{extreme point}$): Suppose $x\in P$ is not a basic feasible solution. Let $B$ be a matrix of active constraints at $x$ and $C$ the matrix of the inactive constraints such that $Bx=d$, $Cx\gneq f$ and $A = \left[B\atop C\right]$. Since $x$ is not a bfs the matrix $B$ hasn't full rank and its kernel is nonempty. Hence
 
 \[\exists \delta \in \R^n, \delta \neq 0:\ B\delta =0\]
 
@@ -104,9 +119,9 @@ Note that $x=(z+y)/2$. That means that $x$ is not an extreme point if $z,y \in P
 
 \[Bz = B(x+\epsilon \delta) = Bx + \epsilon B\delta = Bx\]
 
-Since $B\delta = 0$ so the active constraints are still active. For the inactive constraints we have some slack before we leave the polyhedron. If we choose $\epsilon$ small enough we're still within. It suffices to choose $\epsilon$ such that 
+Since $B\delta = 0$ the active constraints are still active. For the inactive constraints we have some slack before we leave the polyhedron (We can move around on the red line in figure \ref{Fig:extremeBfs}). If we choose $\epsilon$ small enough we're still within. It suffices to choose $\epsilon$ such that 
 
-\[\forall i: \epsilon |c_i z| < c_i x - f_i\]
+\[\forall i: \epsilon |c_i z| < c_i x - f_i\qquad \vec c_i\in C,\ f_i \in \vec f\]
 
 Hence $z$ (and analogous $y$) are still in the polyhedron and $x$ is not an extreme point.
 
@@ -118,7 +133,9 @@ Hence $z$ (and analogous $y$) are still in the polyhedron and $x$ is not an extr
 \label{Fig:extremeBfs}
 \end{figure}
 
-\item bfs $\Rightarrow$ vertex: Let $I$ be the indices of all active constraints and $c=\sum{i \in I} a_i$. Then $c x = \sum_{i \in I} b_i$, this follows from definition \ref{Def:ActiveConstraint}. Also $\forall y\in P, i\in I$ s.t. $a_i x \geq b_i$, as the constraint $i$ is active. Therefore $c y \geq c x$. The greater then is sharp as $x$ is the unique solution to the active constraints (Theorem 2.2 in the Linear Optimization book). 
+\item bfs $\Rightarrow$ vertex: Suppose $x$ is a bsf. Let $I$ be the indices of all active constraints and $c=\sum_{i \in I} a_i$. Then $c x = \sum_{i \in I} b_i$, since for each $a_i x \geq b_i $ the inequality is tight (see def. \ref{Def:ActiveConstraint}). 
+
+Also $\forall y\in P, i\in I$ we have $a_i y \geq b_i$. Therefore $c y \geq c x$. The greater then is sharp as $x$ is the unique solution to the active constraints because it's a bfs and the system of active constraints has full rank, i.e. if n-lines cross in n-dimensional space they do so at \emph{one} point. (Theorem 2.2 in the Linear Optimization book). So $x$ is the optimal solution for some LP and hence a vertex.
 \end{itemize}
 
 \subsection*{Standard Form}
