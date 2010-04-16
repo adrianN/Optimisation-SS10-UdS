@@ -14,6 +14,14 @@
 \usepackage{listings}
 %\linespread{1.25}
 \setlength{\parindent}{0pt}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\cfoot{\thepage}
+\rfoot{\includegraphics{./images/by-nc-sa.pdf}}
+\fancyhead{}
+\lfoot{}
+\renewcommand{\footrulewidth}{0.4pt}
+\renewcommand{\headrulewidth}{0pt}
 \newcommand{\N}[0]{\mathbb{N}}
 \newcommand{\Z}[0]{\mathbb{Z}}
 \newcommand{\Q}[0]{\mathbb{Q}}
@@ -32,8 +40,7 @@
     {} %head spec
 \title{Optimisation}
 \author{Adrian Neumann and Sebastian Steenbruck}
-\date{}
-\begin{document}
+\date{}\begin{document}
 \lstset{language=Java, basicstyle=\ttfamily\small\upshape, commentstyle=\slshape\sffamily, keywordstyle=\em, breaklines=true}
 
 \theoremstyle{definition}
@@ -46,7 +53,11 @@
 \theoremstyle{theorem}
 \newtheorem{thm}{Theorem}
 
+
+
 \maketitle
+\thispagestyle{fancy}
+
 \marginpar{Lecture 1}
 \input{./lecture1}
 \marginpar{Lecture 2}
