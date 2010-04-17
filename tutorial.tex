@@ -16,9 +16,14 @@ As infinite sets are hard to describe we're looking for a \emph{Basis} $S$. Whic
 
 The vectors in a basis must be \emph{linearly independent}, that is none of them can be written as a linear combination of the others. The standard basis for $\R^n$ is the set of $n$-dimensional unit vectors.
 
+\[\left\{\begin{pmatrix}1\\0\\\vdots\\0\end{pmatrix},\begin{pmatrix}0\\1\\\vdots\\0\end{pmatrix},\ldots,\begin{pmatrix}0\\\vdots\\0\\1\end{pmatrix}\right\}\]
+
+
 \begin{thm} 
 Every basis of a vector space $\R^n$ has the same number of elements, which is $n$. 
 \end{thm}
+
+This follows for example from \href{http://en.wikipedia.org/wiki/Steinitz_exchange_lemma}{Steinitz exchange lemma}.
 
 \begin{Def}[Subspace]
  A subspace $V$ of a vector space $\R^n$ is spanned by a subset of the a basis of $R^n$. An example of a subspace in 2D are all the lines going through the point $(0,0) \in \R^2$.
@@ -49,7 +54,9 @@ Now that we have defined vector spaces we want to study some linear transformati
 \end{enumerate}
 \end{Def}
 
-Prominent examples for linear transformations are rotations and reflections around the origin. If we use a standard basis for our vector space we can easily represent linear transformations by their effects on the basis. Just map every basis vector to its image and write the results in a matrix. 
+Prominent examples for linear transformations are rotations and reflections around the origin. Note that if $T(\vec 0)\neq 0$ you automatically know that it's not a linear transformation.
+
+If we use a standard basis for our vector space we can easily represent linear transformations by their effects on the basis. Just map every basis vector to its image and write the results in a matrix. 
 
 \begin{Ex}[Reflection] Suppose we want to reflect every vector in $\R^2$ at the x-axis. If we use the standard base $V = \{(1,0),(0,1)\}$ and compute its reflection $V'=\{(1,0),(0,-1)\}$ we get the matrix
 
@@ -58,8 +65,19 @@ Prominent examples for linear transformations are rotations and reflections arou
 0 & -1
 \end{pmatrix}\]
 
-Multiplying a vector with that matrix (remember: multiply the row in the matrix with the column of the vector and sum it up) we get its reflection.
+Multiplying a vector with that matrix we get its reflection. Just in case: Matrix multiplication
+
+\[\begin{pmatrix}
+a_{11} & a_{12} & \ldots & a_{1n}\\
+a_{21} & a_{22} & \ldots & a_{2n}\\
+\vdots \\
+a_{m1} & a_{m2} & \ldots & a_{mn}
+\end{pmatrix} * \begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix} =\begin{pmatrix} \sum_{i=1}^n a_{1i}x_i\\ \sum_{i=1}^n a_{2i}x_i\\\vdots\\\sum_{i=1}^n a_{ni}x_i\end{pmatrix}\]
+
 \end{Ex}
+
+Note that for two transformations $f,g$ and their matrices $A,B$ we have
+\[\forall \vec v:\ (f\circ g)(v) = (AB)v\]
 
 \begin{Def}[Kernel of a matrix] 
  The kernel of a matrix $A$ is the set of all vectors $x$ with
