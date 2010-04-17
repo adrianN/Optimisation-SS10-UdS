@@ -4,9 +4,8 @@ A linear program in general has the form:
 \text{minimize:}& \vec c \cdot \vec x \\
 \text{subject to:} & A \cdot \vec x \geq \vec b
 \end{eqnarray*}
-$x=\{x_1,x_2,..,x_n\}$ is an vector of variables in $\R$. $x$ together with the vector $c \in \R^n$ is the objective function.
-$A^{m \times n}$ together with $x\in \R^m$ and $b \in \R^m$is the system of inequation which describes the constrains.
-%From now on we'll characterize the system of inequation by a matrix and a vector. $A\vec x \geq \vec b$. The objective function can also be written in vector form $\min \vec c \vec x$, where $c$ is the cost vector.
+where $x=(\nthings{x})$ is an vector of variables in $\R$. $x$ together with the vector $c \in \R^n$ define the objective function.
+$A \in \R^{m \times n}$ together with $x\in \R^m$ and $b \in \R^m$is the system of inequation which describes the constrains.
 
 Solving LPs with just two variables is rather easy. We can use a graphical approach in two dimensions. The constraints define halfplanes in the 2D space. The feasible region of the problem is then the intersection of all the halfplanes. The cost vector now defines a halfspace of its own (i.e. lines with equivalent costs) that can be shifted around by choosing different $x$. If $x$ lies within the feasible region we get a feasible solution. The goal is to shift the lines as far in negative $c$ direction as possible without leaving the feasible region. See figure \ref{Fig:graphSolutionEx}.
 
@@ -147,7 +146,7 @@ Also $\forall y\in P, i\in I$ we have $a_i y \geq b_i$. Therefore $c y \geq c x$
 \end{itemize}
 
 \subsection*{Standard Form}
-A LP in standard form\footnote{Cormen et al. name this slack-form (Schlupfform)} is of the form:
+A LP in standard form\footnote{Cormen et al. call this slack-form (Schlupfform)} is of the form:
 \begin{eqnarray*}
 \text{minimize:}& \vec c \cdot \vec x \\
 \text{subject to:} & A \cdot \vec x = \vec b \\
@@ -156,8 +155,12 @@ A LP in standard form\footnote{Cormen et al. name this slack-form (Schlupfform)}
 
 Any LP can be transformed into an equivalent LP in standard form. Two steps are needed for this, one to add non negativity constraints for all variables and a second to transform any inequalities into a equalities.
 
-\paragraph*{Add non negativity constraints:} Suppose a variable $x$ has no non-negativity constraint. $x$ can be replaced with two variables $x'$ and $x''$ such that $x=x'-x''$ and $x',x''\geq 0$, as any negative number can be written as a combination of two non negative numbers.
+\begin{enumerate}
+\item {\bfseries Add non negativity constraints:} Suppose a variable $x$ has no non-negativity constraint. $x$ can be replaced with two variables $x'$ and $x''$ such that $x=x'-x''$ and $x',x''\geq 0$, as any negative number can be written as a combination of two non negative numbers.
 
-\paragraph*{Remove inequalities:} Suppose a constraint $a$ to be $x_1+2x_2 \geq 15$. By adding a new variable $s\in \R$ and the constraint $a-s=15$ we can remove the inequality. So by adding a new vector $s\in \R^n$ with $A \cdot \vec x - s = \vec b$ the inequalities can be removed.
+\item {\bfseries Remove inequalities:} Suppose a constraint $a$ to be $x_1+2x_2 \geq 15$. By adding a new variable $s\in \R$ and the constraint $a-s=15$ we can remove the inequality. So by adding a new vector $s\in \R^n$ with $A \cdot \vec x - s = \vec b$ the inequalities can be removed.
+\end{enumerate}
+
+Of course the solution we get for the LP in standard form can't be immediately used as a solution for the original LP. However the values of the original variables are easily reconstructed.
 
 \end{pr}
