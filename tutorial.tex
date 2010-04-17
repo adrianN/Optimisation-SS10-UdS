@@ -35,12 +35,18 @@ To get a notion of angle between vectors we introduce the dot product (in euclid
 
 It is related to the law of cosines in two dimensions ($c^2 = a^2+b^2-2ab\cos \gamma$) like this:
 
+\begin{minipage}[hbt]{0.5\linewidth}
 \begin{align*}
 \norm{\vec c}^2 &= \norm{\vec a}^2 + \norm{\vec b}^2 -2\norm{\vec a}\norm{\vec b}\cos \gamma\\
 \norm{a-b}^2 &= \norm{\vec a}^2 + \norm{\vec b}^2 -2\norm{\vec a}\norm{\vec b}\cos \gamma\\
 \norm{a}^2-2\langle a,b\rangle +\norm{b}^2 &= \norm{\vec a}^2 + \norm{\vec b}^2 -2\norm{\vec a}\norm{\vec b}\cos \gamma\\
 \frac{\langle a,b\rangle }{\norm{a}\norm{b}} = \cos \gamma
 \end{align*}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{0.3\linewidth}
+\includegraphics[scale=0.8]{./images/Triangle_with_notations_2.pdf}
+\end{minipage}
 
 (Here $\norm{a}$ denotes the norm: $\sqrt{\sum a_i^2} = \sqrt{\langle a,a\rangle }$). Obviously the dot product is 0 if the vectors are orthogonal to each other.
 
