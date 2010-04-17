@@ -1,0 +1,35 @@
+\section*{Tutorial}
+Some definitions from linear algebra, which were repeated in the tutorial.
+
+\begin{Def}[Vector space] 
+A vector space is a set of points $$\R^n=\{(x_1,x_2,...,x_n)|x_i \in \R\}$$
+\end{Def}
+ 
+As infinite sets are hard to describe we're looking for a \emph{Basis} $S$. Which is a subset of $\R^n$ such that every vector in $\R^n$ can be represented as a unique linear combination of the elements of $S$.
+
+\begin{Def}[Linear Combination] 
+The linear combination $w$ is defined as the sum of all the vectors in a set $V$ multiplied with some scalars $\lambda$.
+$$w=\sum_{i \in V}{\lambda_i v_i} | \lambda_i \in \R$$ 
+\end{Def} 
+
+The vectors in a basis must be \emph{linearly independent}, that is none of them can be written as a linear combination of the others.
+
+\begin{thm} 
+Every basis of a vector space $\R^n$ has the same number of elements, which is $n$. 
+\end{thm}
+
+\begin{Def}[Subspace]
+ A subspace $V$ of a vector space $\R^n$ is a subset of the a basis of $R^n$. An example of a subspace in 2D are all the lines going through the point $(0,0) \in \R^2$.
+\end{Def}
+
+\begin{Def}[Kernel of a matrix] 
+ The kernel of a matrix $A$ is the set of all vectors $x$ with
+$$Ax=0$$
+\end{Def}
+
+\begin{Def}[Rank of a matrix]
+ The rank of a matrix $A$ is the number of linearly independent columns or rows of $A$. The column and row rank is always the same. In other words the row (column) rank is the dimension of the subspace spanned by the rows of $A$. A matrix $A^{m \times n}$ is said to have a full rank if $rank(A)=min(m,n)$
+\end{Def}
+
+
+
