@@ -115,7 +115,7 @@ cx &= \lambda cy +(1-\lambda)cz\\
    &< cx
 \end{align*}
 
-\item extreme point $\Rightarrow$ bsf (proof by contraposition; we show $\neg \text{bsf} \Rightarrow \neg \text{extreme point}$): Suppose $x\in P$ is not a basic feasible solution. Let $B$ be a matrix of active constraints at $x$ and $C$ the matrix of the inactive constraints such that $Bx=d$, $Cx\gneq f$ and $A = \left[B\atop C\right]$. Since $x$ is not a bfs the matrix $B$ hasn't full rank and its kernel is nonempty. Hence
+\item extreme point $\Rightarrow$ bsf (proof by contraposition; we show $\neg \text{bsf} \Rightarrow \neg \text{extreme point}$): Suppose $x\in P$ is not a basic feasible solution. Let $B$ be a matrix of active constraints at $x$ and $C$ the matrix of the inactive constraints such that $Bx=d$, $Cx\gneq f$ and $A = \left[B\atop C\right]$. Since $x$ is not a bfs the matrix $B$ hasn't full rank\footnote{Note the slightly different full rank definition. In this case full rank is defined by the number of dimensions of the polyhedron, not in terms of the rows and columns of $B$.} and its kernel is nonempty. Hence
 
 \[\exists \delta \in \R^n, \delta \neq 0:\ B\delta =0\]
 
@@ -141,7 +141,7 @@ Hence $z$ (and analogous $y$) are still in the polyhedron and $x$ is not an extr
 \label{Fig:extremeBfs}
 \end{figure}
 
-\item bfs $\Rightarrow$ vertex: Suppose $x$ is a bsf. Let $I$ be the indices of all active constraints and $c=\sum_{i \in I} a_i$. Then $c x = \sum_{i \in I} b_i$, since for each $a_i x \geq b_i $ the inequality is tight (see def. \ref{Def:ActiveConstraint}). 
+\item bfs $\Rightarrow$ vertex: Suppose $x$ is a bfs. Let $I$ be the indices of all active constraints and $c=\sum_{i \in I} a_i$. Then $c x = \sum_{i \in I} b_i$, since for each $a_i x \geq b_i $, the inequality is tight (see def. \ref{Def:ActiveConstraint}). 
 
 Also $\forall y\in P, i\in I$ we have $a_i y \geq b_i$. Therefore $c y \geq c x$. The greater then is sharp as $x$ is the unique solution to the active constraints because it's a bfs and the system of active constraints has full rank, i.e. if n-lines cross in n-dimensional space they do so at \emph{one} point. (Theorem 2.2 in the Linear Optimization book). So $x$ is the optimal solution for some LP and hence a vertex.
 \end{itemize}
