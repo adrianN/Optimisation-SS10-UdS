@@ -156,10 +156,35 @@ A LP in standard form\footnote{Cormen et al. call this slack-form (Schlupfform)}
 Any LP can be transformed into an equivalent LP in standard form. Two steps are needed for this, one to add non negativity constraints for all variables and a second to transform any inequalities into a equalities.
 
 \begin{enumerate}
-\item {\bfseries Add non negativity constraints:} Suppose a variable $x$ has no non-negativity constraint. $x$ can be replaced with two variables $x'$ and $x''$ such that $x=x'-x''$ and $x',x''\geq 0$, as any negative number can be written as a combination of two non negative numbers.
+\item {\bfseries Add non negativity constraints:} Suppose a variable $x$ has no non-negativity constraint. $x$ can be replaced with two variables $x'$ and $x''$ such that $x=x'-x''$ and $x',x''\geq 0$, as any negative number can be written as a combination of two non negative numbers. Figure \ref{Fig:1dTo2d} shows the transformation of the one dimensional LP:
+\begin{eqnarray*}
+\text{minimize:}& x \\
+\text{subject to:} & x \geq -2\\
+& x \leq 4
+\end{eqnarray*}
+
+\begin{figure}[hbt]
+\begin{minipage}[hbt]{0.4\linewidth}
+\includegraphics[width=1\textwidth]{./images/1dTo2d.pdf}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{0.4\linewidth}
+\begin{align*}
+\text{min: } x-y\\
+x-y \geq -2\\
+-x+y \geq -4\\
+x,y \geq 0
+\end{align*}
+
+\end{minipage}
+\caption{Adding non negativity constraints. The red line shows the optimal solutions.}
+\label{Fig:1dTo2d}
+\end{figure}
 
 \item {\bfseries Remove inequalities:} Suppose a constraint $a$ to be $x_1+2x_2 \geq 15$. By adding a new variable $s\in \R$ and the constraint $a-s=15$ we can remove the inequality. So by adding a new vector $s\in \R^n$ with $A \cdot \vec x - s = \vec b$ the inequalities can be removed.
 \end{enumerate}
+
+
 
 Of course the solution we get for the LP in standard form can't be immediately used as a solution for the original LP. However the values of the original variables are easily reconstructed.
 
