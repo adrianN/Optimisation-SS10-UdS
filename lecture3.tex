@@ -95,9 +95,9 @@ Herein lies the problem of the algorithm. We introduce a new constraint for ever
 \begin{pr} To prove that we need to show
 \begin{enumerate}
 \item $\bar x \in \bar P \Rightarrow x\in Q$. That means 
-\[\exists x_n: \left[\atop{\bar x}{x_n}\right] \in P \Rightarrow \max_{i\in T_1} d_i +f_i \bar x \leq x_n \Rightarrow \min_{i\in T_2 d_i+fi\bar x \geq x_n\]
+\[\exists x_n: \left[\atop{\bar x}{x_n}\right] \in P \Rightarrow \max_{i\in T_1} d_i +f_i \bar x \leq x_n \Rightarrow \min_{i\in T_2} d_i+fi\bar x \geq x_n\]
 Therefore the first kind of constraints ($i \in T_{1,2}$) are satisfied.
-\item $\bar x \in Q \Rightarrow \bar x \in \pi_{n-1}℗$. Choosing $x_n$ as 
+\item $\bar x \in Q \Rightarrow \bar x \in \pi_{n-1}(P)$. Choosing $x_n$ as 
 \[x_n \in [\max_{i\in T_1} d_i+f_i \bar x, \min_{i\in T_2} d_i+f_i \bar x]\]
 does the trick
 \end{enumerate}
@@ -125,7 +125,7 @@ We can use the projections to find the optimal value for an LP (not the optimal 
 
 \[P=\{(x_0,\ldots,x_n) | A(x_0,\ldots,x_n)^{\mbox{T}} \geq b \wedge x_0=c(x_0,\ldots,x_n)^{\mbox{T}}\}\]
 
-Define $Q = \pi_1℗$. We can  find that with the algorithm. If $Q$ is not feasible, $P$ is empty. Else we can choose the biggest $b_i$ such that $x_0\geq b_i$ or the smallest $b_i$ such that $x_0 \leq b_i$, depending on the type of constraints we have. That is the optimal value.
+Define $Q = \pi_1(P)$. We can  find that with the algorithm. If $Q$ is not feasible, $P$ is empty. Else we can choose the biggest $b_i$ such that $x_0\geq b_i$ or the smallest $b_i$ such that $x_0 \leq b_i$, depending on the type of constraints we have. That is the optimal value.
 
 \begin{thm}[Farkas' lemma] Let $A\in \R^{m\times n}$ and $b\in \R^m$. Then either 
 \begin{itemize}
