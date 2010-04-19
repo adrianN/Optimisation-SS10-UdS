@@ -2,19 +2,35 @@ To get a better feeling for the different definitions of a corner, we'll use the
 
 \subsection*{Convex Hulls}
 \begin{Def}(Convex Hull) Let $x_1,\ldots,x_k$ be some vectors in $\R^n$. The convex hull of these vectors in
-\[\mbox{CH}(\{x_1,\ldots,x_k\}) = \left\{\sum _{i=1}^k \lambda_i x_i \Big| \sum_{i=1}^k \lambda_i =1,\ \lambda_i\geq 0\right\}\]
+\[\mbox{CH}(\{x_1,\ldots,x_k\}) = \left\{\sum _{i=1}^k \lambda_i x_i \left| \sum_{i=1}^k \lambda_i =1,\ \lambda_i\geq 0\right.\right\}\]
 \end{Def}
 
 Here we generalise the notion of convex combination to use more than two points. Intuitively if we have a bunch of points in 2D we get all the points that lie within the polygon that is spanned by the points on the CH, see figure \ref{Fig:convexHull}.
 
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics{./images/convex_hull.pdf}
+\end{center}
+\caption{The convex hull of a set of points}
+\label{Fig:convexHull}
+\end{figure}
+
 This definition allows us to come up with a different definition of a polyhedron. We already definition \ref{Def:polyhedron}, but the convex hull gives us a more geometric definition.
 
-\begin{Def}[Bounded Polyhedra] A bounded polyhedron lies within a finite bounding box, see figure \ref{Fig:bounded_undbouded}. More formally
+\begin{Def}[Bounded Polyhedra] A bounded polyhedron lies within a finite bounding box, see figure \ref{Fig:bounded_unbouded}. More formally
 
-\[\forall x,d, \exists \lambda\geq 0: x+\lambda d \not \in P\]
+\[\forall x\in P,d\in \R^n, \exists \lambda\geq 0: x+\lambda d \not \in P\]
 
 For any line from a point in the polyhedron we eventually leave the polyhedron
 \end{Def}
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics{./images/bounded_unbounded.pdf}
+\end{center}
+\caption{A bounded (left) and an unbounded (right) polyhedron}
+\label{Fig:bounded_unbounded}
+\end{figure}
 
 \begin{thm}\label{Thm:CH_polyhedron} Let $P$ be a non-empty bounded polyhedron. Then $P=$CH(extreme points $P$)
 \end{thm}
@@ -28,7 +44,15 @@ Let $x\in P$. Since $P$ is a polyhedron $x$ is a solution of the system of unequ
 
 The other possibility is $\rank B=k$ and $k<n$. We use the same trick as in proof \ref{Thm:cornerEquiv} to find two new points. Since the matrix hasn't full rank, there has to be $\delta \neq 0$ such that $B\delta = 0$. As before we build two vectors $x_1 = x+ \epsilon_1 \delta$, $x_2=x-\epsilon_2 \delta$. 
 
-Now we want to get from these points somehow to extreme points, as we want to prove that we can use extreme points to represent every point in $P$. We choose $\epsilon>0$ as the largest value such that $x_1$ is still a feasible solution, that is, we follow a line through $x$ until we reach a boundary of the polyhedron. 
+Now we want to get from these points somehow to extreme points, as we want to prove that we can use extreme points to represent every point in $P$. We choose $\epsilon>0$ as the largest value such that $x_1$ is still a feasible solution, that is, we follow a line through $x$ until we reach a boundary of the polyhedron. See figure \ref{Fig:convCombExPoints}
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics{./images/convex_comb_extr_points.pdf}
+\end{center}
+\caption{$x$ can be written as a convex combination of $x_1',x_2', x_1''$ and $x_2''$}
+\label{Fig:convCombExPoints}
+\end{figure}
 
 Such $\epsilon$ has to exist, since the polyhedron is bounded and every line eventually crosses a boundary. Choosing $\epsilon$ like this implies that some constraint $a_i$ in $D$ has to become active for $x_1$ (and $x_2$ by symmetry). Moving in direction $\delta$ doesn't affect the constraints that already were active, since $\delta$ is in the kernel of $B$. So we increase the number of active constraints and can extend $B$. The rank of
 
