@@ -95,7 +95,27 @@ $$Ax=0$$
  The rank of a matrix $A$ is the number of linearly independent columns or rows of $A$. The column and row rank is always the same. In other words the row (column) rank is the dimension of the subspace spanned by the rows of $A$. A matrix $A^{m \times n}$ is said to have a full rank if $rank(A)=min(m,n)$
 \end{Def}
 
-If a matrix $A$ has full rank its kernel has dimension 0 and any system of equations $A x=b$ has a unique solution $A^{-1}b$. You can invert such matrices for example by using a Gauss-Jordan elimination.
+If a matrix $A$ has full rank its kernel has dimension 0 and any system of equations $A x=b$ has a unique solution $A^{-1}b$. You can invert such matrices for example by using a Gauss-Jordan elimination. If the matrix is sparse it may be faster to calculate the inverse by
 
+\[A^{-1} = \frac{1}{\det A} \tilde A \qquad \tilde a_{ij} = (-1)^{i+j} \det A_{ji}\]
 
+Where $A_{ji}$ is the matrix $A$ without the $i$-th row and the $j$-th column and $\det A$ is the determinant of the matrix. It can be computed recursively:
 
+\[\det A = \sum_{i=1}^n a_{ij} \cdot (-1)^{i+j} \det A_{ij} = \sum_{j=1}^n a_{ij} \cdot (-1)^{i+j} \det A_{ij} \]
+
+For example
+\[\det \begin{pmatrix} 
+3 & 9 & 1\\
+2 & 5 & 4\\
+-2 & 8 & 7\end{pmatrix} \stackrel{i=2}{=}
+-2\cdot \det \underbrace{\begin{pmatrix} 
+9 & 1\\ 
+8 & 7\end{pmatrix}}_{A_{21}} + 
+5\cdot \det \underbrace{\begin{pmatrix}
+3 & 1\\
+-2 & 7\end{pmatrix}}_{A_{22}} -
+4\cdot \det \underbrace{\begin{pmatrix} 
+3 & 9\\ 
+-2 & 8\end{pmatrix}}_{A_{23}}= -163\]
+
+Here we fixed the second row and iterated over the columns. Since we multiply by $a_{ij}$ in each recursion step this procedure is fast if there are lots of zeros in the matrix.
