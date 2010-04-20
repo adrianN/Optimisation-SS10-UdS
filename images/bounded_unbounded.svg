@@ -14,32 +14,71 @@
    height="126.7014"
    id="svg2979"
    version="1.1"
-   inkscape:version="0.47+devel r9327"
-   sodipodi:docname="Neues Dokument 4">
+   inkscape:version="0.47pre4 r22446"
+   sodipodi:docname="bounded_unbounded.svg">
   <defs
      id="defs2981">
     <linearGradient
        inkscape:collect="always"
-       id="linearGradient3759">
+       id="linearGradient4233">
       <stop
          style="stop-color:#81ff82;stop-opacity:1;"
          offset="0"
-         id="stop3761" />
+         id="stop4235" />
       <stop
          style="stop-color:#81ff82;stop-opacity:0;"
          offset="1"
-         id="stop3763" />
+         id="stop4237" />
     </linearGradient>
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0.0"
+       refX="0.0"
+       id="Arrow1Mend"
+       style="overflow:visible;">
+      <path
+         id="path3611"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1.0pt;marker-start:none;"
+         transform="scale(0.4) rotate(180) translate(10,0)" />
+    </marker>
+    <inkscape:perspective
+       sodipodi:type="inkscape:persp3d"
+       inkscape:vp_x="0 : 63.3507 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_z="440.23248 : 63.3507 : 1"
+       inkscape:persp3d-origin="220.11624 : 42.2338 : 1"
+       id="perspective13" />
     <linearGradient
        inkscape:collect="always"
-       xlink:href="#linearGradient3759"
-       id="linearGradient3765"
-       x1="384.81003"
-       y1="158.48558"
-       x2="485.9491"
-       y2="71.794952"
-       gradientUnits="userSpaceOnUse"
-       gradientTransform="translate(64.999579,41.916468)" />
+       xlink:href="#linearGradient4233"
+       id="linearGradient4239"
+       x1="303.0921"
+       y1="118.52813"
+       x2="427.05338"
+       y2="43.265934"
+       gradientUnits="userSpaceOnUse" />
+    <inkscape:perspective
+       id="perspective4291"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <marker
+       inkscape:stockid="Arrow1Mend"
+       orient="auto"
+       refY="0"
+       refX="0"
+       id="Arrow1Mend-2"
+       style="overflow:visible">
+      <path
+         id="path3611-0"
+         d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
+         style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
+         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+    </marker>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -48,17 +87,17 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="2.0763492"
-     inkscape:cx="196.27632"
-     inkscape:cy="2.2827467"
+     inkscape:zoom="2.9364012"
+     inkscape:cx="257.60826"
+     inkscape:cy="34.827173"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1676"
-     inkscape:window-height="1006"
-     inkscape:window-x="4"
-     inkscape:window-y="0"
-     inkscape:window-maximized="0" />
+     inkscape:window-width="1920"
+     inkscape:window-height="1126"
+     inkscape:window-x="1920"
+     inkscape:window-y="25"
+     inkscape:window-maximized="1" />
   <metadata
      id="metadata2984">
     <rdf:RDF>
@@ -77,14 +116,111 @@
      id="layer1"
      transform="translate(-64.999579,-41.916468)">
     <path
+       style="fill:none;stroke:#000000;stroke-width:1.0085001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 436.36675,45.001409 -74.87159,119.863231 135.66182,0.34345"
+       id="path4227" />
+    <path
+       style="fill:url(#linearGradient4239);fill-opacity:1;stroke:none"
+       d="M 310.83443,121.16842 299.05724,120.9915 334.90377,63.608336 C 354.61936,32.047594 370.88072,6.0149131 371.04011,5.757934 371.27679,5.3763543 377.22792,5.1494592 403.50255,4.5202578 421.1975,4.0965151 435.71817,3.787848 435.77072,3.834331 c 0.0525,0.046483 -1.62925,26.540799 -3.73732,58.876256 l -3.83285,58.791743 -52.79446,-0.0785 c -29.03696,-0.0432 -58.09421,-0.1581 -64.57166,-0.25541 l 0,0 z"
+       id="path4231"
+       transform="translate(64.999579,41.916468)" />
+    <path
        style="fill:#81ff82;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 163.74895,42.416468 77.058328,73.239799 65.499579,149.3349 l 78.021561,18.78297 70.79734,-52.49599 z"
        id="path2987"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:url(#linearGradient3765);fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="M 404.55622,46.750999 384.32841,158.96719 504.73205,148.85328"
-       id="path2989"
-       inkscape:connector-curvature="0" />
+       style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend)"
+       d="m 422.36258,134.93285 33.95383,-31.54576"
+       id="path2821" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:0.98039216;stroke:none"
+       id="path2819"
+       sodipodi:cx="183.01353"
+       sodipodi:cy="44.586121"
+       sodipodi:rx="0.96322912"
+       sodipodi:ry="1.2040364"
+       d="m 183.97676,44.586121 a 0.96322912,1.2040364 0 1 1 -1.92645,0 0.96322912,1.2040364 0 1 1 1.92645,0 z"
+       transform="matrix(0.71875,0,0,0.57499997,290.89455,109.14234)" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.97142887px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="414.99173"
+       y="137.54362"
+       id="text3595"><tspan
+         sodipodi:role="line"
+         id="tspan3597"
+         x="414.99173"
+         y="137.54362">x</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.75268126px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="439.78586"
+       y="126.53355"
+       id="text4047"><tspan
+         sodipodi:role="line"
+         id="tspan4049"
+         x="439.78586"
+         y="126.53355"> λd </tspan></text>
+    <path
+       style="fill:#ffffff;fill-opacity:0.98039216;stroke:none"
+       d=""
+       id="path4119"
+       transform="translate(64.999579,41.916468)" />
+    <path
+       style="fill:#00ff00;fill-opacity:0.98039216;stroke:none"
+       d=""
+       id="path4149"
+       transform="translate(64.999579,41.916468)" />
+    <path
+       style="fill:#00ff00;fill-opacity:0.98039216;stroke:none"
+       d=""
+       id="path4153"
+       transform="translate(64.999579,41.916468)" />
+    <path
+       style="fill:#00ff00;fill-opacity:0.98039216;stroke:none"
+       d=""
+       id="path4155"
+       transform="translate(64.999579,41.916468)" />
+    <path
+       style="fill:#00ff00;fill-opacity:0.98039216;stroke:none"
+       d=""
+       id="path4175"
+       transform="translate(64.999579,41.916468)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend)"
+       d="m 145.62435,107.04088 43.8796,-40.767575"
+       id="path2821-7" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:0.98039216;stroke:none"
+       id="path2819-3"
+       sodipodi:cx="183.01353"
+       sodipodi:cy="44.586121"
+       sodipodi:rx="0.96322912"
+       sodipodi:ry="1.2040364"
+       d="m 183.97676,44.586121 a 0.96322912,1.2040364 0 1 1 -1.92645,0 0.96322912,1.2040364 0 1 1 1.92645,0 z"
+       transform="matrix(0.71875,0,0,0.57499997,14.046703,81.359993)" />
+    <text
+       xml:space="preserve"
+       style="font-size:10.97142887px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="138.14389"
+       y="109.76128"
+       id="text3595-8"><tspan
+         sodipodi:role="line"
+         id="tspan3597-7"
+         x="138.14389"
+         y="109.76128">x</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:7.75268126px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="162.93802"
+       y="98.751198"
+       id="text4047-2"><tspan
+         sodipodi:role="line"
+         id="tspan4049-1"
+         x="162.93802"
+         y="98.751198"> λd </tspan></text>
   </g>
 </svg>
