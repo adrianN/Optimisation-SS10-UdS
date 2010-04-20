@@ -41,9 +41,11 @@
 \newcommand{\R}[0]{\mathbb{R}}
 \newcommand{\C}[0]{\mathbb{C}}
 \newcommand{\im}[0]{\mathit{i}}
-\newcommand{\nthings}[1]{{#1}_1,\ldots,{#1}_n}
+\newcommand{\kthings}[2]{{#1}_1,\ldots,{#1}_{#2}}
+\newcommand{\nthings}[1]{\kthings{#1}{n}}
 \newcommand{\norm}[1]{|\!|#1|\!|}
 \newcommand{\rank}{\mbox{rank }}
+\renewcommand{\bar}{\overline}
 \newtheoremstyle{leplain} %name
     {3pt} %above
     {3pt} %below
