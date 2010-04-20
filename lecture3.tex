@@ -1,4 +1,4 @@
-To get a better feeling for the different definitions of a corner, we'll use them for some things that are not directly related to solving LPs.
+To get a better intuition for the different definitions of a corner, we'll use them for some things that are not directly related to solving LPs.
 
 \subsection*{Convex Hulls}
 
@@ -16,7 +16,7 @@ Here we generalise the notion of convex combination to use more than two points.
 \label{Fig:convexHull}
 \end{figure}
 
-This definition allows us to come up with a different definition of a polyhedron. In contrast to definition \ref{Def:polyhedron} the convex hull definition allows use to have a geometric view of the problem.
+This definition allows us to come up with a different definition of a polyhedron. In contrast to definition \ref{Def:polyhedron} the convex hull definition allows us to have a more geometric view of the problem.
 
 \begin{Def}[Bounded Polyhedra] A bounded polyhedron lies within a finite bounding box, see figure \ref{Fig:bounded_unbounded}. More formally
 
@@ -33,17 +33,17 @@ For any line from a point inside the polyhedron we eventually leave the polyhedr
 \label{Fig:bounded_unbounded}
 \end{figure}
 
-\begin{thm}\label{Thm:CH_polyhedron} Let $P$ be a non-empty bounded polyhedron. Then $P=$CH(extreme points $P$)
+\begin{thm}\label{Thm:CH_polyhedron} Let $P$ be a non-empty bounded polyhedron. Then $P=$\mbox{CH}(extreme points $P$)
 \end{thm}
 
-\begin{pr}[Theorem \ref{Thm:CH_polyhedron}] 
+\begin{pr}[Theorem \ref{Thm:CH_polyhedron}] We prove equality by showing mutual inclusion:
+\begin{description}
 %#todo
 %sieht unschoen aus, muessten wir anders formatieren
-$\text{CH(extreme point of P)} \subseteq \text{P}$: As polyhedra are convex sets. Every convex combination of extreme points must be in $P$.\\ 
+\item[$\text{CH(extreme points of P)} \subseteq \text{P}$] As polyhedra are convex sets. Every convex combination of extreme points must be in $P$.\\ 
+\item[$\text{P} \subseteq \text{CH(extreme points of P)}$]:  From the definition we know that all convex combinations of two points are still in P. We generalise to the new kind of convex combination that includes several vectors. 
 
-$\text{P} \subseteq \text{CH(extreme point of P)}$:  From the definition we know that all convex combinations of two points are still in P. We generalise to the new kind of convex combination that includes several vectors. 
-
-Let $x\in P$. Since $P$ is a polyhedron $x$ is a solution of the system of inequation $Ax\geq b$ (def. \ref{Def:polyhedron}). As before we separate $A$ into the matrix $B$ of active constraint and $D$ of inactive constraints, with $Bx=d$, $Dx>f$. If the rank of $B$ is $n$, $x$ is an extreme point by definition and we're done. 
+Let $x\in P$. Since $P$ is a polyhedron $x$ is a solution of the system of inequations $Ax\geq b$ (def. \ref{Def:polyhedron}). As in the proof for theorem \ref{Thm:cornerEquiv} we separate $A$ into the matrix $B$ of active constraint and $D$ of inactive constraints, with $Bx=d$, $Dx>f$. If the rank of $B$ is $n$, $x$ is an extreme point by definition and we're done. 
 
 The other possibility is $\rank B=k$ and $k<n$. We use the same trick as in proof \ref{Thm:cornerEquiv} to find two new points. Since the matrix hasn't full rank, there has to be $\delta \neq 0$ such that $B\delta = 0$. As before we build two vectors $x_1 = x+ \epsilon_1 \delta$, $x_2=x-\epsilon_2 \delta$. 
 
@@ -57,14 +57,27 @@ Now we want to get from these points somehow to extreme points, as we want to pr
 \label{Fig:convCombExPoints}
 \end{figure}
 
-Such an $\epsilon$ has to exist, since the polyhedron is bounded and therefore every line eventually crosses a boundary. Choosing $\epsilon$ like this implies that some constraint $a_i$ in $D$ has to become active for $x_1$ and the same holds with a different $a_i$ for $x_2$. Moving in direction $\delta$ doesn't affect the constraints that already were active, since $\delta$ is in the kernel of $B$. So we increase the number of active constraints and can extend $B$ to 
+Such an $\epsilon$ has to exist, since the polyhedron is bounded and therefore every line eventually crosses a boundary.\footnote{The calculation we did in the lecture to find $\epsilon_{1,2}$ seems dubious to the authors. We'll investigate.} Choosing $\epsilon$ like this implies that some constraint $a_i$ in $D$ has to become active for $x_1$ and the same holds with a different $a_i$ for $x_2$. Moving in direction $\delta$ doesn't affect the constraints that already were active, since $\delta$ is in the kernel of $B$. So we increase the number of active constraints and can extend $B$ to 
 
 \[\begin{pmatrix}B\\ a_i\end{pmatrix}\] 
 
 The rank of the new $B$ has to be $k+1$ since $\delta$ was orthogonal to all the vectors in $B$, as $B\delta=0$. %todo weiter ausführen
 
-We have now reduced the problem of proving $x \in P$ to the one of proving $x_1,x_2 \in P$. This process can be repeated for $x_1$ and $x_2$ until the respective $B$ has full rank. For figure \ref{Thm:CH_polyhedron} the process is repeated three times, for $x,x_1$ and $x_2$. 
+We have now reduced the problem of finding extreme points to represent $x \in P$ to the problem of finding some for $x_1,x_2 \in P$. However we increased the number of active constraints for $x_1,x_2$ (in 2D: we moved them on an edge). This process can be repeated for $x_1$ and $x_2$ until the respective $B$ has full rank and we arrived at some extreme points. For figure \ref{Thm:CH_polyhedron} the process is repeated three times, for $x,x_1$ and $x_2$. 
 Since all the points from the beginning can be recursively written by a convex combination of the new points and we end up at an extreme point, the original $x$ can transitively be written by a convex combination of extreme points.
+\end{description}
+
+% Ich hab noch drüber nachgedacht und die Rechnung da in der Tat komisch zu sein. Er (oder ich :D) scheint sich zwischendurch verrechnet zu haben. Wir haben nicht genug info das zu lösen:
+%
+% x&=\lambda x_1+(1-\lambda)x_2 % ist die Linie zwischen x1,2 auf der x liegt. Wir wollen x_1,2 soweit nach außen schieben dass wir am Rand ankommen
+% x&=\lambda (x+\epsilon_1\delta) + (1-\lambda)(x-\epsilon_2\delta) % ist das selbe nochmal neu geschrieben. Jetzt wollen wir nach den epsilons auflösen ???
+% x-\lambda x - (1-\lambda) x = \lambda \epsilon_1\delta + (1-\lambda)\epsilon_2\delta
+% x -\lambda x - x +\lambda x  = \epsilon_1\delta +\epsilon_2\delta
+% 0 = \epsilon_1 \delta + \epsilon_2\delta
+% ???
+% Profit.
+
+
 
 %In particular choose \label{wieso}
 %\begin{align*}
@@ -78,18 +91,19 @@ Since all the points from the beginning can be recursively written by a convex c
 \begin{cor}\label{Cor:always_extreme_points} Let $P$ be a non-empty bounded polyhedron. Then the LP $\min cx$ s.t. $x\in P$ always has an optimal solution that is an extreme point of $P$.
 \end{cor}
 
-Intuitive this is true, as given an optimal solution, which is not an extreme point, we could always go into the direction of a constraint which is not tight. Such a constraint must exist, as otherwise we would be at an extreme point.
+Intuitively this is true, as given an optimal solution, which is not an extreme point, we could always go into the direction of a constraint which is not tight. Such a constraint must exist, as otherwise we would be at an extreme point. 
 
 %TODO Beweis 
 \begin{pr}[Theorem \ref{Cor:always_extreme_points}] %(from the book 'Linear Optimization') 
 Start with some optimal solution $x^*$. Write it as a convex combination of extreme points 
-\[x^* = \sum_{i=1}^x \lambda_i y_i | y_i \text{ is an extreme point}\]
+\[x^* = \sum_{i=1}^x \lambda_i y_i \qquad \text{s.t. } y_i \text{ is an extreme point}\]
 We want to prove that there is an extreme point $y_i$ such that the cost $v$ are the same as in $x^{*}$, that is:
 
 \[v = cx^* = cy_i\]
 
 %Suppose for the contradiction, that no such $y^*$ exist and that $x^*$ ist not an extreme point. As $x^*$ is not an extreme point, $v,w \in P, v,w\neq x^*, \lambda=[0,1]$ with $x^*=\lambda v + (1-\lambda)w$ must exist. From $cx^*=\lambda cv + (1-\lambda)cw$ it follows that either  
-Obviously $cy_i\geq 0$. It can't be strictly greater for all $y_i$ or the $\lambda_i$ couldn't all be positive we couldn't find a convex combination for $x_i$. 
+Obviously %not so obvious for me
+$cy_i\geq 0$. It can't be strictly greater for all $y_i$ or the $\lambda_i$ couldn't all be positive we couldn't find a convex combination for $x_i$. 
 \end{pr}
 
 Corollary \ref{Cor:always_extreme_points} gives us the nice result that we can transform the problem of optimising an LP to a discrete problem with finitely many candidate solutions. This will of course be very useful in designing an algorithm for solving them.
@@ -102,11 +116,11 @@ In this section we're interested in computing representations of projections of 
 \begin{center}
 \includegraphics[width=0.3\textwidth]{./images/polyhedron_proj.pdf}
 \end{center}
-\caption{A projection, which removes one of the two dimensions.}
+\caption{A projection which removes one of the two dimensions.}
 \label{Fig:polyhedron_proj}
 \end{figure}
 
-\begin{Def} The projection $x=(\nthings{x})$ onto its first $x$ coordinates is $\pi_k(x) = (x_1,\ldots, x_k)$. 
+\begin{Def} The projection $x=(\nthings{x})$ onto its first $k$ coordinates is $\pi_k(x) = (x_1,\ldots, x_k)$. 
 
 Let $S\subseteq \R^n$ then the projection on the first $k$ components is
 
@@ -117,31 +131,38 @@ Of course that definition is not particularly useful in actually constructing th
 
 We want to classify the constraints $a_i$ into three kinds. Let $\overline a = \pi_{n-1}(a)$ then we can write  
 
-\[P=\left\{x\left| \begin{array}{cr}
+\begin{equation}\label{Eq:threeKindsConstraints}P=\left\{x\left| \begin{array}{cr}
 \overline a_i\overline x +a_{in}x_n \geq b_i & i\in T_1\\
 \overline a_i\overline x +a_{in}x_n \geq b_i & i\in T_2\\
 \overline a_i\overline x \geq b_i & i\in T_3\\
-\end{array}\right.\right\}\]
+\end{array}\right.\right\}\end{equation}
 
 With 
-$$\forall i\in T_1: a_{in}>0$$ $$\forall i\in T_2: a_{in}<0$$ $$ \forall i\in T_3: a_{in}=0 $$
 
-$d_i$ are scalars and $f_i$ are vectors. The polyhedron can be rewritten to:
+\begin{align*}
+\forall i\in T_1: a_{in}&>0\\
+\forall i\in T_2: a_{in}&<0\\
+\forall i\in T_3: a_{in}&=0
+\end{align*}
+
+By just pulling out the last summand $a_{in}x_n$ out of the calculation.
+
+Let $d_i$ be scalars and $f_i$ be vectors. The solving the equations in \ref{Eq:threeKindsConstraints} for $x_n$, the polyhedron can be rewritten to use the following constraints:
 
 \begin{equation}\label{For:Motz1}x_n \geq  d_i + f_i \bar x : i \in T_1 \end{equation}
 \begin{equation}\label{For:Motz2}x_n \leq  d_i+f_i \bar x : i \in T_2 \end{equation}
 \begin{equation}\label{For:Motz3}0 \leq  d_i+f_i \bar x : i \in T_3 \end{equation}
 
-%\[P \{i\in T_1 \wedge x_n \geq d_i + f_i \bar x \vee i\in T_2 \wedge x_n \leq d_i + f_i \bar x \vee i\in T_3 \wedge 0 \leq d_i + f_i \bar x\}\]
+Now we can get rid of $x_n$ by putting equations \ref{For:Motz1} and \ref{For:Motz2} together. Hence the projection $\overline P=Q$ can be written as:\footnote{Adrians lecture notes as well as mine read: $\{d_i+f_i\bar x \leq d_j+f_j\bar x\ \forall i\in T_2, j\in T_1 $. The book says $\geq$ and $T_2\geq x_n \geq T_1$. Makes sense if you look at equations \ref{For:Motz1} and \ref{For:Motz2}}
 
-Then we can write the projection $\overline P=Q$ as\footnote{Adrians lecture notes as well as mine read: $\{d_i+f_i\bar x \leq d_j+f_j\bar x\ \forall i\in T_2, j\in T_1 $. The book says $\geq$ and $T_2\geq x_n \geq T_1$}
-
-$$\{d_i+f_i\bar x \geq d_j+f_j\bar x\ \forall i\in T_2, j\in T_1 $$ 
-$$d_i+f_i\bar x \geq 0\ \forall i\in T_3\}$$
+\begin{align*}
+Q=\{\bar x | d_i+f_i\bar x &\geq d_j+f_j\bar x     &&\forall i\in T_2, j\in T_1 \\ 
+d_i+f_i\bar x   &\geq 0                 &&\forall i\in T_3\}
+\end{align*}
 
 Herein lies the problem of the algorithm. We introduce a new constraint for every pair of constraints from $T_1,T_2$. Hence in every iteration the number of constraints can grow quadratically. %TODO graphical example for this
 
-\begin{pr} To prove that we need to show the result $Q$ of the elimination algorithm is equal to $\pi_{n-1}(P)$ we do this by showing $\pi_{n-1}(P) \subset Q$ and $Q \subset \pi_{n-1}(P)$.
+\begin{pr} To prove the correctness of the Fourier-Motzkin elimination we need to show that the result $Q$ of the algorithm is equal to $\pi_{n-1}(P)$. We do this by showing $\pi_{n-1}(P) \subset Q$ and $Q \subset \pi_{n-1}(P)$.
 \begin{enumerate}
 
 \item $\bar x \in \pi_{n-1}(P) \Rightarrow \bar x\in Q$. That means 
@@ -157,16 +178,16 @@ does the trick, as $(\bar x, x)$ then satisfies constrains \ref{For:Motz1}, \ref
 
 There are a lot of interesting applications for these projections:
 
-\begin{thm} Let $P\in \R^n$ be a polyhedron and $A\in \R^{m\times n}$ be a matrix. Then 
+\begin{thm}\label{Thm:linTransPoly} Let $P\in \R^n$ be a polyhedron and $A\in \R^{m\times n}$ be a matrix. Then 
 \[\{Ax|x\in P\}\]
 is a polyhedron.
 \end{thm}
 
 In 2D this is intuitively clear: applying linear transformations on polygons results in distorted, rotated etc. polygons. For higher dimensions it follows from the projections:
 
-\begin{pr} For $P$ we have
+\begin{pr}[Theorem \ref{Thm:linTransPoly}] For $P$ we have
 
-\[Q=\{(Ax,x)\in R^{m+n}| x\in P\}\]
+\[Q=\{(Ax,x)\in R^{m+n}| x\in P\}\]  %this is actually not that intuitive for me. Why is this a polyhedron?
 
 is a polyhedron. Then $\pi_m(Q)$ is also a polyhedron.
 \end{pr}
@@ -186,4 +207,4 @@ Define $Q = \pi_1(P)$. We can  find that with the algorithm. If $Q$ is not feasi
 \end{itemize}
 \end{thm}
 
-This theorem is very nice if we want to check if some system of inequalities is feasible. We just have to find the vector $y$. These lemma can be proven by our earlier results. We start with the polygon $P$ and use a projection to get rid of the last dimension of $P$. By that we get another matrix $B$ and another vector $d$. We get the new inequalities by combining those from the original polyhedron. Instead of actually doing the projection to a lower dimension we can replace the last element by 0. You can show that $[B0]=DA$. You can repeat that process until you get a matrix $F$ such that $FA=0$. The system is infeasible if you end up with a negative rhs for a constraint, since all lhs will be 0.
+This theorem is very nice if we want to check if some system of inequalities is feasible. We just have to find the vector $y$. This lemma can be proven by our earlier results. (Sketch:) We start with the polygon $P$ and use a projection to get rid of the last dimension of $P$. By that we get another matrix $B$ and another vector $d$. We get the new inequalities by combining those from the original polyhedron. Instead of actually doing the projection to a lower dimension we can replace the last element by 0. You can show that $[B0]=DA$ (no proof). You can repeat that process until you get a matrix $F$ such that $FA=0$. The system is infeasible if you end up with a negative rhs for a constraint, since all lhs will be 0.
