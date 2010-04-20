@@ -241,6 +241,6 @@ Define $Q = \pi_1(P)$. We can find $Q$ with the Fourier-Motzkin elimination. If 
 \item $\exists x\in \R^n: Ax\geq b$ or
 \item $\exists y\in \R^m, y\geq 0, y^{\mbox{T}}A=0: y\cdot b>0$
 \end{itemize}
-\end{thm}
+\end{thm} 
 
 This theorem is very nice if we want to check if some system of inequalities is feasible. We just have to find the vector $y$. This lemma can be proven by our earlier results. (Sketch:) We start with the polygon $P$ and use a projection to get rid of the last dimension of $P$. By that we get another matrix $B$ and another vector $d$. We get the new inequalities by combining those from the original polyhedron. Instead of actually doing the projection to a lower dimension we can replace the last element by 0. You can show that $[B0]=DA$ (no proof). You can repeat that process until you get a matrix $F$ such that $FA=0$. The system is infeasible if you end up with a negative rhs for a constraint, since all lhs will be 0.
