@@ -10,8 +10,8 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="859.00085"
-   height="624.64697"
+   width="760"
+   height="525"
    id="svg2"
    version="1.1"
    inkscape:version="0.47pre4 r22446"
@@ -276,152 +276,156 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.98994949"
-     inkscape:cx="285.57768"
-     inkscape:cy="195.25665"
+     inkscape:zoom="1.4"
+     inkscape:cx="456.44193"
+     inkscape:cy="254.85058"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1280"
-     inkscape:window-height="726"
-     inkscape:window-x="0"
+     inkscape:window-width="1920"
+     inkscape:window-height="1126"
+     inkscape:window-x="1920"
      inkscape:window-y="25"
      inkscape:window-maximized="1"
      guidetolerance="10">
     <sodipodi:guide
        orientation="1,0"
-       position="277.27367,459.31179"
+       position="277.27367,459.31181"
        id="guide2816" />
     <sodipodi:guide
        orientation="1,0"
-       position="316.17775,204.18094"
+       position="316.17775,204.18096"
        id="guide2818" />
     <sodipodi:guide
        orientation="1,0"
-       position="527.27367,447.88322"
+       position="527.27367,447.88324"
        id="guide2820" />
     <sodipodi:guide
        orientation="1,0"
-       position="377.27367,449.31179"
+       position="377.27367,449.31181"
        id="guide2822" />
     <sodipodi:guide
        orientation="1,0"
-       position="427.27367,459.31179"
+       position="427.27367,459.31181"
        id="guide2824" />
     <sodipodi:guide
        orientation="1,0"
-       position="477.27367,434.31179"
+       position="477.27367,434.31181"
        id="guide2826" />
     <sodipodi:guide
        orientation="1,0"
-       position="577.27367,347.16894"
+       position="577.27367,347.16896"
        id="guide2828" />
     <sodipodi:guide
        orientation="1,0"
-       position="627.27367,355.02608"
+       position="627.27367,355.0261"
        id="guide2830" />
     <sodipodi:guide
        orientation="1,0"
-       position="677.27367,285.74037"
+       position="677.27367,285.74039"
        id="guide2832" />
     <sodipodi:guide
        orientation="0,1"
-       position="42.273671,-59.973921"
+       position="42.273671,-59.973894"
        id="guide2834" />
     <sodipodi:guide
        orientation="0,1"
-       position="164.41653,-9.9739209"
+       position="164.41653,-9.9738937"
        id="guide2836" />
     <sodipodi:guide
        orientation="0,1"
-       position="188.70224,40.026081"
+       position="188.70224,40.026108"
        id="guide2838" />
     <sodipodi:guide
        orientation="0,1"
-       position="170.8451,90.026081"
+       position="170.8451,90.026108"
        id="guide2840" />
     <sodipodi:guide
        orientation="0,1"
-       position="155.13081,140.02608"
+       position="155.13081,140.0261"
        id="guide2842" />
     <sodipodi:guide
        orientation="0,1"
-       position="125.8451,190.02608"
+       position="125.8451,190.0261"
        id="guide2844" />
     <sodipodi:guide
        orientation="0,1"
-       position="377.27367,240.02608"
+       position="377.27367,240.0261"
        id="guide2846" />
     <sodipodi:guide
        orientation="0,1"
-       position="457.27367,290.02608"
+       position="457.27367,290.0261"
        id="guide2848" />
     <sodipodi:guide
        orientation="0,1"
-       position="110.8451,340.02608"
+       position="110.8451,340.0261"
        id="guide2850" />
     <sodipodi:guide
        orientation="0,1"
-       position="354.41653,392.16894"
+       position="354.41653,392.16896"
        id="guide2879" />
     <sodipodi:guide
        orientation="1,0"
-       position="367.27367,428.59751"
+       position="367.27367,428.59753"
        id="guide2883" />
     <sodipodi:guide
        orientation="1,0"
-       position="387.27367,435.74037"
+       position="387.27367,435.74039"
        id="guide2885" />
     <sodipodi:guide
        orientation="0,1"
-       position="387.27367,130.02608"
+       position="387.27367,130.0261"
        id="guide2887" />
     <sodipodi:guide
        orientation="0,1"
-       position="223.70224,150.74037"
+       position="223.70224,150.74039"
        id="guide2889" />
     <sodipodi:guide
        orientation="1,0"
-       position="-24.405359,551.51984"
+       position="-24.405359,551.51986"
        id="guide3219" />
     <sodipodi:guide
        orientation="1,0"
-       position="228.10172,220.18982"
+       position="228.10172,220.18984"
        id="guide3221" />
     <sodipodi:guide
        orientation="1,0"
-       position="177.59409,359.59087"
+       position="177.59409,359.59089"
        id="guide3223" />
     <sodipodi:guide
        orientation="1,0"
-       position="128.09661,376.76346"
+       position="128.09661,376.76348"
        id="guide3225" />
     <sodipodi:guide
        orientation="1,0"
-       position="77.588986,379.79392"
+       position="77.588986,379.79394"
        id="guide3227" />
     <sodipodi:guide
        orientation="0,1"
-       position="402.85811,439.39292"
+       position="402.85811,439.39294"
        id="guide4271" />
     <sodipodi:guide
        orientation="1,0"
-       position="343.45187,190.02608"
+       position="343.45187,190.0261"
        id="guide4336" />
     <sodipodi:guide
        orientation="1,2.3607939e-08"
-       position="496.99505,177.91698"
+       position="496.99505,177.917"
        id="guide4338" />
     <sodipodi:guide
        orientation="0,1"
-       position="277.27367,113.26721"
+       position="277.27367,113.26723"
        id="guide4350" />
     <sodipodi:guide
        orientation="0,1"
-       position="496.99505,61.749432"
+       position="496.99505,61.749459"
        id="guide4352" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="387.27367,130.0261"
+       id="guide4103" />
   </sodipodi:namedview>
   <metadata
      id="metadata7">
@@ -439,7 +443,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(267.27367,-357.74126)">
+     transform="translate(267.27367,-457.38827)">
     <path
        style="fill:#00ff00;stroke:#000000;stroke-width:1.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-start:url(#Arrow1Mstart);marker-end:none"
        d="m 110,462.12617 0,380.23601"
@@ -587,10 +591,6 @@
        d="m -230.57857,862.61375 627.70155,-314.181"
        id="path4265" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1.90777373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 343.01125,975.37345 -41.813976,590.54823"
-       id="path4269" />
-    <path
        style="fill:none;stroke:#000000;stroke-width:1.73523355;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="M 80.886442,484.74666 329.79877,981.52063"
        id="path4273" />
@@ -622,7 +622,11 @@
          id="tspan4318"
          x="346.70633"
          y="600.57404"
-         style="font-size:19px">-0.5x+y=3</tspan></text>
+         style="font-size:19px"
+         dy="0 0 0 -4.2857141">c<tspan
+   style="font-size:10px"
+   id="tspan4155"
+   dy="4.2857141">1 </tspan>-0.5x+y=3</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:19px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -632,7 +636,11 @@
          sodipodi:role="line"
          id="tspan4322"
          x="138.61488"
-         y="573.29993">2x+y=6</tspan></text>
+         y="573.29993"
+         dy="0 0 0 -4.2857141">c<tspan
+   style="font-size:10px"
+   id="tspan4153"
+   dy="4.2857141">2 </tspan>2x+y=6</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:19px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -642,7 +650,11 @@
          sodipodi:role="line"
          id="tspan4326"
          x="333.57434"
-         y="809.67566">x+3y=6</tspan></text>
+         y="809.67566"
+         dy="0 0 0 -4.2857141">c<tspan
+   style="font-size:10px"
+   id="tspan4157"
+   dy="4.2857141">3 </tspan>x+3y=6</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:19px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -652,7 +664,11 @@
          sodipodi:role="line"
          id="tspan4330"
          x="-1.7962972"
-         y="610.6756">x+y=2</tspan></text>
+         y="610.6756"
+         dy="0 0 0 -4.2857141">c<tspan
+   style="font-size:10px"
+   id="tspan4151"
+   dy="4.2857141">4 </tspan>x+y=2</tspan></text>
     <path
        style="fill:none;stroke:#000000;stroke-width:1.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:7.5, 1.25;stroke-dashoffset:0"
        d="m 48.90408,719.72458 0,148.79543"
@@ -671,24 +687,40 @@
        id="path4348"
        transform="translate(-267.27367,357.74126)" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 1;stroke-dashoffset:0"
-       d="m 316.17775,511.37977 180.8173,0"
-       id="path4354"
-       transform="translate(-267.27367,357.74126)" />
+       style="fill:none;stroke:#000000;stroke-width:1.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5, 1.25;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
+       d="m 49.208546,869.12103 290.922654,0"
+       id="path4354" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 1;stroke-dashoffset:0"
-       d="m 343.45187,534.62091 153.54318,0"
-       id="path4356"
-       transform="translate(-267.27367,357.74126)" />
+       style="fill:none;stroke:#000000;stroke-width:1.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5, 1.25;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
+       d="m 76.529466,892.36217 261.412074,0"
+       id="path4356" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 1;stroke-dashoffset:0"
-       d="m 496.99505,562.89755 -153.54318,0"
-       id="path4358"
-       transform="translate(-267.27367,357.74126)" />
+       style="fill:none;stroke:#000000;stroke-width:1.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5, 1.25;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
+       d="m 229.4302,920.63881 -242.96082,0"
+       id="path4358" />
     <path
-       style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:4, 1;stroke-dashoffset:0"
-       d="m 577.27367,584.62091 -233.8218,0"
-       id="path4360"
+       style="fill:none;stroke:#000000;stroke-width:1.25;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:5, 1.25;stroke-dashoffset:0;marker-end:url(#Arrow1Mend)"
+       d="m 309.81597,942.36217 -319.882312,0"
+       id="path4360" />
+    <path
+       style="fill:none;stroke:#ff0000;stroke-width:1.875;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 343.45187,494.62089 153.54318,0"
+       id="path4107"
        transform="translate(-267.27367,357.74126)" />
+    <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
+       x="198.57143"
+       y="462.85715"
+       id="text4159"
+       transform="translate(-267.27367,457.38827)"><tspan
+         sodipodi:role="line"
+         id="tspan4161"
+         x="198.57143"
+         y="462.85715" /></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1.90777373;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="M 343.01125,975.37345 -41.813976,590.54823"
+       id="path4269" />
   </g>
 </svg>

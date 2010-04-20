@@ -129,39 +129,66 @@ Let $S\subseteq \R^n$ then the projection on the first $k$ components is
 
 Of course that definition is not particularly useful in actually constructing the projection. The Fourier-Motzkin elimination computes the projection for polyhedra. We start with our usual characterisation of a polyhedron $P=\{x|Ax\geq b_i\}$ and want to find a different matrix $A'$ s.t. we get $\pi_{n-1}(P)$. Generalizing to $\pi_k$ is then of course easy.
 
+\subsubsection*{Example of Fourier-Motzkin elimination}
+Figure \ref{Fig:motzkinExample} shows an example of the Fourier-Motzkin elimination. The LP used for the example is:
+\begin{eqnarray*}
+c_1 & -0,5x + y & \geq 3 \\
+c_2 & 2x + y & \leq 6 \\
+c_3 & x+3y & \leq 6 \\
+c_4 & x+y & \geq 2
+\end{eqnarray*}
+Those constraints can be rewritten to:
+\begin{eqnarray*}
+c_1 & \frac{1}{2}x + 3  & \geq y \\
+c_2 & -2x+6 & \geq y \\
+c_3 & y & \geq -\frac{1}{3}x+2 \\
+c_4 & y & \geq -x+2
+\end{eqnarray*}
+Writting them this way has the advantage of ordering them around $y$. With this information we can build a new LP, which constraints are only on the x-dimension. The constraints are all the ordered pairs of around $y$.
+\begin{eqnarray*}
+c_1 \geq c_3: & \frac{1}{2}x + 3 & \geq -\frac{1}{3}x+2  \\
+c_2 \geq c_3: & -2x+6 &  \geq -\frac{1}{3}x+2 \\
+c_1 \geq c_4: & \frac{1}{2}x + 3   & \geq -\frac{1}{3}x+2 \\
+c_2 \geq c_4: & -2x+6 & \geq -x+2
+\end{eqnarray*}
+Those constrains are shown below the x-axis with broken lines. Note that we're only interested in the red part. So the two constraint $c_2 \geq c_3$ and $c_1 \geq c_4$ would be enough, but as there is no efficent way to find those two constraints. We have to keep all of them, which is a problem for higher dimensions.
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{./images/motzkin.pdf}
+\end{center}
+\caption{A projection, which removes one of the two dimensions. The result is shown in red.}
+\label{Fig:motzkinExample}
+\end{figure}
+
+\subsubsection*{General case}
 We want to classify the constraints $a_i$ into three kinds. Let $\overline a = \pi_{n-1}(a)$ then we can write  
 
-\begin{equation}\label{Eq:threeKindsConstraints}P=\left\{x\left| \begin{array}{cr}
+\[P=\left\{x\left| \begin{array}{cr}
 \overline a_i\overline x +a_{in}x_n \geq b_i & i\in T_1\\
 \overline a_i\overline x +a_{in}x_n \geq b_i & i\in T_2\\
 \overline a_i\overline x \geq b_i & i\in T_3\\
-\end{array}\right.\right\}\end{equation}
+\end{array}\right.\right\}\]
 
 With 
+$$\forall i\in T_1: a_{in}>0$$ $$\forall i\in T_2: a_{in}<0$$ $$ \forall i\in T_3: a_{in}=0 $$
 
-\begin{align*}
-\forall i\in T_1: a_{in}&>0\\
-\forall i\in T_2: a_{in}&<0\\
-\forall i\in T_3: a_{in}&=0
-\end{align*}
-
-By just pulling out the last summand $a_{in}x_n$ out of the calculation.
-
-Let $d_i$ be scalars and $f_i$ be vectors. The solving the equations in \ref{Eq:threeKindsConstraints} for $x_n$, the polyhedron can be rewritten to use the following constraints:
+$d_i$ are scalars and $f_i$ are vectors. The polyhedron can be rewritten to:
 
 \begin{equation}\label{For:Motz1}x_n \geq  d_i + f_i \bar x : i \in T_1 \end{equation}
 \begin{equation}\label{For:Motz2}x_n \leq  d_i+f_i \bar x : i \in T_2 \end{equation}
 \begin{equation}\label{For:Motz3}0 \leq  d_i+f_i \bar x : i \in T_3 \end{equation}
 
-Now we can get rid of $x_n$ by putting equations \ref{For:Motz1} and \ref{For:Motz2} together. Hence the projection $\overline P=Q$ can be written as:\footnote{Adrians lecture notes as well as mine read: $\{d_i+f_i\bar x \leq d_j+f_j\bar x\ \forall i\in T_2, j\in T_1 $. The book says $\geq$ and $T_2\geq x_n \geq T_1$. Makes sense if you look at equations \ref{For:Motz1} and \ref{For:Motz2}}
+%\[P \{i\in T_1 \wedge x_n \geq d_i + f_i \bar x \vee i\in T_2 \wedge x_n \leq d_i + f_i \bar x \vee i\in T_3 \wedge 0 \leq d_i + f_i \bar x\}\]
 
-\begin{align*}
-Q=\{\bar x | d_i+f_i\bar x &\geq d_j+f_j\bar x     &&\forall i\in T_2, j\in T_1 \\ 
-d_i+f_i\bar x   &\geq 0                 &&\forall i\in T_3\}
-\end{align*}
+Then we can write the projection $\overline P=Q$ as\footnote{Adrians lecture notes as well as mine read: $\{d_i+f_i\bar x \leq d_j+f_j\bar x\ \forall i\in T_2, j\in T_1 $. The book says $\geq$ and $T_2\geq x_n \geq T_1$}
+
+$$\{d_i+f_i\bar x \geq d_j+f_j\bar x\ \forall i\in T_2, j\in T_1 $$ 
+$$d_i+f_i\bar x \geq 0\ \forall i\in T_3\}$$
 
 Herein lies the problem of the algorithm. We introduce a new constraint for every pair of constraints from $T_1,T_2$. Hence in every iteration the number of constraints can grow quadratically. %TODO graphical example for this
 
+\subsubsection*{Proof of correctness}
 \begin{pr} To prove the correctness of the Fourier-Motzkin elimination we need to show that the result $Q$ of the algorithm is equal to $\pi_{n-1}(P)$. We do this by showing $\pi_{n-1}(P) \subset Q$ and $Q \subset \pi_{n-1}(P)$.
 \begin{enumerate}
 
