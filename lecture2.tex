@@ -79,7 +79,7 @@ Example: In 2D we can always select the two adjacent corners of a point $x$ on t
 \begin{Def}[Active Constraint]\label{Def:ActiveConstraint} Let $P$ be a polyhedron that is defined by some linear inequalities $a_i$: $P=\{x|a_ix\geq b_i\}$. We'll say that the $i$-th constraint is \emph{active} at a point $x$ if we have equality there $a_ix = b_i$
 \end{Def}
 
-\begin{Def}[Basic Solution]Let $P\in \R^n$ be a polyhedron and let $x^{*}\in \R^n$. The vector $x^{*}$ is a basic solution if all \emph{equality} constraint are active and out the active constraints, there are $n$ of them that are linearly independet.
+\begin{Def}[Basic Solution]\label{Def:BasicSolution}Let $P\in \R^n$ be a polyhedron and let $x^{*}\in \R^n$. The vector $x^{*}$ is a basic solution if all \emph{equality} constraint are active and out the active constraints, there are $n$ of them that are linearly independet.
 \end{Def}
 
 \begin{Def}[Basic Feasible Solution]\label{Def:BFS} Let $P$ be a polyhedron in $n$ dimensions. Then $x\in P$ is a \emph{basic feasible solution} if the set of active constraints has full rank, that is there are $n$ linearly independent active constraint vectors at the point $x$. See figure \ref{Fig:bfsActiveConstraints}.
