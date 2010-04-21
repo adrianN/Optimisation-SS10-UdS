@@ -102,7 +102,18 @@ We want to prove that there is an extreme point $y_i$ such that the cost $v$ are
 
 Obviously $cy_i\geq v$ since $x^*$ is an optimal solution. It can't be strictly greater for all $y_i$ or 
 \[c\sum_{i=1}^x \lambda_i y_i \gneq v\]
-since the $\lambda_i$ are greater than zero and $\sum_i \lambda_i =1$. This would be a contradiction since $x^*=\sum_{i=1}^x \lambda_i y_i$. So there has to be at least one extreme point $y_i$ for which $cy_i=v$.
+since the $\lambda_i$ are greater than zero and $\sum_i \lambda_i =1$. %To see why observe this:
+%
+%\begin{align*}
+%cx^* &= c\sum_{i} \lambda_i y_i\\
+%&=\sum_i \lambda_i cy_i\\
+%\intertex{assume $cy_i\gneq cx^*$}
+%&< \sum_i \lambda_i cx^*\\
+%\intertext{$\lambda_i$ sum to 1}
+%&< cx^*
+%\end{align*}
+%
+This would be a contradiction since $x^*=\sum_{i=1}^x \lambda_i y_i$. So there has to be at least one extreme point $y_i$ for which $cy_i=v$.
 \end{pr}
 
 Corollary \ref{Cor:always_extreme_points} gives us the nice result that we can transform the problem of optimising an LP to a discrete problem with finitely (albeit exponentially) many candidate solutions. This will of course be very useful in designing an algorithm for solving them.
