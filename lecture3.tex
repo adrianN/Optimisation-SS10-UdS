@@ -61,7 +61,7 @@ Such an $\epsilon$ has to exist, since the polyhedron is bounded and therefore e
 
 \[\begin{pmatrix}B\\ a_i\end{pmatrix}\] 
 
-The rank of the new $B$ has to be $k+1$ since $\delta$ was orthogonal to all the vectors in $B$, as $B\delta=0$. %todo weiter ausführen
+The rank of the new $B$ has to be $k+1$ since $\delta$ was orthogonal to all the vectors in $B$, as $B\delta=0$ (and hence all vectors in $\text{span } B$), but it is not orthogonal to $a_i$, or we wouldn't have hit that constraint by moving in direction $\delta$.
 
 We have now reduced the problem of finding extreme points to represent $x \in P$ to the problem of finding some for $x_1,x_2 \in P$. However we increased the number of active constraints for $x_1,x_2$ (in 2D: we moved them on an edge). This process can be repeated for $x_1$ and $x_2$ until the respective $B$ has full rank and we arrived at some extreme points. For figure \ref{Thm:CH_polyhedron} the process is repeated three times, for $x,x_1$ and $x_2$. 
 Since all the points from the beginning can be recursively written by a convex combination of the new points and we end up at an extreme point, the original $x$ can transitively be written by a convex combination of extreme points.
@@ -93,20 +93,19 @@ Since all the points from the beginning can be recursively written by a convex c
 
 Intuitively this is true, as given an optimal solution, which is not an extreme point, we could always go into the direction of a constraint which is not tight. Such a constraint must exist, as otherwise we would be at an extreme point. 
 
-%TODO Beweis 
-\begin{pr}[Theorem \ref{Cor:always_extreme_points}] %(from the book 'Linear Optimization') 
+\begin{pr}[Corollary \ref{Cor:always_extreme_points}] %(from the book 'Linear Optimization') 
 Start with some optimal solution $x^*$. Write it as a convex combination of extreme points 
 \[x^* = \sum_{i=1}^x \lambda_i y_i \qquad \text{s.t. } y_i \text{ is an extreme point}\]
 We want to prove that there is an extreme point $y_i$ such that the cost $v$ are the same as in $x^{*}$, that is:
 
 \[v = cx^* = cy_i\]
 
-%Suppose for the contradiction, that no such $y^*$ exist and that $x^*$ ist not an extreme point. As $x^*$ is not an extreme point, $v,w \in P, v,w\neq x^*, \lambda=[0,1]$ with $x^*=\lambda v + (1-\lambda)w$ must exist. From $cx^*=\lambda cv + (1-\lambda)cw$ it follows that either  
-Obviously %not so obvious for me
-$cy_i\geq 0$. It can't be strictly greater for all $y_i$ or the $\lambda_i$ couldn't all be positive we couldn't find a convex combination for $x_i$. 
+Obviously $cy_i\geq v$ since $x^*$ is an optimal solution. It can't be strictly greater for all $y_i$ or 
+\[c\sum_{i=1}^x \lambda_i y_i \gneq v\]
+since the $\lambda_i$ are greater than zero and $\sum_i \lambda_i =1$. This would be a contradiction since $x^*=\sum_{i=1}^x \lambda_i y_i$. So there has to be at least one extreme point $y_i$ for which $cy_i=v$.
 \end{pr}
 
-Corollary \ref{Cor:always_extreme_points} gives us the nice result that we can transform the problem of optimising an LP to a discrete problem with finitely many candidate solutions. This will of course be very useful in designing an algorithm for solving them.
+Corollary \ref{Cor:always_extreme_points} gives us the nice result that we can transform the problem of optimising an LP to a discrete problem with finitely (albeit exponentially) many candidate solutions. This will of course be very useful in designing an algorithm for solving them.
 
 \subsection*{Fourier-Motzkin elimination}
 
