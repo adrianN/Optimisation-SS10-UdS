@@ -7,7 +7,7 @@ Ax = b\\
 x\geq 0
 \end{align*}
 
-and $A\in \R^{m\times n} has $m$ linearly independet rows. A basis $B\subseteq [1,n]$ is as set of $m$ indices such that $A_B$ has full rank $m$. It induces a basic solution
+and $A\in \R^{m\times n}$ has $m$ linearly independet rows. A basis $B\subseteq [1,n]$ is as set of $m$ indices such that $A_B$ has full rank $m$. It induces a basic solution
 
 \[\begin{cases} x_B = A^{-1}_Bb\\ x_{\bar B} = 0\end{cases}\]
 
@@ -64,7 +64,7 @@ We move from solution $x$ to solution $y$ along some vector $d$ ($y=x+\Theta d$)
 \begin{itemize}
 \item $d_k=0$ if $k\not \in B \cup j$, because we assumed all variables not in the basis (i.e. the non-basic variables) to be zero to make the non-negativity constraints active 
 \item $d_j>0$ $(x_k=0, y_k=0)$. By choosing $\Theta$ accordingly we can scale this to be $d_j=1$
-\item $Ad = 0$ ($Ad = $(Ay-Ax)/\Theta = (b-b)/\Theta = 0)
+\item $Ad = 0$ ($Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0)$
 \end{itemize}
 
 By using these observations we can directly calculate the $b_i$ we need to remove.
@@ -77,7 +77,7 @@ We also want $y\geq 0$ so that we need
 
 \[x_B - d_B = x_B - \Theta A_B^{-1} A_j \geq 0\]
 
-Thet means if $d_{b_i}>0$ we are ok, however if $d_{b_i} <0$ then $x_{b_i} +\Theta_{b_i} \stackrel{!}{\geq} 0$ so $\Theta \leq \frac{-x_{b_i}}{d_{b_i}}. We can do that by choosing
+Thet means if $d_{b_i}>0$ we are ok, however if $d_{b_i} <0$ then $x_{b_i} +\Theta_{b_i} \stackrel{!}{\geq} 0$ so $\Theta \leq \frac{-x_{b_i}}{d_{b_i}}$. We can do that by choosing
 
 \[\Theta = \min_{{b_i\in B}\atop {d_{b_i} <0}} \left| \frac{x_{b_i}}{d_{b_i}}\right |\]
 
@@ -98,7 +98,7 @@ repeat
         $d_B$ = $A^{-1}_B A_j$
         if $c_j - c_B^TA^{-1}_B A_j < 0$
             $b_i$ = index  s.t. $d_{b_i} <0$, 
-                    minimizing $\left| \frac{x_{b_i}}{d_{b_i}}\right|$
+                    minimizing $\left| \frac{x_{b_i}}{d_{b_i}}\right|$
             B = B $\cup$ j $\backslash$ $b_i$
 until B hasn't changed
 \end{lstlisting}
