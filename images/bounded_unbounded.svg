@@ -14,19 +14,18 @@
    height="126.7014"
    id="svg2979"
    version="1.1"
-   inkscape:version="0.47pre4 r22446"
+   inkscape:version="0.47+devel r9327"
    sodipodi:docname="bounded_unbounded.svg">
   <defs
      id="defs2981">
     <linearGradient
-       inkscape:collect="always"
        id="linearGradient4233">
       <stop
          style="stop-color:#81ff82;stop-opacity:1;"
          offset="0"
          id="stop4235" />
       <stop
-         style="stop-color:#81ff82;stop-opacity:0;"
+         style="stop-color:#ffffff;stop-opacity:1;"
          offset="1"
          id="stop4237" />
     </linearGradient>
@@ -56,8 +55,8 @@
        id="linearGradient4239"
        x1="303.0921"
        y1="118.52813"
-       x2="427.05338"
-       y2="43.265934"
+       x2="481.54184"
+       y2="-9.1792154"
        gradientUnits="userSpaceOnUse" />
     <inkscape:perspective
        id="perspective4291"
@@ -88,16 +87,16 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="2.9364012"
-     inkscape:cx="257.60826"
-     inkscape:cy="34.827173"
+     inkscape:cx="292.70084"
+     inkscape:cy="75.693523"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1920"
-     inkscape:window-height="1126"
-     inkscape:window-x="1920"
-     inkscape:window-y="25"
-     inkscape:window-maximized="1" />
+     inkscape:window-width="1676"
+     inkscape:window-height="1006"
+     inkscape:window-x="4"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0" />
   <metadata
      id="metadata2984">
     <rdf:RDF>
@@ -106,7 +105,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -116,14 +115,16 @@
      id="layer1"
      transform="translate(-64.999579,-41.916468)">
     <path
+       style="fill:url(#linearGradient4239);fill-opacity:1;stroke:none"
+       d="m 297.01392,122.69426 c 25.35664,-39.377849 48.75157,-77.339248 74.7073,-118.9796435 9.94754,0 61.83431,-4.44404864 62.81856,0.1197145 0,38.189872 0,73.945714 0,119.370759 -43.79197,0.30062 -97.84654,-0.48997 -137.52586,-0.51083 z"
+       id="path4231"
+       transform="translate(64.999579,41.916468)"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ccccc" />
+    <path
        style="fill:none;stroke:#000000;stroke-width:1.0085001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 436.36675,45.001409 -74.87159,119.863231 135.66182,0.34345"
        id="path4227" />
-    <path
-       style="fill:url(#linearGradient4239);fill-opacity:1;stroke:none"
-       d="M 310.83443,121.16842 299.05724,120.9915 334.90377,63.608336 C 354.61936,32.047594 370.88072,6.0149131 371.04011,5.757934 371.27679,5.3763543 377.22792,5.1494592 403.50255,4.5202578 421.1975,4.0965151 435.71817,3.787848 435.77072,3.834331 c 0.0525,0.046483 -1.62925,26.540799 -3.73732,58.876256 l -3.83285,58.791743 -52.79446,-0.0785 c -29.03696,-0.0432 -58.09421,-0.1581 -64.57166,-0.25541 l 0,0 z"
-       id="path4231"
-       transform="translate(64.999579,41.916468)" />
     <path
        style="fill:#81ff82;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 163.74895,42.416468 77.058328,73.239799 65.499579,149.3349 l 78.021561,18.78297 70.79734,-52.49599 z"
@@ -141,7 +142,7 @@
        sodipodi:cy="44.586121"
        sodipodi:rx="0.96322912"
        sodipodi:ry="1.2040364"
-       d="m 183.97676,44.586121 a 0.96322912,1.2040364 0 1 1 -1.92645,0 0.96322912,1.2040364 0 1 1 1.92645,0 z"
+       d="m 183.97676,44.586121 c 0,0.664971 -0.43125,1.204036 -0.96323,1.204036 -0.53197,0 -0.96322,-0.539065 -0.96322,-1.204036 0,-0.664971 0.43125,-1.204037 0.96322,-1.204037 0.53198,0 0.96323,0.539066 0.96323,1.204037 z"
        transform="matrix(0.71875,0,0,0.57499997,290.89455,109.14234)" />
     <text
        xml:space="preserve"
@@ -200,7 +201,7 @@
        sodipodi:cy="44.586121"
        sodipodi:rx="0.96322912"
        sodipodi:ry="1.2040364"
-       d="m 183.97676,44.586121 a 0.96322912,1.2040364 0 1 1 -1.92645,0 0.96322912,1.2040364 0 1 1 1.92645,0 z"
+       d="m 183.97676,44.586121 c 0,0.664971 -0.43125,1.204036 -0.96323,1.204036 -0.53197,0 -0.96322,-0.539065 -0.96322,-1.204036 0,-0.664971 0.43125,-1.204037 0.96322,-1.204037 0.53198,0 0.96323,0.539066 0.96323,1.204037 z"
        transform="matrix(0.71875,0,0,0.57499997,14.046703,81.359993)" />
     <text
        xml:space="preserve"
