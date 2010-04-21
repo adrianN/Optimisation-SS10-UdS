@@ -151,11 +151,11 @@ c_2 \geq c_3: & -2x+6 &  \geq -\frac{1}{3}x+2 \\
 c_1 \geq c_4: & \frac{1}{2}x + 3   & \geq -\frac{1}{3}x+2 \\
 c_2 \geq c_4: & -2x+6 & \geq -x+2
 \end{eqnarray*}
-Those constrains are shown below the x-axis with broken lines. Note that we're only interested in the red part. So the two constraint $c_2 \geq c_3$ and $c_1 \geq c_4$ would be enough. As there is no efficent way to find those two constraints we have to keep all of them. 
+Those constrains are shown in figure \ref{Fig:motzkinExample} below the x-axis with dashed lines. Note that we're only interested in the red part. So the two constraint $c_2 \geq c_3$ and $c_1 \geq c_4$ would be enough. As there is no efficent way to find those two constraints we have to keep all of them. 
 
 \begin{figure}[hbt]
 \begin{center}
-\includegraphics[width=0.8\textwidth]{./images/motzkin.pdf}
+\includegraphics[width=0.8\textwidth]{./images/motzkin.pdf} %TODO die gestrichelten Linien mit c_1,..,4 beschriften 
 \end{center}
 \caption{A projection, which removes one of the two dimensions. The result is shown in red.}
 \label{Fig:motzkinExample}
@@ -173,7 +173,7 @@ We want to classify the constraints $a_i$ into three kinds. Let $\overline a = \
 With 
 $$\forall i\in T_1: a_{in}>0$$ $$\forall i\in T_2: a_{in}<0$$ $$ \forall i\in T_3: a_{in}=0 $$
 
-From that form we rewritte the polyhedron by dividing with $\overline a_{in}$ if $\overline a_{in}!=0$. The $f_i$ are vectors and the $d_i$ are scalars. 
+From that form we rewrite the polyhedron by dividing with $\overline a_{in}$ if $\overline a_{in}\neq 0$. The $f_i$ are vectors and the $d_i$ are scalars. 
 
 \begin{equation}\label{For:Motz1}x_n \geq  d_i + f_i \bar x : i \in T_1 \end{equation}
 \begin{equation}\label{For:Motz2}x_n \leq  d_i+f_i \bar x : i \in T_2 \end{equation}
@@ -191,7 +191,7 @@ d_i+f_i\bar x & \geq 0\ & \forall i\in T_3\}
 %$$\{d_i+f_i\bar x \geq d_j+f_j\bar x\ \forall i\in T_2, j\in T_1 $$ 
 %$$d_i+f_i\bar x \geq 0\ \forall i\in T_3\}$$
 
-Herein lies the problem of the algorithm. We introduce a new constraint for every pair of constraints from $T_1,T_2$. Hence in every iteration the number of constraints $c$ can grow by a factor of $(\frac{c}{2})^2$.
+Herein lies the problem of the algorithm. We introduce a new constraint for every pair of constraints from $T_1,T_2$. Hence in every iteration the number of constraints $c$ can grow on the order of $(\frac{c}{2})^2$.
 
 \subsubsection*{Proof of correctness}
 \begin{pr} To prove the correctness of the Fourier-Motzkin elimination we need to show that the result $Q$ of the algorithm is equal to $\pi_{n-1}(P)$. We do this by showing $\pi_{n-1}(P) \subset Q$ and $Q \subset \pi_{n-1}(P)$.
