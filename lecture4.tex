@@ -114,11 +114,13 @@ x_{b_i} +\Theta d_{b_i} &\stackrel{!}{\geq} 0\\
 \Theta &\leq \frac{-x_{b_i}}{d_{b_i}}
 \end{align*}
 
-By choosing $\Theta$ sufficiently small like this
+By choosing $\Theta$ sufficiently small we can avoid negativity. However we'd like to move as far as possible along the line $y=x+\Theta d$ without leaving the polyhedron. So we choose it like this
 
 \[\Theta = \min_{{b_i\in B}\atop {d_{b_i} <0}} \left| \frac{x_{b_i}}{d_{b_i}}\right |\]
 
-we can avoid negativity. The variable $x_{b_i}$ that attains the above minimum will be equal to zero in $y$, i.e. in becomes non-basic and will have to be taken out of $B$. Because we assumed that the system is non degenerate there will be only one element actually attaining it or we would have a basic feasible solution with a basic variable that is 0 (and hence $>n$ constraints would be active at that solution). 
+The variable $x_{b_i}$ that attains the above minimum will be equal to zero in $y$, i.e. in becomes non-basic and will have to be taken out of $B$. Because we assumed that the system is non degenerate there will be only one element actually attaining it or we would have a basic feasible solution with a basic variable that is 0 (and hence $>n$ constraints would be active at that solution). Also $\Theta \gneq 0$ or one of the basic variables would have been zero ($\Rightarrow x\neq y$).
+
+Note that this was the step that assumed a bounded polyhedron. If $d>0$ we can move along $x+\Theta d$ as far as we want without leaving $P$. So $P$ contains a line and is not bounded (remember figure \ref{Fig:bounded_unbounded}).
 
 Next we want to look at how the cost changes when going from $x$ to $y$. Again we do this by plugging in our observations into the line equation:
 
@@ -141,7 +143,7 @@ B = some feasible basis
 repeat 
     for $j\in \{1,\ldots,n\}\backslash B$ // $b_i$ is determined
         $d_B$ = $A^{-1}_B A_j$
-        if $c_j - c_B^TA^{-1}_B A_j < 0$
+        if $c_j - \trans c_BA^{-1}_B A_j < 0$
             $b_i$ = index  s.t. $d_{b_i} <0$, 
                     minimizing $\left| \frac{x_{b_i}}{d_{b_i}}\right|$
             B = B $\cup$ j $\backslash$ $b_i$
@@ -149,14 +151,14 @@ until B hasn't changed
 \end{lstlisting}
 \end{center}
 
-%todo rechnungen zwischen II und III
+
 \begin{center}
 \begin{lstlisting}
 SIMPLEX-TAKE-III (A,b,c)
 
 B = some feasible solution
 repeat
-    $\bar c$ = c - $c^T_B A^{-1}_BA$ //reduced cost vector
+    $\bar c$ = $c_j$ - $\trans c_B A^{-1}_BA$ //reduced cost vector
     if $\exists j:{\bar c}_j<0$ 
         u = $A^{-1}_B A_j$ // dimension m
         $b_i$ = index in B s.t. $u_i >0$ 
