@@ -229,13 +229,14 @@ is a polyhedron. Then $\pi_m(Q)$ is also a polyhedron.
 
 \paragraph*{Optimal value} We can use the projections to find the optimal value for an LP (not the optimal solution though). Suppose we're given a LP in the usual form, $\min cx$ s.t. $Ax\geq b$. We construct the following polyhedron P:
 
-\begin{eqnarray*}
- & (x_0,\ldots,x_n) & \\
+\begin{align}  \notag
+ & (x_0,\ldots,x_n) & \\ \notag
 s.t. & A(x_0,\ldots,x_n)^{\mbox{T}} & \geq b \\
-& c(x_0,\ldots,x_n)^{\mbox{T}} & = x_0
-\end{eqnarray*}
+& c(x_0,\ldots,x_n)^{\mbox{T}} & \leq z \label{Form:OptimalValueMotzkin}
+\end{align}
 
-Define $Q = \pi_1(P)$. We can find $Q$ with the Fourier-Motzkin elimination. If $Q$ is not feasible, $P$ is empty. Else we can choose the biggest $b_i$ such that $x_0\geq b_i$ or the smallest $b_i$ such that $x_0 \leq b_i$, depending on the type of constraints we have. That is the optimal value.
+The idea behind formula \ref{Form:OptimalValueMotzkin} is that we minimize $z$ by giving it the smallest value which is still feasible under the constraints.
+Define $Q = \pi_1(P)$, let $B(0)=z$ (e.g $z$ is the first dimension). We can find $Q$ with the Fourier-Motzkin elimination. If $Q$ is empty, $P$ has no feasible region. If we get results some of them will have the form $z \geq b_i$ (the other ones $0 \geq b_i$). We choose the biggest $b_i$ such that $z \geq b_i$ (assuming the our goal was to minimize the cost). That is the optimal value. 
 
 \begin{thm}[Farkas' lemma] Let $A\in \R^{m\times n}$ and $b\in \R^m$. Then either 
 \begin{itemize}
