@@ -1,4 +1,7 @@
 \subsection{The simplex algorithm}
+
+In corollary \ref{Cor:always_extreme_points} we saw that we can always find an optimal solution for an LP by looking at all the extreme points. The simplex algorithm is a method that enumerates them in order of decreasing cost. 
+
 Recall that an LP is in standard form if
 
 \begin{align*}
@@ -7,13 +10,15 @@ Ax = b\\
 x\geq 0
 \end{align*}
 
-and $A\in \R^{m\times n}$ has $m$ linearly independet rows. A basis $B\subseteq [1,n]$ is as set of $m$ indices such that $A_B$ has full rank $m$. It induces a basic solution
+and $A\in \R^{m\times n}$ has $m$ linearly independent rows (and hence $m$ independent columns too). A basis $B\subseteq [1,n]$ is as set of $m$ indices such that $A_B$ (here the subscript means "$A$ restricted to the columns in $B$) has full rank $m$. Note that $A_B$ is always invertible, as it is a $m\times m$ matrix with independent columns. We'll call the variables $x_B$ with an index in $B$ the \emph{basic} variables and the others, $x_{\bar b}$ the \emph{non-basic} variables. Basic variables should be non-zero (for nice LPs that is the case), non-basic variables are always 0.
+
+A basis induces a basic solution
 
 \[\begin{cases} x_B = A^{-1}_Bb\\ x_{\bar B} = 0\end{cases}\]
 
-We say it is feasible if $x_B\geq 0$. Note that the $x_{\bar B}=0$ part makes $n-m$ non-negativity constraints active so that we actually are at a corner with $n$ active constraints in $n$ dimensions.
+We say it is feasible if $x_B\geq 0$. Note that the $x_{\bar B}=0$ part makes $n-m$ non-negativity constraints active so that we actually are at a corner with $\geq n$ active constraints in $n$ dimensions (some $x_B$ could be zero). 
 
-The simplex algorithm works by moving from corner to corner, always in the direction of better costs. At first we'll have some simplifying assumptions, to avoid the messy details:
+When deriving the simplex method we'll have some simplifying assumptions first, to avoid the messy details:
 
 \begin{enumerate}
 \item The LP is in standard form (for conversion see \ref{Sec:standardForm})
@@ -24,7 +29,7 @@ The simplex algorithm works by moving from corner to corner, always in the direc
 
 In the next lectures we'll remove those assumptions one after the other.
 
-The algorithm works as follows:
+An initial version of the algorithm works as follows:
 \begin{lstlisting}
 SIMPLEX-TAKE-I(A,b,c)
 
@@ -41,10 +46,11 @@ repeat
 until B hasn't changed                
 \end{lstlisting}
 
-$D$ is build by removing one constraint from $B$ and adding another one that wasn't in there before. We then check if $D$ is non-singular. If so it induces a basic solution, we just have to check if it's feasible. If yes we check if the cost improves and move to $D$ if it does.
+We switch from a basis $B$ to a basis $D$ by removing a column $b_i$ from $B$ and putting in a replacement $j$ to get back to a (hopefully) full rank matrix $D$. We then check if $D$ is non-singular. If so it induces a basic solution, we just have to check if it's feasible. If yes we check if the cost of the new induced solution $y_D$ is better that the old $x_B$ and keep $D$ if it is an improvement.
 
-It will later turn out that we don't actually have to check every combination for $j$ and $b_i$. The choice of $b_i$ is uniquely determined.
+It will later turn out that we don't actually have to check every combination for $j$ and $b_i$. The choice of $b_i$ is uniquely determined by the choice of $j$.
 
+%das ist didaktisch hier fehl am platz
 We can't get the same basic solution from two different bases, if we have a non-degenerate LP. In the degenerate case this may very well happen:
 
 \begin{align*}
@@ -59,25 +65,26 @@ The above system gives us the solution $(1,1,0,0,0)$ for three bases $\{1,2,3\},
 
 %figure
 
-We move from solution $x$ to solution $y$ along some vector $d$ ($y=x+\Theta d$). Have a look at figure \ref{Fig:movingToSolutions}. We do some observations on the vector $d$. 
+When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s.t. $y=x+\Theta d$). Have a look at figure \ref{Fig:movingToSolutions}. We do some observations on the vector $d$. 
 
 \begin{itemize}
-\item $d_k=0$ if $k\not \in B \cup j$, because we assumed all variables not in the basis (i.e. the non-basic variables) to be zero to make the non-negativity constraints active 
-\item $d_j>0$ $(x_k=0, y_k=0)$. By choosing $\Theta$ accordingly we can scale this to be $d_j=1$
-\item $Ad = 0$ ($Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0)$
+\item $d_k=0$ if $k\not \in B \cup j$, because we assumed all non-basic variables to be zero to make the non-negativity constraints active. In particular the column $b_i$ and the variable $x_{b_i}$ that we remove becomes basic and hence 0
+\item $d_j>0$ because we want to make the formerly non-basic variable $x_j$ basic, that is getting it to some value $>0$. By choosing $\Theta$ accordingly we can scale this to be $d_j=1$ and make further calculations easier
+\item $Ad = 0$ because both $x$ and $y$ are bsf, i.e. both satisfy all equations: $Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0$
 \end{itemize}
 
 By using these observations we can directly calculate the $b_i$ we need to remove.
 
-We can rewrite $A_d$ like follows and can use that to find the components of $d$:
+First we want to get the components $d_B$ that we don't know immediately from the above observations. We can decompose $Ad$ into the part we're looking for, $A_j d_j$ which is $A_j$ since $d_j:=1$ and $A_{\bar B} d_{\bar B}$ which is 0 since $d_{\bar B}:=0$. $B$ is a basis, so $A_B$ is invertible and we can compute $d_B$.
 
-\[A_d = A_B d_B+A_j = 0 \Rightarrow d_B = -A^{-1}_B A_j\]
+\[Ad = A_B d_B+A_j = 0 \Rightarrow d_B = -A^{-1}_B A_j\]
 
-We also want $y\geq 0$ so that we need
+The new extreme point $y$ should be a feasible solution so we also want $y\geq 0$. By plugging in the calculation for $d_B$ into the equation for the line between $x$ and $y$ %really? where does the - d_B come from?
+we get
 
 \[x_B - d_B = x_B - \Theta A_B^{-1} A_j \geq 0\]
 
-Thet means if $d_{b_i}>0$ we are ok, however if $d_{b_i} <0$ then $x_{b_i} +\Theta_{b_i} \stackrel{!}{\geq} 0$ so $\Theta \leq \frac{-x_{b_i}}{d_{b_i}}$. We can do that by choosing
+That means if $d_{b_i}>0$ we are ok, however if $d_{b_i} <0$ then $x_{b_i} +\Theta_{b_i} \stackrel{!}{\geq} 0$ so $\Theta \leq \frac{-x_{b_i}}{d_{b_i}}$. We can do that by choosing
 
 \[\Theta = \min_{{b_i\in B}\atop {d_{b_i} <0}} \left| \frac{x_{b_i}}{d_{b_i}}\right |\]
 
