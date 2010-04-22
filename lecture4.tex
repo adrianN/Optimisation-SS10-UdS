@@ -37,7 +37,6 @@ In other words (the book):
 In the next lectures we'll remove those assumptions one after the other.
 
 An initial version of the algorithm works as follows:
-\begin{figure}[h]
 \begin{center}
 \begin{lstlisting}
 SIMPLEX-TAKE-I(A,b,c)
@@ -55,7 +54,6 @@ repeat
 until B hasn't changed                
 \end{lstlisting}
 \end{center}
-\end{figure}
 
 We switch from a basis $B$ to a basis $D$ by removing a column $b_i$ from $B$ and putting in a replacement $j$ to get back to a (hopefully) full rank matrix $D$. We then check if $D$ is non-singular. If so it induces a basic solution, we just have to check if it's feasible. If yes we check if the cost of the new induced solution $y_D$ is better that the old $x_B$ and keep $D$ if it is an improvement.
 
@@ -126,16 +124,14 @@ Next we want to look at how the cost changes when going from $x$ to $y$. Again w
 cy &= cx + \Theta cd\\
     &= cx - \Theta (c_B(A_B^{-1} A_j) + c_jd_j)\\
     &= cx - \Theta (c_B(A_B^{-1} A_j) + c_j)\\
-cy - cx = \Theta (c_j - c_B^{T}A_B^{-1}A_j)
+cy - cx &= \Theta (c_j - c_B^{T}A_B^{-1}A_j)
 \end{align*}
 
 If $y$ was a solution that we move to we did that because $cy$ was smaller that $cx$. So $c_j - c_B^TA^{-1}_B A_j$ should be negative if we want to move to $y$.
 
 Now we know how to calculate the $b_i$ we need to remove when we put in a $j$ to get a new basis and we know a new (much more complicated, yay) criterion to check whether we move in the right direction. We combine that into a better version of the algorithm.
 
-\begin{figure}[h]
 \begin{center}
-\begin{lstlisting}
 \begin{lstlisting}
 SIMPLEX-TAKE-II (A,b,c)
 
@@ -150,10 +146,8 @@ repeat
 until B hasn't changed
 \end{lstlisting}
 \end{center}
-\end{figure}
 
 %todo rechnungen zwischen II und III
-\begin{figure}[h]
 \begin{center}
 \begin{lstlisting}
 SIMPLEX-TAKE-III (A,b,c)
@@ -170,7 +164,7 @@ until B hasn't changed
 // $\bar c \geq 0$ 
 \end{lstlisting}
 \end{center}
-\end{figure}
+
 The algorithm always terminates because the assumptions ensure that we always have a optimal solution and we improve our solution in every step.
 
 \begin{thm}\label{Pr:simplexIIIopt} Let B be a basis. If $x_B=A^{-1}_Bb\geq 0$ and $\bar c=c-c_B^{T}A_B^{-1}A_j$ then $B$ is optimal.\end{thm}
