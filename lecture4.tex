@@ -7,13 +7,23 @@ Ax = b\\
 x\geq 0
 \end{align*}
 
-and $A\in \R^{m\times n}$ has $m$ linearly independet rows. A basis $B\subseteq [1,n]$ is as set of $m$ indices such that $A_B$ has full rank $m$. It induces a basic solution
+and $A\in \R^{m\times n}$ has $m$ linearly independet rows. A \emph{basis} $B\subseteq [1,n]$ is as set of $m$ column indices such that $A_B$ has full rank $m$ (Note that $A_B$ can be inverted as the rows are linearly independet). It induces a \emph{basic solution} (see \ref{Def:BasicSolution} for a basic solution definition)
 
 \[\begin{cases} x_B = A^{-1}_Bb\\ x_{\bar B} = 0\end{cases}\]
 
+If $x_B$ is a basic solution, the variables $x_{B(1)},...x_{B(m)}$ are called \emph{basic variables}. The remaining variables $x_i|i \neq B(1),...,B(m)$ are called \emph{nonbasic}. 
+
 We say it is feasible if $x_B\geq 0$. Note that the $x_{\bar B}=0$ part makes $n-m$ non-negativity constraints active so that we actually are at a corner with $n$ active constraints in $n$ dimensions.
 
-The simplex algorithm works by moving from corner to corner, always in the direction of better costs. At first we'll have some simplifying assumptions, to avoid the messy details:
+In other words (the book):
+\begin{enumerate}
+ \item Choose m linearly independet columns $A_{B(1)},...,A_{B(m)}$
+ \item Let $x_i=0$ for all $i \neq B(1),...,B(m)$
+ \item Solte the system of $m$ equations $Ax=b$ for the unknowns $x_{B(1)},...x_{B(m)})$
+\end{enumerate}
+
+\paragraph*{The simplex algorithm} works by moving from corner to corner, always in the direction of better costs. At first we'll have some simplifying assumptions, to avoid the messy details:
+
 
 \begin{enumerate}
 \item The LP is in standard form (for conversion see \ref{Sec:standardForm})
