@@ -86,22 +86,39 @@ First we want to get the components $d_B$ that we don't know immediately from th
 
 \[Ad = A_B d_B+A_j = 0 \Rightarrow d_B = -A^{-1}_B A_j\]
 
-The new extreme point $y$ should be a feasible solution so we also want $y\geq 0$. By plugging in the calculation for $d_B$ into the equation for the line between $x$ and $y$ %really? where does the - d_B come from?
-we get
+The new extreme point $y$ should be a feasible solution so we also want $y\geq 0$. By plugging in the calculation for $d_B$ into the equation for the line between $x$ and $y$ we get
 
-\[x_B - d_B = x_B - \Theta A_B^{-1} A_j \geq 0\]
+\begin{align*}
+y_B &= x_B + \Theta d\\
+ &= x_B + \Theta A_B^{-1} A_j\\
+ &= x_B - \Theta A_B^{-1} A_j \geq 0
+\end{align*}
 
-That means if $d_{b_i}>0$ we are ok, however if $d_{b_i} <0$ then $x_{b_i} +\Theta_{b_i} \stackrel{!}{\geq} 0$ so $\Theta \leq \frac{-x_{b_i}}{d_{b_i}}$. We can do that by choosing
+Remember that the basic variables in $x_B$ are all greater than 0. So that means if $d>0$ we are ok, however if for some $b_i$ $d_{b_i} <0$ then it can happen that we get a negative component if we choose $\Theta$ too large. We need 
+
+\begin{align*}
+x_{b_i} +\Theta d_{b_i} &\stackrel{!}{\geq} 0\\
+\Theta &\leq \frac{-x_{b_i}}{d_{b_i}}
+\end{align*}
+
+By choosing $\Theta$ sufficiently small like this
 
 \[\Theta = \min_{{b_i\in B}\atop {d_{b_i} <0}} \left| \frac{x_{b_i}}{d_{b_i}}\right |\]
 
-So the indices attaining the minimum will be the ones we'll have to take out. Because we assumed that the system is non degenerate there will be only one element actually attaining it. %why does non-degenerate imply that?
+we can avoid negativity. The variable $x_{b_i}$ that attains the above minimum will be equal to zero in $y$, i.e. in becomes non-basic and will have to be taken out of $B$. Because we assumed that the system is non degenerate there will be only one element actually attaining it or we would have a basic feasible solution with a basic variable that is 0 (and hence $>n$ constraints would be active at that solution). 
 
-How does the cost change?
+Next we want to look at how the cost changes when going from $x$ to $y$. Again we do this by plugging in our observations into the line equation:
 
-\[cy -cx = \Theta cd = \Theta(c_j+c_Bd_B) = \Theta(c_j - c_B^TA^{-1}_B A_j)\]
+\begin{align*}
+cy &= cx + \Theta cd\\
+    &= cx - \Theta (c_B(A_B^{-1} A_j) + c_jd_j)\\
+    &= cx - \Theta (c_B(A_B^{-1} A_j) + c_j)\\
+cy - cx = \Theta (c_j - c_B^{T}A_B^{-1}A_j)
+\end{align*}
 
-If $y$ was a solution that we move to we did that because $cy$ was smaller that $cx$. So $c_j - c_B^TA^{-1}_B A_j$ should be negative if we want to move to $y$
+If $y$ was a solution that we move to we did that because $cy$ was smaller that $cx$. So $c_j - c_B^TA^{-1}_B A_j$ should be negative if we want to move to $y$.
+
+Now we know how to calculate the $b_i$ we need to remove when we put in a $j$ to get a new basis and we know a new (much more complicated, yay) criterion to check whether we move in the right direction. We combine that into a better version of the algorithm.
 
 \begin{lstlisting}
 SIMPLEX-TAKE-II (A,b,c)
