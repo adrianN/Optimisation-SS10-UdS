@@ -19,11 +19,36 @@ If $x_B$ is a basic solution, the variables $x_{B(1)},...x_{B(m)}$ are called \e
 We say it is feasible if $x_B\geq 0$. Note that the $x_{\bar B}=0$ part makes $n-m$ non-negativity constraints active so that we actually are at a corner with $n$ active constraints in $n$ dimensions.
 
 In other words (the book):
-\begin{enumerate}
+\begin{enumerate} 
  \item Choose m linearly independet columns $A_{B(1)},...,A_{B(m)}$
  \item Let $x_i=0$ for all $i \neq B(1),...,B(m)$
  \item Solve the system of $m$ equations $Ax=b$ for the unknowns $x_{B(1)},...x_{B(m)})$
 \end{enumerate}
+The basic solution is given by the results of step three.
+
+\paragraph*{Degeneracy}
+Certain basic solution are degenerate. 
+\begin{Def}[Degeneracy]
+ A basic solution $x\in \R^n$ is said to be degenerated if more than $n$ of the constraints are active at $x$ 
+\end{Def}
+In 2D this means that more than two lines intersect at one point.
+
+%das ist didaktisch hier fehl am platz
+The interesting property is, that we can't get the same basic solution from two different bases, if we have a non-degenerate LP. In the degenerate case this may very well happen. Below examples shows the problem:
+
+\begin{align*}
+x_2 + x_3 &= 1\\
+x_1 - x_2 +x_4 &=0\\
+x_1 + x_2 +x_5 &= 2\\
+\end{align*}
+
+% figure
+
+The above system gives us the solution $(1,1,0,0,0)$ for three bases $\{1,2,3\},\{1,2,4\},\{1,2,5\}$. This happens because we have a point where three constraints are active, although we're in 2D. See figure \ref{Fig:degenerateLP}. It is easy to see that if we have two bases build from indices $k\in [1,\ldots,n]$ that give us the same solution one of the $x_k$ (a basic variable) has to be zero. %easy to see :S
+
+%figure
+Note that degeneracy is not a purely \emph{geometric property} (representation independend). However if a basic feasible solution of a particular standard form representation of a polyhedron $P$ is degenerated, then it is degenerated under all standard form representations of $P$.
+
 
 \paragraph*{The simplex algorithm} works by moving from corner to corner, always in the direction of better costs. At first we'll have some simplifying assumptions, to avoid the messy details:
 
@@ -48,9 +73,10 @@ repeat
         D = B $\cup$ j $\backslash$ $b_i$
         if D is a basis then
             $x_B$ = $A^{-1}_B$b
-            $y_D$ = $A_D^{-1}b$ // a bfs
-            if ($y_D$ $\geq$ 0 and $c_Dy_D < c_Bx_B$)
-                B = D
+            $y_D$ = $A_D^{-1}b$ //a basic solution
+            if ($y_D$ $\geq$ 0) //a bfs
+                if($c_Dy_D < c_Bx_B$) //cheaper than $B$
+                    B = D
 until B hasn't changed                
 \end{lstlisting}
 \end{center}
@@ -59,20 +85,7 @@ We switch from a basis $B$ to a basis $D$ by removing a column $b_i$ from $B$ an
 
 It will later turn out that we don't actually have to check every combination for $j$ and $b_i$. The choice of $b_i$ is uniquely determined by the choice of $j$.
 
-%das ist didaktisch hier fehl am platz
-We can't get the same basic solution from two different bases, if we have a non-degenerate LP. In the degenerate case this may very well happen:
 
-\begin{align*}
-x_2 + x_3 &= 1\\
-x_1 - x_2 +x_4 &=0\\
-x_1 + x_2 +x_5 &= 2\\
-\end{align*}
-
-% figure
-
-The above system gives us the solution $(1,1,0,0,0)$ for three bases $\{1,2,3\},\{1,2,4\},\{1,2,5\}$. This happens because we have a point where three constraints are active, although we're in 2D. See figure \ref{Fig:degenerateLP}. It is easy to see that if we have two bases build from indices $k\in [1,\ldots,n]$ that give us the same solution one of the $x_k$ (a basic variable) has to be zero. %easy to see :S
-
-%figure
 
 When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s.t. $y=x+\Theta d$). Have a look at figure \ref{Fig:movingToSolutions}. We do some observations on the vector $d=(x_0,...,x_n)$. $d_k$ refers to the k-th component of $d$. 
 
