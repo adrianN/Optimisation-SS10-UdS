@@ -5,12 +5,14 @@ In corollary \ref{Cor:always_extreme_points} we saw that we can always find an o
 Recall that an LP is in standard form if
 
 \begin{align*}
-\min cx\\
+\min \vec c\vec x\\
 Ax = b\\
 x\geq 0
 \end{align*}
 
-and $A\in \R^{m\times n}$ has $m$ linearly independet rows. A \emph{basis} $B\subseteq [1,n]$ is as set of $m$ column indices such that $A_B$ has full rank $m$ (Note that $A_B$ can be inverted as the rows are linearly independet). It induces a \emph{basic solution} (see \ref{Def:BasicSolution} for a basic solution definition)
+and $A\in \R^{m\times n}$ has $m$ linearly independet rows. Note that we use a row vector for $c$.
+
+A \emph{basis} $B\subseteq [1,n]$ is as set of $m$ column indices such that $A_B$ has full rank $m$ (Note that $A_B$ can be inverted as the rows are linearly independet). It induces a \emph{basic solution} (see \ref{Def:BasicSolution} for a basic solution definition)
 
 \[\begin{cases} x_B = A^{-1}_Bb\\ x_{\bar B} = 0\end{cases}\]
 
@@ -103,7 +105,7 @@ When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s
 
 \item $d_j>0$ let $j$ be the column added to the basis, because we made the formerly non-basic variable $x_j$ basic. That is assigning it some value $>0$. By choosing $\Theta$ accordingly we can scale this to be $d_j=1$ and make further calculations easier. Therefore we assume from now one $d_j=1$
 
-\item $Ad = 0$ because both $x$ and $y$ are bfs, i.e. both satisfy all equations: $Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0$
+\item $Ad = 0$ because both $x$ and $y$ are bfs, i.e. both satisfy all equations. By multiplying the line equation with $A$ and solving for $Ad$: $Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0$
 \end{itemize}
 
 By using these observations we can directly calculate the $b_i$ we need to remove.
@@ -112,11 +114,10 @@ First we want to get the components $d_B$ that we don't know immediately from th
 
 \[Ad = A_B d_B+A_j = 0 \Rightarrow d_B = -A^{-1}_B A_j\]
 
-The new extreme point $y$ should be a feasible solution so we also want $y\geq 0$. By plugging in the calculation for $d_B$ into the equation for the line between $x$ and $y$ we get
+The new extreme point $y$ should be a feasible solution so we also want $y\geq 0$. By plugging the calculation for $d_B$ into the equation for the line between $x$ and $y$ we get
 
 \begin{align*}
 y_B &= x_B + \Theta d_B\\
- &= x_B + \Theta A_B^{-1} A_j\\
  &= x_B - \Theta A_B^{-1} A_j \geq 0
 \end{align*}
 
@@ -124,7 +125,7 @@ Remember that the basic variables in $x_B$ are all greater than 0. So that means
 
 \begin{align*}
 x_{b_i} +\Theta d_{b_i} &\stackrel{!}{\geq} 0\\
-\Theta &\leq \frac{-x_{b_i}}{d_{b_i}}
+\Theta &\leq \frac{-x_{b_i}}{d_{b_i}} && \text{note: }d_{b_i}<0
 \end{align*}
 
 By choosing $\Theta$ sufficiently small we can avoid negativity. However we'd like to move as far as possible along the line $y=x+\Theta d$ without leaving the polyhedron. So we choose it like this
@@ -139,12 +140,12 @@ Next we want to look at how the cost changes when going from $x$ to $y$. Again w
 
 \begin{align*}
 cy &= cx + \Theta cd\\
-    &= cx - \Theta (c_B(A_B^{-1} A_j) + c_jd_j)\\
-    &= cx - \Theta (c_B(A_B^{-1} A_j) + c_j)\\
-cy - cx &= \Theta (c_j - \trans c_B A_B^{-1}A_j)
+    &= cx + \Theta (c_Bd_B + c_jd_j) &&d_j=1\\
+    &= cx + \Theta (c_Bd_B + c_j)\\
+cy - cx &= \Theta (c_Bd_B +c_j)
 \end{align*}
 
-If $y$ was a solution that we move to we did that because $cy$ was smaller that $cx$. So $c_j - c_B^TA^{-1}_B A_j$ should be negative if we want to move to $y$.
+If $y$ was a solution that we move to we did that because $cy$ was smaller that $cx$. So $c_j - c_Bd_B$ should be negative if we want to move to $y$.
 
 Now we know how to calculate the $b_i$ we need to remove when we put in a $j$ to get a new basis and we know a new (much more complicated, yay) criterion to check whether we move in the right direction. We combine that into a better version of the algorithm.
 
@@ -156,7 +157,7 @@ B = some feasible basis
 repeat 
     for $j\in \{1,\ldots,n\}\backslash B$ // $b_i$ is determined
         $d_B$ = $A^{-1}_B A_j$
-        if $c_j - \trans c_BA^{-1}_B A_j < 0$
+        if $c_j + c_Bd_B < 0$
             $b_i$ = index  s.t. $d_{b_i} <0$, 
                     minimizing $\left| \frac{x_{b_i}}{d_{b_i}}\right|$
             B = B $\cup$ j $\backslash$ $b_i$
@@ -165,13 +166,14 @@ until B hasn't changed
 \end{center}
 
 
+
 \begin{center}
 \begin{lstlisting}
 SIMPLEX-TAKE-III (A,b,c)
 
 B = some feasible solution
 repeat
-    $\bar c$ = $c_j$ - $\trans c_B A^{-1}_BA$ //reduced cost vector
+    $\bar c$ = $c_j$ + $c_BA_B^{-1}A$ //reduced cost vector
     if $\exists j:{\bar c}_j<0$ 
         u = $A^{-1}_B A_j$ // dimension m
         $b_i$ = index in B s.t. $u_i >0$ 
@@ -184,7 +186,7 @@ until B hasn't changed
 
 The algorithm always terminates because the assumptions ensure that we always have a optimal solution and we improve our solution in every step.
 
-\begin{thm}\label{Pr:simplexIIIopt} Let B be a basis. If $x_B=A^{-1}_Bb\geq 0$ and $\bar c=c-\trans c_B A_B^{-1}A_j$ then $B$ is optimal.\end{thm}
+\begin{thm}\label{Pr:simplexIIIopt} Let B be a basis. If $x_B=A^{-1}_Bb\geq 0$ and $\bar c=c- c_B A_B^{-1}A_j$ then $B$ is optimal.\end{thm}
 
 \begin{pr}[Theorem \ref{Pr:simplexIIIopt}] Let $x$ be the bsf induced by $B$, $y$ be some feasible solution. We want to argue that the cost of $x$ is smaller than the cost of $y$. Let $d=y-x$ then 
 \[cd = c_Bd_B + \sum_{j\in \bar B} c_jd_j \] 
