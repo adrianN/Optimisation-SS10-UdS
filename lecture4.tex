@@ -108,11 +108,18 @@ When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s
 \item $Ad = 0$ because both $x$ and $y$ are bfs, i.e. both satisfy all equations. By multiplying the line equation with $A$ and solving for $Ad$: $Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0$
 \end{itemize}
 
+\subsubsection*{Calculating $b_i$ directly}
 By using these observations we can directly calculate the $b_i$ we need to remove.
 
-First we want to get the components $d_B$ that we don't know immediately from the above observations. We can decompose $Ad$ into the part we're looking for, $A_j d_j$ which is $A_j$ since $d_j:=1$ and $A_{\bar B} d_{\bar B}$ which is 0 since $d_{\bar B}:=0$. $B$ is a basis, so $A_B$ is invertible and we can compute $d_B$.
+First we want to get the components $d_B$ that we don't know immediately from the above observations. We can decompose $Ad$ into the part we're looking for, $A_j d_j$ which is $A_j$ since $d_j:=1$ and $A_{\bar B} d_{\bar B}$ which is 0 since $d_{\bar B}:=0$.
 
-\[Ad = A_B d_B+A_j = 0 \Rightarrow d_B = -A^{-1}_B A_j\]
+\[0= Ad \sum_{i=1}^{n}A_i d_i  = \sum_{i=1}^{m}{A_{B(i)} d_{B(i)}} + A_j = A_B d_B + A_j\]
+
+$B$ is a basis, so $A_B$ is invertible and we can compute $d_B$.
+
+\begin{equation}
+d_B = -A^{-1}_B A_j \label{equ:valueDb}
+\end{equation}
 
 The new extreme point $y$ should be a feasible solution so we also want $y\geq 0$. By plugging the calculation for $d_B$ into the equation for the line between $x$ and $y$ we get
 
@@ -121,21 +128,28 @@ y_B &= x_B + \Theta d_B\\
  &= x_B - \Theta A_B^{-1} A_j \geq 0
 \end{align*}
 
-Remember that the basic variables in $x_B$ are all greater than 0. So that means if $d>0$ we are ok, however if for some $b_i$ $d_{b_i} <0$ then it can happen that we get a negative component if we choose $\Theta$ too large. We need 
+We also need to ensure the nonnegativity constraints. For $x_j$ this isn't a problem as we only increase it. All nonbasic variables $x_{\bar B}$ stay at zero. So we only need to worry about the basic variables. \\ 
+Remember that the basic variables in $x_B$ are all greater than 0. 
+So that means if $d>0$ we are ok, however if $d_{B(i)} <0$ for some $i \in {1,...,m}$ then it can happen that we get a negative component if we choose $\Theta$ too large. We need 
 
+\begin{center}
 \begin{align*}
-x_{b_i} +\Theta d_{b_i} &\stackrel{!}{\geq} 0\\
-\Theta &\leq \frac{-x_{b_i}}{d_{b_i}} && \text{note: }d_{b_i}<0
+x_{b_i} +\Theta d_{b_i} & \geq 0\\ %was \stackrel{!}{\geq} why was it so?
+\Theta &\leq \frac{-x_{b_i}}{d_{b_i}} \text{\ note: }d_{b_i}<0
 \end{align*}
+\end{center}
 
-By choosing $\Theta$ sufficiently small we can avoid negativity. However we'd like to move as far as possible along the line $y=x+\Theta d$ without leaving the polyhedron. So we choose it like this
+By choosing $\Theta$ sufficiently small we can avoid negativity. 
+
+However we'd like to move as far as possible along the line $y=x+\Theta d$ without leaving the polyhedron. So we choose it like this
 
 \[\Theta = \min_{{b_i\in B}\atop {d_{b_i} <0}} \left| \frac{x_{b_i}}{d_{b_i}}\right |\]
 
 The variable $x_{b_i}$ that attains the above minimum will be equal to zero in $y$, i.e. in becomes non-basic and will have to be taken out of $B$. Because we assumed that the system is non degenerate there will be only one element actually attaining it or we would have a basic feasible solution with a basic variable that is 0 (and hence $>n$ constraints would be active at that solution). Also $\Theta \gneq 0$ or one of the basic variables would have been zero ($\Rightarrow x\neq y$).
 
-Note that this was the step that assumed a bounded polyhedron. If $d>0$ we can move along $x+\Theta d$ as far as we want without leaving $P$. So $P$ contains a line and is not bounded (remember figure \ref{Fig:bounded_unbounded}).
+Note that this was the step that assumed a bounded polyhedron. If $P$ would be unbounded and $d>0$ there could be some $x+\Theta d$ were we could move along as far as we want without leaving $P$. That would mean that $P$ contains a infinite line and is therefore not bounded (remember figure \ref{Fig:bounded_unbounded}).
 
+\subsubsection*{Calculating the costs of the new solution}
 Next we want to look at how the cost changes when going from $x$ to $y$. Again we do this by plugging in our observations into the line equation:
 
 \begin{align*}
@@ -145,7 +159,8 @@ cy &= cx + \Theta cd\\
 cy - cx &= \Theta (c_Bd_B +c_j)
 \end{align*}
 
-If $y$ was a solution that we move to we did that because $cy$ was smaller that $cx$. So $c_j - c_Bd_B$ should be negative if we want to move to $y$.
+Note that using equation \ref{equ:valueDb} $c_Bd_B$ equals $- c_B A^{-1}_B A_j$.
+If $y$ was a solution that we move to we did that because $cy$ was smaller than $cx$. So $c_j + c_Bd_B$ should be negative if we want to move to $y$. 
 
 Now we know how to calculate the $b_i$ we need to remove when we put in a $j$ to get a new basis and we know a new (much more complicated, yay) criterion to check whether we move in the right direction. We combine that into a better version of the algorithm.
 
@@ -165,6 +180,11 @@ until B hasn't changed
 \end{lstlisting}
 \end{center}
 
+\subsubsection*{Reduced cost vector}
+\begin{Def}[Reduced cost vector]
+ Let $x$ be a basic solution, let $A_B$ be an associated basis matrix, and let $c_B$ be the vector of costs of the basic variables. For each $j$, we define the reduced costs $\bar c$ of the variable $x_j$ according to the formula 
+$\bar c_j = c_j + c_Bd_B = c_j - c_B A^{-1}_B A_j$
+\end{Def}
 
 
 \begin{center}
@@ -173,9 +193,11 @@ SIMPLEX-TAKE-III (A,b,c)
 
 B = some feasible solution
 repeat
-    $\bar c$ = $c_j$ + $c_BA_B^{-1}A$ //reduced cost vector
+    $\bar c$ = $c_j$ - $c_BA_B^{-1}A$ //reduced cost vector
     if $\exists j:{\bar c}_j<0$ 
-        u = $A^{-1}_B A_j$ // dimension m
+        u = $A^{-1}_B A_j$ 
+        if(no component of $u$ is positive)
+            return 'polyhedron is unbounded'
         $b_i$ = index in B s.t. $u_i >0$ 
                 minimizes  $x_{b_i}/u_i$
         B = B $\cup$ j $\backslash b_i$ 
