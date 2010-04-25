@@ -209,9 +209,11 @@ until B hasn't changed
 
 The algorithm always terminates because the assumptions ensure that we always have a optimal solution and we improve our solution in every step.
 
+The return statement 'polyhedron is unbounded' was added to work around assumption 4. If we reach that return value we know that the costs are decreasing as $c_j < 0$ and that at no time a constraint is going to be violated, as $u$ has no positive components and therefore $\theta=\infty$ and the optimal cost equal $-\infty$.
+
 \begin{thm}\label{Pr:simplexIIIopt} Let B be a basis. If $x_B=A^{-1}_Bb\geq 0$ and $\bar c=c- c_B A_B^{-1}A_j \geq 0$ then the basic feasible solution induced by $B$ is optimal.\end{thm}
 
-\begin{pr}[Theorem \ref{Pr:simplexIIIopt}] Let $x$ be the basiv feasible solution induced by $B$, $y$ be any other feasible solution. We want to argue that the cost of $x$ is smaller than the cost of $y$. %Let $d=y-x$ then 
+\begin{pr}[Theorem \ref{Pr:simplexIIIopt}] Let $x$ be the basic feasible solution induced by $B$, $y$ be any other feasible solution. We want to argue that the cost of $x$ is smaller than the cost of $y$. %Let $d=y-x$ then 
 Consider the direction $d=x-y$. From the feasibility of $x$ and $y$ it follows by using the formula \ref{equ:AdEquZero} that
 
 \[0=Ad=A_b d_b + \sum_{k \not \in B } {A_k d_k} \Rightarrow d_b = - \sum_{k \not \in B}{A_{B}^{-1}A_k d_k}\]
