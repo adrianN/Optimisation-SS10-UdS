@@ -105,7 +105,8 @@ When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s
 
 \item $d_j>0$ let $j$ be the column added to the basis, because we made the formerly non-basic variable $x_j$ basic. That is assigning it some value $>0$. By choosing $\Theta$ accordingly we can scale this to be $d_j=1$ and make further calculations easier. Therefore we assume from now one $d_j=1$
 
-\item $Ad = 0$ because both $x$ and $y$ are bfs, i.e. both satisfy all equations. By multiplying the line equation with $A$ and solving for $Ad$: $Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0$
+\item Both $x$ and $y$ are bfs, i.e. both satisfy all equations. By multiplying the line equation with $A$ and solving for $Ad$: $Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0$ we get
+\begin{equation} Ad = 0 \label{equ:AdEquZero}\end{equation}
 \end{itemize}
 
 \subsubsection*{Calculating $b_i$ directly}
@@ -208,10 +209,19 @@ until B hasn't changed
 
 The algorithm always terminates because the assumptions ensure that we always have a optimal solution and we improve our solution in every step.
 
-\begin{thm}\label{Pr:simplexIIIopt} Let B be a basis. If $x_B=A^{-1}_Bb\geq 0$ and $\bar c=c- c_B A_B^{-1}A_j$ then $B$ is optimal.\end{thm}
+\begin{thm}\label{Pr:simplexIIIopt} Let B be a basis. If $x_B=A^{-1}_Bb\geq 0$ and $\bar c=c- c_B A_B^{-1}A_j \geq 0$ then the basic feasible solution induced by $B$ is optimal.\end{thm}
 
-\begin{pr}[Theorem \ref{Pr:simplexIIIopt}] Let $x$ be the bsf induced by $B$, $y$ be some feasible solution. We want to argue that the cost of $x$ is smaller than the cost of $y$. Let $d=y-x$ then 
-\[cd = c_Bd_B + \sum_{j\in \bar B} c_jd_j \] 
+\begin{pr}[Theorem \ref{Pr:simplexIIIopt}] Let $x$ be the basiv feasible solution induced by $B$, $y$ be any other feasible solution. We want to argue that the cost of $x$ is smaller than the cost of $y$. %Let $d=y-x$ then 
+Consider the direction $d=x-y$. From the feasibility of $x$ and $y$ it follows by using the formula \ref{equ:AdEquZero} that
 
-To be continued
+\[0=Ad=A_b d_b + \sum_{k \not \in B } {A_k d_k} \Rightarrow d_b = - \sum_{k \not \in B}{A_{B}^{-1}A_k d_k}\]
+
+Now the difference in cost between $y$ and $x$ is 
+\[cd=c_{B}^{T} d_b + \sum_{k \not \in B} {d_k c_k}= \sum_{k \not \in B} {d_k (c_k-A_{B}^{-1} A_k)}=\sum_{k \in B} {d_k \bar c_k}\]
+
+Notice that for all $k \in B$ we have $x_k=0$ and $y_k \geq 0$ and therefore $d_k \geq 0$. By our assumption, all reduced costs are non-negative. Thus, $c y - c x = c d \geq 0$. Sine this holds for all feasible $y$, it follows that $x$ is indeed optimal.
 \end{pr}
+
+\begin{cor}
+Given that our initial four assumptions hold. Algorithm three returns an optimal feasible solution after a finite number of steps.
+\end{cor}
