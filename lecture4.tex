@@ -207,9 +207,41 @@ until B hasn't changed
 \end{lstlisting}
 \end{center}
 
-The algorithm always terminates because the assumptions ensure that we always have a optimal solution and we improve our solution in every step.
+
+%alles hier haben wir schon oben bewiesen.
+Let's focus on a single iteration and recapture why it works. If we start with a basic feasible solution $Ax=b, x\geq 0$, $B$ is a basis; then 
+
+\begin{enumerate}
+\item $Ayb=b$, since 
+\[Ay=A(x+\Theta d) = Ax + \Theta Ad = b+\Theta(A_j+A_Bd_B) = b+\Theta(A_j - A_BA_B^{-1}A_j) = b\]
+\item $y\geq 0$. There are three cases
+\begin{itemize}
+\item $y_k, k\not \in B\cup j$
+\[y_k=x_k+\Theta d_k =x_k\]
+Since $x_k$ was not in $B$ it is 0
+\item $y_k, k=j$
+\[y_k=x_j+\Theta d_j = \Theta \geq 0\]
+By definition of $\Theta$
+\item $y_k,k\in B$
+\[y_k=x_k+\Theta d_k\]
+This is only interesting if $d_k<0$. In that case we defined $\Theta$ to be $\min_{{b_i\in B}\atop {d_{b_i} <0}} \left| \frac{x_{b_i}}{d_{b_i}}\right |$. And hence we stay positive.
+\end{itemize}
+\item $D$ is a basis. Assume otherwise. Then the new vector must break the linear independence
+
+\[A_j= \sum_{b_k\in B\backslash b_i} \lambda_k A_{b_k}\]
+
+Since we have $d_B=-A_B^{-1}A_j$ we get
+
+\[d_B = -\sum \lambda_k A_B^{-1} A_{b_k} \qquad \Rightarrow d_{b_i} = 0\]
+
+Which is a contradiction %ausführen
+\end{enumerate}
+
+For all these things we don't use the assumption that the system is nondegenerate. We'll use that later, when we remove that constraint. However we need that if we want to show that we always improve the objective value.
 
 The return statement 'polyhedron is unbounded' was added to work around assumption 4. If we reach that return value we know that the costs are decreasing as $c_j < 0$ and that at no time a constraint is going to be violated, as $u$ has no positive components and therefore $\theta=\infty$ and the optimal cost equal $-\infty$.
+
+If the assumptions hold, simplex always terminates, since there are only finitely many candidate solutions and we always increase the objective value.
 
 \begin{thm}\label{Pr:simplexIIIopt} Let B be a basis. If $x_B=A^{-1}_Bb\geq 0$ and $\bar c=c- c_B A_B^{-1}A_j \geq 0$ then the basic feasible solution induced by $B$ is optimal.\end{thm}
 
@@ -219,7 +251,7 @@ Consider the direction $d=x-y$. From the feasibility of $x$ and $y$ it follows b
 \[0=Ad=A_b d_b + \sum_{k \not \in B } {A_k d_k} \Rightarrow d_b = - \sum_{k \not \in B}{A_{B}^{-1}A_k d_k}\]
 
 Now the difference in cost between $y$ and $x$ is 
-\[cd=c_{B}^{T} d_b + \sum_{k \not \in B} {d_k c_k}= \sum_{k \not \in B} {d_k (c_k-A_{B}^{-1} A_k)}=\sum_{k \in B} {d_k \bar c_k}\]
+\[cd=c_{B} d_b + \sum_{k \not \in B} {d_k c_k}= \sum_{k \not \in B} {\underbrace{d_k}_{y_k-x_k\geq 0} \underbrace{(c_k-c_BA_{B}^{-1} A_k)}_{\bar c_k\geq 0}}=\sum_{k \in B} {d_k \bar c_k}\]
 
 Notice that for all $k \in B$ we have $x_k=0$ and $y_k \geq 0$ and therefore $d_k \geq 0$. By our assumption, all reduced costs are non-negative. Thus, $c y - c x = c d \geq 0$. Sine this holds for all feasible $y$, it follows that $x$ is indeed optimal.
 \end{pr}
