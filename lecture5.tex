@@ -4,17 +4,19 @@ Make sure to understand this part, it will be in the midterm.
 
 Imagine we had the following table at the beginning of an iteration:
 
+\begin{center}
 %c is a row vector!
 \begin{tabular}{c|c}
-$-c_BA_B^{-1}b$ & $c-c_BA_B^{-1}A$ \\ 
-$A^{-1}_B b$ & $A_B^{-1}A
+$-c_BA_B^{-1}b$ & $c-c_BA_B^{-1}A$\\
+$A^{-1}_B b$ & $A_B^{-1}A$
 \end{tabular}
+\end{center}
 
 In the lower right cell we can get the vector $u$. By dividing the components of $u$ by the number in the top left we can find the basic index we need to kick out. It will turn out that computing the inverse matrices it easy, as they change only in one column from iteration to iteration.
 
-Suppose we have $A_B^{-1}$ and want to find $A_D^{-1}$, where $D=B\union j \backslash b_i$. Suppose we already had the correct solution with $A_B^{-1}$ 
+Suppose we have $A_B^{-1}$ and want to find $A_D^{-1}$, where $D=B\cup j \backslash b_i$. Suppose we already had the correct solution with $A_B^{-1}$ 
 
-\[A_B^{-1}A_D = \left[ A_B^{-1}A_{_b_i}\ldots A_B^{-1}A_j\ldots A_B^{-1}A_m\right] = \left[ e_1,e_2, \ldots, e_{i-1}, \underbrace{A_B^{-1}A_j}_{=u}, e_{i+1},\ldots, e_m\right]\]
+\[A_B^{-1}A_D = \left[ A_B^{-1}A_{b_i}\ldots A_B^{-1}A_j\ldots A_B^{-1}A_m\right] = \left[ e_1,e_2, \ldots, e_{i-1}, \underbrace{A_B^{-1}A_j}_{=u}, e_{i+1},\ldots, e_m\right]\]
 
 So it's not the correct inverse, but the difference is very small. So we want to find a correction matrix $R$ that gives us the right answer. It is the identity matrix, except for the column that is wrong.
 
@@ -29,7 +31,9 @@ So it's not the correct inverse, but the difference is very small. So we want to
 
 Then we get $RA_B^{-1} = A_D^{-1}$. You can find $R$ yourself by doing gaussian elimination on $A_B^{-1}A_D$ and accumulating the transformation matrices.
 
-\begin{Ex} Suppose we have the following LP
+\begin{Ex} So now forget for a moment that fancy matrix stuff and see what's going on when you solve an LP by hand.
+
+Suppose we have the following LP
 
 \begin{align*}
 \min & -10x_1 -12x_2 -12x_3\\
@@ -51,6 +55,7 @@ We convert that to standard form by introducing slack variables:
 
 At initial solution we choose $B=\{4,5,6\}, A_B=\mathbb{I}$. Our tableau looks like this
 
+\begin{center}
 \begin{tabular}{c|cccccc}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
 0 & -10 & -12 & -12 & 0 & 0 & 0\\
@@ -58,9 +63,11 @@ $x_4=20$ & 1 & 2 & 2 & 1 &  0 & 0 \\
 $x_5=20$ & 2 & 1 & 2 & 0 &  1 & 0\\
 $x_6=20$ & 2 & 2 & 1 & 0 &  0 & 1\\
 \end{tabular}
+\end{center}
 
 By looking at the matrix we can see that the reduced cost of a basic variable is 0. Also the submatrix for the basic variables should be the identity matrix. We have to choose one of the non-basic variables with negative reduced cost, for example $x_1$ (there will be a rule to avoid cycling later). Note that in this example the basis is degenerate. Since $x_5$ and $x_6$ both achieve the minimum we have to choose one. For example $x_5$. This is called the pivot. We update the table like this
 
+\begin{center}
 \begin{tabular}{c|cccccc}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
 100 & 0 & -7 & -2 & 0 & 5 & 0\\
@@ -68,9 +75,11 @@ $x_4=10$ & 0 & 3/2 & 1 & 1 & 1/2 & 0 \\
 $x_1=10$ & 1 & 1/2 & 1 & 0 &  1/2 & 0\\
 $x_6=0$ & 0 & 1 & -1 & 0 & -1 &  1\\
 \end{tabular}
+\end{center}
 
 Now we can choose between $x_2$ with $-7$ and $x_3$ with $-2$. $x_2$ wouldn't be good, so we choose $x_3$ instead. Then we can choose between $x_1$ and $x_4$. Let's use $x_4$. That gives us
 
+\begin{center}
 \begin{tabular}{c|cccccc}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
 120 & 0 & -4 & 0 & 2 & 6 & 0\\
@@ -78,9 +87,11 @@ $x_3=10$ & 0 & 3/2 & 1 & 1 & 1/2 & 0 \\
 $x_1=0$ &0  & -1 & 0 & -1 &  1 & 0\\
 $x_6=0$ & 0 & 5/2 & 0 & 1 & -3/2 &  1\\
 \end{tabular}
+\end{center}
 
 The final iteration brings in $x_2$ and kicks out $x_6$
 
+\begin{center}
 \begin{tabular}{c|cccccc}
          & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
 120      &\\
@@ -88,7 +99,7 @@ $x_3=10$ &\\
 $x_1=0$  &\\
 $x_2=0$  &\\
 \end{tabular}
-
+\end{center}
 \end{Ex}
 
 
