@@ -103,6 +103,9 @@ When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s
 \begin{itemize}
 \item $d_k=0$ if $k\not \in B \cup j$, because we assumed all non-basic variables to be zero to make the non-negativity constraints active. In particular the column $b_i$ is removed from the basis and hence the variable $x_{b_i}$ becomes $0$.
 
+\begin{equation} d_k=0 \label{equ:dkEquZero} \end{equation}
+
+
 \item $d_j>0$ let $j$ be the column added to the basis, because we made the formerly non-basic variable $x_j$ basic. That is assigning it some value $>0$. By choosing $\Theta$ accordingly we can scale this to be $d_j=1$ and make further calculations easier. Therefore we assume from now one $d_j=1$
 
 \item Both $x$ and $y$ are bfs, i.e. both satisfy all equations. By multiplying the line equation with $A$ and solving for $Ad$: $Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0$ we get
@@ -212,27 +215,34 @@ until B hasn't changed
 Let's focus on a single iteration and recapture why it works. If we start with a basic feasible solution $Ax=b, x\geq 0$, $B$ is a basis; then 
 
 \begin{enumerate}
-\item $Ayb=b$, since 
+\item $Ay=b$, since 
 \[Ay=A(x+\Theta d) = Ax + \Theta Ad = b+\Theta(A_j+A_Bd_B) = b+\Theta(A_j - A_BA_B^{-1}A_j) = b\]
+Note that $A_BA_b^{-1}$ equals the identity matrix
 \item $y\geq 0$. There are three cases
+
 \begin{itemize}
+
 \item $y_k, k\not \in B\cup j$
-\[y_k=x_k+\Theta d_k =x_k\]
-Since $x_k$ was not in $B$ it is 0
+\[y_k=x_k+\Theta d_k = x_k = 0\]
+Since $d_k=0$ as $k \not \in B$ (see formula \ref{equ:dkEquZero}) for the same reason $x_k=0$ (it isn't a basic variable therefore we set it to zero). 
+
 \item $y_k, k=j$
-\[y_k=x_j+\Theta d_j = \Theta \geq 0\]
-By definition of $\Theta$
+\[ y_k = x_j + \Theta d_j = 0 + \Theta d_j \Rightarrow  \Theta d_k \geq 0\]
+By definition of $\Theta$ %TODO which is in this case?
+
 \item $y_k,k\in B$
 \[y_k=x_k+\Theta d_k\]
 This is only interesting if $d_k<0$. In that case we defined $\Theta$ to be $\min_{{b_i\in B}\atop {d_{b_i} <0}} \left| \frac{x_{b_i}}{d_{b_i}}\right |$. And hence we stay positive.
+
 \end{itemize}
+
 \item $D$ is a basis. Assume otherwise. Then the new vector must break the linear independence
 
 \[A_j= \sum_{b_k\in B\backslash b_i} \lambda_k A_{b_k}\]
 
 Since we have $d_B=-A_B^{-1}A_j$ we get
 
-\[d_B = -\sum \lambda_k A_B^{-1} A_{b_k} \qquad \Rightarrow d_{b_i} = 0\]
+\[d_B = -\sum \lambda_k A_B^{-1} A_{b_k} \qquad \Rightarrow d_{b_i} = 0\] %TODO check this. My notes don't show the -
 
 Which is a contradiction %ausführen
 \end{enumerate}
