@@ -7,12 +7,12 @@ Imagine we had the following table at the beginning of an iteration:
 \begin{center}
 %c is a row vector!
 \begin{tabular}{c|c}
-$-c_BA_B^{-1}b$ & $c-c_BA_B^{-1}A$\\
+$-c_BA_B^{-1}b$ & $c-c_BA_B^{-1}A$\\\hline
 $A^{-1}_B b$ & $A_B^{-1}A$
 \end{tabular}
 \end{center}
 
-In the lower right cell we can get the vector $u$. By dividing the components of $u$ by the number in the top left we can find the basic index we need to kick out. It will turn out that computing the inverse matrices it easy, as they change only in one column from iteration to iteration.
+In the lower right cell we can get the vector $u$. By dividing the components of $u$ by the number in the top left (note: there seems to be a mistake here) we can find the basic index we need to kick out. It will turn out that computing the inverse matrices it easy, as they change only in one column from iteration to iteration.
 
 Suppose we have $A_B^{-1}$ and want to find $A_D^{-1}$, where $D=B\cup j \backslash b_i$. Suppose we already had the correct solution with $A_B^{-1}$ 
 
@@ -23,9 +23,9 @@ So it's not the correct inverse, but the difference is very small. So we want to
 \[R= \begin{pmatrix} %needs diagonal dots
 1 & \ldots & -u_1/u_i & \ldots \\
 0 & \ldots & -u_2/u_i & \ldots \\
-\vdots \\
+\vdots & \ddots & \vdots \\
 & & 1/u_i & \ldots\\
-\vdots\\
+\vdots & &\vdots &\ddots\\
 & & & \ldots & 1
 \end{pmatrix}\]
 
@@ -36,24 +36,24 @@ Then we get $RA_B^{-1} = A_D^{-1}$. You can find $R$ yourself by doing gaussian 
 Suppose we have the following LP
 
 \begin{align*}
-\min & -10x_1 -12x_2 -12x_3\\
-\text{s.t.} & x_1+2x_2 +2_x2\leq 20\\
+\min \qquad& -10x_1 -12x_2 -12x_3\\
+\text{s.t.}\qquad & x_1+2x_2 +2_x2\leq 20\\
 &2x_1 +x_2+2_x3\leq 20\\
-& 2x_1+2x_2 +x_3\leq 20
+& 2x_1+2x_2 +x_3\leq 20\\
 & x_1,x_2,x_3 \geq 0
 \end{align*}
 
 We convert that to standard form by introducing slack variables:
 
 \begin{align*}
-\min & -10x_1 -12x_2 -12x_3\\
-\text{s.t.} & x_1+2x_2 +2_x2 + x_4 = 20\\
+\min \qquad & -10x_1 -12x_2 -12x_3\\
+\text{s.t.}\qquad & x_1+2x_2 +2_x2 + x_4 = 20\\
 &2x_1 +x_2+2_x3 +x_5 =20\\
-& 2x_1+2x_2 +x_3 +x_6 = 20
+& 2x_1+2x_2 +x_3 +x_6 = 20\\
 & x_1,x_2,x_3,x_4,x_5,x_6 \geq 0
 \end{align*}
 
-At initial solution we choose $B=\{4,5,6\}, A_B=\mathbb{I}$. Our tableau looks like this
+Since we can't handle more complicated cases yet, this LP has the origin as a feasible solution. So we can start by putting all the slack variables in our basis $B=\{4,5,6\}, A_B=\mathbb{I}$ (remember, non-basic variables are always 0). Our tableau looks like this
 
 \begin{center}
 \begin{tabular}{c|cccccc}
@@ -65,7 +65,31 @@ $x_6=20$ & 2 & 2 & 1 & 0 &  0 & 1\\
 \end{tabular}
 \end{center}
 
-By looking at the matrix we can see that the reduced cost of a basic variable is 0. Also the submatrix for the basic variables should be the identity matrix. We have to choose one of the non-basic variables with negative reduced cost, for example $x_1$ (there will be a rule to avoid cycling later). Note that in this example the basis is degenerate. Since $x_5$ and $x_6$ both achieve the minimum we have to choose one. For example $x_5$. This is called the pivot. We update the table like this
+In the top left cell we see the objective value we currently achieve. Since we negated it, a big value is good here.
+
+The top row shows us the reduced cost vector, i.e. the cost change if we walk along one of the constraints. As expected it is 0 for all basic variables. During the algorithm submatrix for the basic variables should be a diagonal matrix. 
+
+We have to choose one of the non-basic variables with negative reduced cost, for example $x_1$ (there will be a rule to avoid cycling later) and add it to the basis. To decide which element to kick out of the basis we walk over the column of $x_1$ and divide the value of the variable of each row (in the first column) by the value in $x_i$'s column. This is "minimize $|x_{b_i}/d_{b_i}|$ step in the algorithm. It corresponds to rewriting every line of the LP to look for the constraint that becomes tight first. Like this:
+
+\begin{align*}
+x_1+2x_2 +2_x2 + x_4 = 20 &\quad \Rightarrow & x_4 = 20-x_1 \Rightarrow x_1= 20\\
+2x_1 +x_2+2_x3 +x_5 =20 &\quad \Rightarrow & x_5 = 20 -2x_1 \Rightarrow x_1=10 \\
+ 2x_1+2x_2 +x_3 +x_6 = 20 &\quad \Rightarrow& x_6=20-2x_1 \Rightarrow x_1 = 10
+\end{align*}
+
+Since all the non-basic variables are 0 and the coefficients of the basic variables always form a diagonal matrix, each line gives us a simple equation. In this example the basis is degenerate. Since $x_5$ and $x_6$ both achieve the minimum we have to choose one (a rule for this will be introduced later). For example $x_5$. This is called the pivot.
+
+Now we want to introduce $x_1$ into the basis. That means we need to make all coefficients in its column 0 (including the one in the objective function!), except for the one in the line that achieves the minimum. That line gets divided be the coefficient (in an alternative method all other lines get multiplied by the coefficient, that avoids fractions and is called \emph{integer pivoting}). We use the normal row operations we know from gaussian elimination. 
+
+\begin{center}
+\begin{tabular}{c|ccccccr}
+  & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\cline{1-7}
+0 & -10 & -12 & -12 & 0 & 0 & 0 &\hspace{1cm} $+10\cdot x_1$\\
+$x_4=20$ & 1 & 2 & 2 & 1 &  0 & 0 &\hspace{1cm} $-1\cdot x_1$\\
+$x_1=10$ & 1 & 1/2 & 1 & 0 &  1/2 & 0\\
+$x_6=20$ & 2 & 2 & 1 & 0 &  0 & 1 &\hspace{1cm} $-2\cdot x_1$\\
+\end{tabular}
+\end{center}
 
 \begin{center}
 \begin{tabular}{c|cccccc}
@@ -77,7 +101,8 @@ $x_6=0$ & 0 & 1 & -1 & 0 & -1 &  1\\
 \end{tabular}
 \end{center}
 
-Now we can choose between $x_2$ with $-7$ and $x_3$ with $-2$. $x_2$ wouldn't be good, so we choose $x_3$ instead. Then we can choose between $x_1$ and $x_4$. Let's use $x_4$. That gives us
+Now we can choose between $x_2$ with $-7$ and $x_3$ with $-2$. $x_2$ wouldn't be good, %why?
+so we choose $x_3$ instead. Then we can choose between $x_1$ with $10/1=10$ and $x_4$ with $20/2=10$. Let's use $x_4$. Again we replace $x_4$ on the left by $x_3$, scale that line by $1/2$ (since the coefficient was 2) and do gaussian elimination until we have just a $1$ in that column. That gives us
 
 \begin{center}
 \begin{tabular}{c|cccccc}
