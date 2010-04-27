@@ -122,10 +122,10 @@ Now we want to prove that the three definitions \ref{Def:Vertex}, \ref{Def:Extre
 \item vertex $\Rightarrow$ extreme point: Proof by contraposition. Assume the existence of $y,z \in P$ s.t. $y,z\neq x$ with $x= \lambda y + (1-\lambda )z$. That is, $x$ is not an extreme point (definition \ref{Def:ExtremePoint}). We want to show that it's not a vertex either.
 
 From definition a vertex (def. \ref{Def:Vertex}) we know that some $c$ should exist such that $c x < c \lambda y  + c (1-\lambda) z$. That however is a contradiction to the assumption $x= \lambda y + (1-\lambda )z$.
+
 \begin{align*}
 cx &= \lambda cy +(1-\lambda)cz\\
-   &< \lambda cx + (1-\lambda)cx\\
-   &< cx
+   &> \lambda cx + (1-\lambda)cx = cx && \text{since }cx\leq cy, cx\leq cz\\
 \end{align*}
 
 \item extreme point $\Rightarrow$ bsf (proof by contraposition; we show $\neg \text{bsf} \Rightarrow \neg \text{extreme point}$): Suppose $x\in P$ is not a basic feasible solution. Let $B$ be a matrix of active constraints at $x$ and $C$ the matrix of the inactive constraints such that $Bx=d$, $Cx\gneq f$ and $A = \left[B\atop C\right]$. Since $x$ is not a bfs the matrix $B$ hasn't full rank\footnote{Note the slightly different full rank definition. In this case full rank is defined by the number of dimensions of the polyhedron, not in terms of the rows and columns of $B$.} and its kernel is nonempty. Hence
