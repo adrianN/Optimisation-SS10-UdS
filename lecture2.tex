@@ -4,8 +4,9 @@ A linear program in general has the form:
 \text{minimize:}& \vec c \cdot \vec x \\
 \text{subject to:} & A \cdot \vec x \geq \vec b
 \end{eqnarray*}
-where $x=(\nthings{x})$ is an vector of variables in $\R$. $x$ together with the vector $c \in \R^n$ define the objective function.
-$A \in \R^{m \times n}$ together with $x\in \R^m$ and $b \in \R^m$is the system of inequation which describes the constrains.
+where $x=\trans{(\nthings{x})}$ is an vector of variables in $\R$. $x$ together with the vector $c \in \R^n$ define the objective function. Note that in this script the cost vector is always a row vector. Should you find formulas with $\trans c$ in them think hard if that's actually right and mail the authors if not.
+
+$A \in \R^{m \times n}$ together with $x\in \R^m$ and $b \in \R^m$ form the system of inequalities which describe the constraints.
 
 Solving LPs with just two variables is rather easy. We can use a graphical approach in two dimensions. The constraints define halfplanes in the 2D space. The feasible region of the problem is then the intersection of all the halfplanes. The cost vector now defines a halfspace of its own (i.e. lines with equivalent costs) that can be shifted around by choosing different $x$. If $x$ lies within the feasible region we get a feasible solution. The goal is to shift the lines as far in negative $c$ direction as possible without leaving the feasible region. See figure \ref{Fig:graphSolutionEx}.
 
@@ -16,9 +17,9 @@ Solving LPs with just two variables is rather easy. We can use a graphical appro
 \hfill
 \begin{minipage}[hbt]{0.4\linewidth}
 \begin{align*}
-\min x+y\\
-2x+y\geq 8\\
-2x+3y\geq 12
+\min & x+y\\
+s.t.\quad&2x+y\geq 8\\
+&2x+3y\geq 12
 \end{align*}
 \end{minipage}
 \caption{An example for a graphical solution of an LP. The optimal solution is (3,2)}
@@ -58,7 +59,7 @@ With definition \ref{Def:hyperPlaneSpace} we can say that a polyhedron is an int
 Convex sets have a lot of nice properties. Luckily feasible regions are always convex. This is the main reason why we can efficiently solve LPs. 
 
 \subsection*{Corners}
-The following three definitions formalize the notion of a corner.
+The following definitions formalize the notion of a corner.
 
 \begin{Def}[Vertex]\label{Def:Vertex} Let P be a polyhedron. A vector $x\in P$ is a \emph{vertex} of P if $\exists \vec c\in \R^n$
  s.t. $cx < cy$ for all $y\in P, y \neq x $; that is $x$ is the minimal point for some cost vector (the unique optimal solution for some LP with the feasible set P). See figure \ref{Fig:vertex}
@@ -78,10 +79,11 @@ Example: In 2D we can always select the two adjacent corners of a point $x$ on t
 
 \begin{Def}[Active Constraint]\label{Def:ActiveConstraint} Let $P$ be a polyhedron that is defined by some linear inequalities $a_i$: $P=\{x|a_ix\geq b_i\}$. We'll say that the $i$-th constraint is \emph{active} at a point $x$ if we have equality there $a_ix = b_i$
 \end{Def}
-%
-\begin{Def}[Basic Solution]\label{Def:BasicSolution}Let $P\in \R^n$ be a polyhedron and let $x^{*}\in \R^n$. The vector $x^{*}$ is a basic solution if all \emph{equality} constraint are active and out of the active constraints, there are $n$ of them that are linearly independet. See solution $A$ in figure \ref{Fig:bsfVSbs} for an example of a basic solution.
+
+%TODO we don't have a definition of standard form yet but the following definition is only valid for polyhedra in standard form
+\begin{Def}[Basic Solution]\label{Def:BasicSolution}Let $P\in \R^n$ be a polyhedron in standard form (see below) and let $x^{*}\in \R^n$. The vector $x^{*}$ is a basic solution if all \emph{equality} constraints are active and out of the active constraints, there are $n$ of them that are linearly independent. See solution $A$ in figure \ref{Fig:bsfVSbs} for an example of a basic solution.
 \end{Def}
-Notice that in this definition some of the constraint of the form $x_i \geq b_i$ may be violated, as long as $n$ of them are active. In a standard form polyhedron this means that some of the $x_i \geq 0$ constraints may be violated. 
+Notice that in this definition some of the constraints of the form $x_i \geq b_i$ may be violated, as long as $n$ of them are active. In a standard form polyhedron this means that some of the $x_i \geq 0$ constraints may be violated. 
 
 \begin{figure}[hbt]
 \begin{center}

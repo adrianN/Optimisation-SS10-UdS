@@ -55,9 +55,10 @@
        id="linearGradient4239"
        x1="303.0921"
        y1="118.52813"
-       x2="481.54184"
-       y2="-9.1792154"
-       gradientUnits="userSpaceOnUse" />
+       x2="426.71283"
+       y2="26.238289"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(64.999579,41.916468)" />
     <inkscape:perspective
        id="perspective4291"
        inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
@@ -92,8 +93,8 @@
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
-     inkscape:window-width="1676"
-     inkscape:window-height="1006"
+     inkscape:window-width="1280"
+     inkscape:window-height="778"
      inkscape:window-x="4"
      inkscape:window-y="0"
      inkscape:window-maximized="0" />
@@ -116,15 +117,15 @@
      transform="translate(-64.999579,-41.916468)">
     <path
        style="fill:url(#linearGradient4239);fill-opacity:1;stroke:none"
-       d="m 297.01392,122.69426 c 25.35664,-39.377849 48.75157,-77.339248 74.7073,-118.9796435 9.94754,0 61.83431,-4.44404864 62.81856,0.1197145 0,38.189872 0,73.945714 0,119.370759 -43.79197,0.30062 -97.84654,-0.48997 -137.52586,-0.51083 z"
+       d="m 344.0135,164.61073 c 25.35664,-39.37785 48.75157,-77.33925 74.7073,-118.979645 9.94754,0 49.62673,8.382722 64.18077,22.93676 14.55404,14.554037 9.98664,54.199235 -1.36221,96.553715 -43.79197,0.30062 -97.84654,-0.48997 -137.52586,-0.51083 z"
        id="path4231"
-       transform="translate(64.999579,41.916468)"
        inkscape:connector-curvature="0"
-       sodipodi:nodetypes="ccccc" />
+       sodipodi:nodetypes="cczcc" />
     <path
        style="fill:none;stroke:#000000;stroke-width:1.0085001px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 436.36675,45.001409 -74.87159,119.863231 135.66182,0.34345"
-       id="path4227" />
+       d="m 418.36675,45.001409 -74.87159,119.863231 135.66182,0.34345"
+       id="path4227"
+       inkscape:connector-curvature="0" />
     <path
        style="fill:#81ff82;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 163.74895,42.416468 77.058328,73.239799 65.499579,149.3349 l 78.021561,18.78297 70.79734,-52.49599 z"
@@ -132,8 +133,9 @@
        inkscape:connector-curvature="0" />
     <path
        style="fill:none;stroke:#000000;stroke-width:0.75;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend)"
-       d="m 422.36258,134.93285 33.95383,-31.54576"
-       id="path2821" />
+       d="m 404.36258,134.93285 33.95383,-31.54576"
+       id="path2821"
+       inkscape:connector-curvature="0" />
     <path
        sodipodi:type="arc"
        style="fill:#000000;fill-opacity:0.98039216;stroke:none"
@@ -142,27 +144,27 @@
        sodipodi:cy="44.586121"
        sodipodi:rx="0.96322912"
        sodipodi:ry="1.2040364"
-       d="m 183.97676,44.586121 c 0,0.664971 -0.43125,1.204036 -0.96323,1.204036 -0.53197,0 -0.96322,-0.539065 -0.96322,-1.204036 0,-0.664971 0.43125,-1.204037 0.96322,-1.204037 0.53198,0 0.96323,0.539066 0.96323,1.204037 z"
-       transform="matrix(0.71875,0,0,0.57499997,290.89455,109.14234)" />
+       d="m 183.97676,44.586121 a 0.96322912,1.2040364 0 1 1 -1.92645,0 0.96322912,1.2040364 0 1 1 1.92645,0 z"
+       transform="matrix(0.71875,0,0,0.57499997,272.89455,109.14234)" />
     <text
        xml:space="preserve"
        style="font-size:10.97142887px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
-       x="414.99173"
+       x="396.99173"
        y="137.54362"
        id="text3595"><tspan
          sodipodi:role="line"
          id="tspan3597"
-         x="414.99173"
+         x="396.99173"
          y="137.54362">x</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:7.75268126px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
-       x="439.78586"
+       x="421.78586"
        y="126.53355"
        id="text4047"><tspan
          sodipodi:role="line"
          id="tspan4049"
-         x="439.78586"
+         x="421.78586"
          y="126.53355"> λd </tspan></text>
     <path
        style="fill:#ffffff;fill-opacity:0.98039216;stroke:none"

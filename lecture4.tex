@@ -5,14 +5,14 @@ In corollary \ref{Cor:always_extreme_points} we saw that we can always find an o
 Recall that an LP is in standard form if
 
 \begin{align*}
-\min \vec c\vec x\\
-Ax = b\\
-x\geq 0
+\min \quad & \vec c\vec x\\
+&Ax = b\\
+&x\geq 0
 \end{align*}
 
-and $A\in \R^{m\times n}$ has $m$ linearly independet rows. Note that we use a row vector for $c$.
+and $A\in \R^{m\times n}$ has $m$ linearly independent rows. Note that we use a row vector for $c$.
 
-A \emph{basis} $B\subseteq [1,n]$ is as set of $m$ column indices such that $A_B$ has full rank $m$ (Note that $A_B$ can be inverted as the rows are linearly independet). It induces a \emph{basic solution} (see \ref{Def:BasicSolution} for a basic solution definition)
+A \emph{basis} $B\subseteq [1,n]$ is as set of $m$ column indices such that $A_B$ has full rank $m$ (Note that $A_B$ can be inverted as the rows are linearly independent). It induces a \emph{basic solution} (see \ref{Def:BasicSolution} for a basic solution definition)
 
 \[\begin{cases} x_B = A^{-1}_Bb\\ x_{\bar B} = 0\end{cases}\]
 
@@ -22,7 +22,7 @@ We say it is feasible if $x_B\geq 0$. Note that the $x_{\bar B}=0$ part makes $n
 
 In other words (the book):
 \begin{enumerate} 
- \item Choose m linearly independet columns $A_{B(1)},...,A_{B(m)}$
+ \item Choose m linearly independent columns $A_{B(1)},...,A_{B(m)}$
  \item Let $x_i=0$ for all $i \neq B(1),...,B(m)$
  \item Solve the system of $m$ equations $Ax=b$ for the unknowns $x_{B(1)},...x_{B(m)})$
 \end{enumerate}
@@ -36,17 +36,26 @@ Certain basic solution are degenerate.
 In 2D this means that more than two lines intersect at one point.
 
 %das ist didaktisch hier fehl am platz
-The interesting property is, that we can't get the same basic solution from two different bases, if we have a non-degenerate LP. In the degenerate case this may very well happen. Below examples shows the problem:
+The interesting property is, that we can't get the same basic solution from two different bases, if we have a non-degenerate LP. In the degenerate case this may very well happen. Figure \ref{Fig:degenerateSystem} exhibits the problem:
 
+
+\begin{figure}[hbt]
+\begin{minipage}[hbt]{0.4\linewidth}
+\includegraphics{./images/degenerateSystem.pdf}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{0.4\linewidth}
 \begin{align*}
 x_2 + x_3 &= 1\\
 x_1 - x_2 +x_4 &=0\\
 x_1 + x_2 +x_5 &= 2\\
 \end{align*}
+\end{minipage}
+\caption{An example for a degenerate system}
+\label{Fig:degenerateSystem}
+\end{figure}
 
-% figure
-
-The above system gives us the solution $(1,1,0,0,0)$ for three bases $\{1,2,3\},\{1,2,4\},\{1,2,5\}$. This happens because we have a point where three constraints are active, although we're in 2D. See figure \ref{Fig:degenerateLP}. It is easy to see that if we have two bases build from indices $k\in [1,\ldots,n]$ that give us the same solution one of the $x_k$ (a basic variable) has to be zero. %easy to see :S
+The system in figure \ref{Fig:degenerateSystem} gives us the solution $(1,1,0,0,0)$ for three bases $\{1,2,3\}$, $\{1,2,4\}$, $\{1,2,5\}$. This happens because we have a point where three constraints are active, although we're in 2D. It is easy to see that if we have two bases build from indices $k\in [1,\ldots,n]$ that give us the same solution one of the $x_k$ (a basic variable) has to be zero. %easy to see :S
 
 %figure
 Note that degeneracy is not a purely \emph{geometric property} (representation independend). However if a basic feasible solution of a particular standard form representation of a polyhedron $P$ is degenerated, then it is degenerated under all standard form representations of $P$.
@@ -56,7 +65,7 @@ Note that degeneracy is not a purely \emph{geometric property} (representation i
 
 \begin{enumerate}
 \item The LP is in standard form (for conversion see \ref{Sec:standardForm})
-\item Every feasible basis $A$ is non-degenerate. A basis $B$ is non-degenerate if $\forall b:\ x_B=A^{-1}_Bb \gneq 0$. Note the difference to $x_B\geq 0$ for general basic solutions. So it is forbidden that more than $n$ (those in $B$ and $>n-m$ non-negativity) constraints are active (in $n$ dimensions they can't all be linearly independet of course). 
+\item Every feasible basis $A$ is non-degenerate. A basis $B$ is non-degenerate if $\forall b:\ x_B=A^{-1}_Bb \gneq 0$. Note the difference to $x_B\geq 0$ for general basic solutions. So it is forbidden that more than $n$ (those in $B$ and $>n-m$ non-negativity) constraints are active (in $n$ dimensions they can't all be linearly independent of course). 
 \item We are given an initial feasible basis
 \item The feasible region of the LP is bounded
 \end{enumerate}
@@ -87,8 +96,6 @@ We switch from a basis $B$ to a basis $D$ by removing a column $b_i$ from $B$ an
 
 It will later turn out that we don't actually have to check every combination for $j$ and $b_i$. The choice of $b_i$ is uniquely determined by the choice of $j$.
 
-
-
 When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s.t. $y=x+\Theta d$). Have a look at figure \ref{Fig:movingToSolutions}. We do some observations on the vector $d=(x_0,...,x_n)$. $d_k$ refers to the k-th component of $d$. 
 
 \begin{figure}[hbt]
@@ -99,12 +106,10 @@ When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s
 \label{Fig:movingToSolutions}
 \end{figure}
 
-
 \begin{itemize}
 \item $d_k=0$ if $k\not \in B \cup j$, because we assumed all non-basic variables to be zero to make the non-negativity constraints active. In particular the column $b_i$ is removed from the basis and hence the variable $x_{b_i}$ becomes $0$.
 
 \begin{equation} d_k=0 \label{equ:dkEquZero} \end{equation}
-
 
 \item $d_j>0$ let $j$ be the column added to the basis, because we made the formerly non-basic variable $x_j$ basic. That is assigning it some value $>0$. By choosing $\Theta$ accordingly we can scale this to be $d_j=1$ and make further calculations easier. Therefore we assume from now one $d_j=1$
 

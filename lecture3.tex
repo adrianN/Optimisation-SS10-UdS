@@ -40,7 +40,7 @@ For any line from a point inside the polyhedron we eventually leave the polyhedr
 \begin{description}
 %#todo
 %sieht unschoen aus, muessten wir anders formatieren
-\item[$\text{CH(extreme points of P)} \subseteq \text{P}$] As polyhedra are convex sets. Every convex combination of extreme points must be in $P$.\\ 
+\item[$\text{CH(extreme points of P)} \subseteq \text{P}$] As polyhedra are convex sets, every convex combination of extreme points must be in $P$.
 \item[$\text{P} \subseteq \text{CH(extreme points of P)}$]:  From the definition we know that all convex combinations of two points are still in P. We generalise to the new kind of convex combination that includes several vectors. 
 
 Let $x\in P$. Since $P$ is a polyhedron $x$ is a solution of the system of inequations $Ax\geq b$ (def. \ref{Def:polyhedron}). As in the proof for theorem \ref{Thm:cornerEquiv} we separate $A$ into the matrix $B$ of active constraint and $D$ of inactive constraints, with $Bx=d$, $Dx>f$. If the rank of $B$ is $n$, $x$ is an extreme point by definition and we're done. 
@@ -61,7 +61,7 @@ Such an $\epsilon$ has to exist, since the polyhedron is bounded and therefore e
 
 \[\begin{pmatrix}B\\ a_i\end{pmatrix}\] 
 
-The rank of the new $B$ has to be $k+1$ since $\delta$ was orthogonal to all the vectors in $B$, as $B\delta=0$ (and hence all vectors in $\text{span } B$), but it is not orthogonal to $a_i$, or we wouldn't have hit that constraint by moving in direction $\delta$.
+The rank of the new $B$ has to be $k+1$ since $\delta$ was orthogonal to all the vectors in $B$, as $B\delta=0$ (and hence all vectors in $\text{span}(B)$), but it is not orthogonal to $a_i$, or we wouldn't have hit that constraint by moving in direction $\delta$.
 
 We have now reduced the problem of finding extreme points to represent $x \in P$ to the problem of finding some for $x_1,x_2 \in P$. However we increased the number of active constraints for $x_1,x_2$ (in 2D: we moved them on an edge). This process can be repeated for $x_1$ and $x_2$ until the respective $B$ has full rank and we arrived at some extreme points. For figure \ref{Thm:CH_polyhedron} the process is repeated three times, for $x,x_1$ and $x_2$. 
 Since all the points from the beginning can be recursively written by a convex combination of the new points and we end up at an extreme point, the original $x$ can transitively be written by a convex combination of extreme points.
@@ -130,7 +130,9 @@ Let $S\subseteq \R^n$ then the projection on the first $k$ components is
 
 Of course that definition is not particularly useful in actually constructing the projection. The Fourier-Motzkin elimination computes the projection for polyhedra. We start with our usual characterisation of a polyhedron $P=\{x|Ax\geq b_i\}$ and want to find a different matrix $A'$ s.t. we get $\pi_{n-1}(P)$. Generalizing to $\pi_k$ is then of course easy.
 
-\subsubsection*{Example of Fourier-Motzkin elimination}
+Let's do an example to develop an intuition and then formalise the algorithm.
+
+\begin{Ex}
 Figure \ref{Fig:motzkinExample} shows an example of the Fourier-Motzkin elimination. The LP used for the example is:
 \begin{eqnarray*}
 c_1 & -0,5x + y & \leq 3 \\
@@ -161,9 +163,9 @@ Those constraints are shown in figure \ref{Fig:motzkinExample} below the x-axis 
 \caption{A projection, which removes one of the two dimensions. The result is shown in red.}
 \label{Fig:motzkinExample}
 \end{figure}
+\end{Ex}
 
-\subsubsection*{General case}
-We want to classify the constraints $a_i$ into three kinds. Let $\overline a = \pi_{n-1}(a)$ then we can write  
+In the general case we want to classify the constraints $a_i$ into three kinds. Let $\overline a = \pi_{n-1}(a)$ then we can write  
 
 \[P=\left\{x\left| \begin{array}{cr}
 \overline a_i\overline x +a_{in}x_n \geq b_i & i\in T_1\\
@@ -250,7 +252,7 @@ It cannot be that both happen at the same time:
 \begin{align*}
 Ax &\geq b\\
 \trans y Ax&\geq \trans y b\\
-0 \geq \trans y b
+0 &\geq \trans y b
 \end{align*}
 Since $\trans y b<0$ its a contradiction.
 
