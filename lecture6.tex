@@ -5,39 +5,39 @@ Sometimes, if the system is degenerate, the simplex algorithm can start
 \begin{Ex}[Cycling]\label{Ex:cycling} In this system we can cycle, if we choose columns in an unlucky way.
 \begin{center}
 \begin{tabular}{c|cccccc}
-    & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\
-    & -2.3 & -2.15 & 13.55 & 0.4 & 0 & 0\\
-$x_5$=0 & 0.4 & 0.2 & -1.4 & -0.2 & 1 & 0 \\
-$x_6$=0 & -7.8 & -1.4 & 7.9 & 0.4 & 0 & 1\\
+    & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\\hline
+    & -2.3 & -2.15 & 13.55 & 0.4 & 0 & 0\\\hline
+$x_5$=0 & {\bf 0.4} & 0.2 & -1.4 & -0.2 & 1 & 0 \\
+$x_6$=0 & -7.8 & -1.4 & 7.8 & 0.4 & 0 & 1\\
 \end{tabular}
 \end{center}
 
 We select the first column to put it into the basis:
 
 \begin{center}
-\begin{tabular}{c|cccccc}
-    & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\
-    & 0 & -1 & 5.5 & -0.75 & 5.75 & 0\\
-$x_1$=0 & 1 & 0.5 & -3.5 & -0.5 & 2.5 & 0 \\
-$x_6$=0 & 0 & 2.5 & -19.5 & -3.5 & 19.5 & 1\\
+\begin{tabular}{c|ccccccr}
+    & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\\cline{1-7}
+    & 0 & -1 & 5.5 & -0.75 & 5.75 & 0&\hspace{1cm} $\text{old row}_0 + \frac{1.3}{0.4}\cdot \text{old row}_1$\\\cline{1-7}
+$x_1$=0 & 1 & 0.5 & -3.5 & -0.5 & 2.5 & 0 &\hspace{1cm} $2.5 \cdot \text{old row}_1$\\
+$x_6$=0 & 0 & {\bf 2.5} & -19.5 & -3.5 & 19.5 & 1&\hspace{1cm} $\text{old row}_2 + \frac{7.8}{0.4}\cdot \text{old row}_1$\\
 \end{tabular}
 \end{center}
 
-Now we use $x_2$. $x_6$
+Now we use replace $x_6$ with $x_2$.
 
 \begin{center}
-\begin{tabular}{c|cccccc}
-    & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\
-    & 0 & 0 & -2.3 & -2.15 & 13.55 & 0.4\\
-$x_1$=0 & 1 & 0 & 0.4 & 0.2 & 2.5 & -0.2 \\
-$x_2$=0 & 0 & 1 & -7.8 & -1.4 & 7.8 & .4\\
+\begin{tabular}{c|ccccccr}
+    & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\\cline{1-7}
+    & 0 & 0 & -2.3 & -2.15 & 13.55 & 0.4&\hspace{1cm} $\text{old row}_0 + \frac{1}{2.5}\cdot \text{old row}_2$\\\cline{1-7}
+$x_1$=0 & 1 & 0 & 0.4 & 0.2 & -1.4 & -0.2&\hspace{1cm} $\text{old row}_1 + \frac{-0.5}{2.5}\cdot \text{old row}_2$ \\
+$x_2$=0 & 0 & 1 & -7.8 & -1.4 & 7.8 & 0.4&\hspace{1cm} $\frac{1}{2.5} \cdot \text{old row}_2$\\
 \end{tabular}
 \end{center}
 
 This is again the first table, only shifted two columns to the right. Now we could just make the same choices for the pivots and start a cycle (the cycle has length six until we get back to the first table).
 \end{Ex}
 
-To avoid the cycling problem exemplified in example \ref{Ex:cycling}, we introduce some additional rules. There are many possibilities for the ruleset. We go with Bland's rule.
+To avoid the cycling problem exemplified in example \ref{Ex:cycling}, we introduce some additional rules for choosing the pivot element. There are many possibilities for the ruleset. We go with Bland's rule. The reason that we can make those rules is, that the Simplex Algorithm has some degree of freedom in choosing the pivot element. 
 
 \begin{thm}[Bland's Rule] Suppose simplex picks column 
 
@@ -60,33 +60,36 @@ We look at two moments in the execution of the algorithm:
 \item \label{blandsRuleMom2} We remove $q$ from the basis and add $p$
 \end{enumerate}
 
-\paragraph{Observations} In moment \ref{blandsRuleMom1} $q\not \in B$ and $q$ is the only variable with $<0$ cost (or else we would have chosen the one with lower index. In moment \ref{bladnsRuleMom2} $q\in D$ and $p\not \in D$. Again because of Bland's rule $p$ has to be the entry with lowest index that has a negative costchange. $x_q$, the index we'll kick out is the first one to have a positive or zero entry in column $p$. In both cases all the basic variables have value 0.
+\paragraph{Observations} In moment \ref{blandsRuleMom1}: $q\not \in B$ and $q$ is the only variable with $<0$ cost (or else we would have chosen the one with lower index. \\
+In moment \ref{blandsRuleMom2}: $q\in D$ and $p\not \in D$. Again because of Bland's rule $p$ has to be the entry with lowest index that has a negative cost change. $x_q$, the index we'll kick out is the first one to have a positive or zero entry in column $p$. In both cases all the basic variables have value 0.
 
 Consider 
 \[u=A_D^{-1}A_p\]
 
 Remember our observations about the direction $d$ we use to get to the next basis:
 
-\[d_p =1 \quad \forall b_i \in D\ d_{b_i} = -u_i \quad \forall x\not \in D\cup p\ d_k=0\quad Ad=0\]
+\[d_p =1, \quad \forall b_i \in D\ d_{b_i} = -u_i, \quad \forall x\not \in D\cup p\ d_k=0, \quad Ad=0\]
 
 We will compute the  change in cost in two ways. Let $\bar c$ be the old reduced cost vector (moment \ref{blandsRuleMom1}) and $\hat c$ the new one (moment \ref{blandsRuleMom2})
 
 \begin{itemize}
 \item First we have 
-\[\bar cd = c-c_BA_B^{-1}A)d=cd-c_bA_B^{-1}\underbrace{Ad}_{=0} = cd = \hat c_p<0\]
+\[\bar cd = \bar c^{T} d = (c - c_B^T A_B^{-1} A) d= cd - c_b^T A_B^{-1}\underbrace{Ad}_{=0} = cd = \hat c_p<0\]
+
 \item On the other hand we have
-\[\bar c d = \sum_{i=}q \bar c_id_i = \underbrace{\bar c_q}_{<0}\underbrace{d_q}_{<0} + \sum _{i=1}^{q-1} \underbrace{\bar c_i}_{\geq 0}\underbrace{d_i}_{\geq 0} >0\]
+\[\bar c d = \sum_{i=1}^{q} \bar c_i d_i = \underbrace{\bar c_q}_{<0}\underbrace{d_q}_{<0} + \sum _{i=1}^{q-1} \underbrace{\bar c_i}_{\geq 0}\underbrace{d_i}_{\geq 0} \Rightarrow \bar c d >0\]
 $d_i$ are $\geq 0$ because our assumption about the entries in column $p$. %TODO
+
 \end{itemize}
 
 So the cost change should be both positive and negative. That is a contradiction.
 \end{pr}
 
-So by using Bland's Rule we can remove the assumption that the system is nondegenerate and still guarantee termination at an optimal value.
+So by using Bland's Rule we can remove the assumption that the system is non degenerate and still guarantee termination at an optimal value.
 
 \subsubsection*{Finding an Initial Feasible Basis}
 
-Until now we don't now how to find the initial solution we need to start with the simplex algorithm. We know a method (see section \ref{Sec:FourierMotzkin}) to check whether it is feasible at all, but that wasn't particularly efficient. We will find a bsf by solving another LP, which is easier. For an LP with $Ax=b$ and $x>0$ we solve
+Until now we don't now how to find the initial solution we need to start with the simplex algorithm. We know a method (see section \ref{Sec:FourierMotzkin}) to check whether it is feasible at all, but that wasn't particularly efficient. We will find a bfs by solving another LP, which is easier. For an LP with $Ax=b$ and $x>0$ we solve
 
 \begin{align*}
 \min \quad & \sum_{i=1}^m y_i\\
@@ -98,11 +101,11 @@ We observe the following things:
 
 \begin{enumerate}
 \item If the optimal value in the new LP is $<0$ then the old LP is not feasible because any solution for the original LP gives a trivial assignment for $x$ s.t. all $y_i$ are 0.
-\item If the optimal value of the new LP is zero and $(x^*, y^*)$ is an optimal solution, then $x^*$ must be feasible in the old LP. We would like it to be basic also.
-\item If we use the simplex algorithm to solve the new LP we always get an optimal bfs $(x^*,y^*)$. Let $B=\{\kthings{b}{m}\}$ be its basis in the new LP. If every $b_i$ corresponds to some $x$ variable, it is not dificult to see that $B$ is also a feasible basis for the old LP, since the vectors are the same in both LPs. However we may also have some of the $y$ indices. Look at $F=\{b_i | b_i \text{is $x$ index}\}$. We can augment $F$ with columns from $A$ to get a basis for the old LP.
+\item If the optimal value of the new LP is zero and $(x^*, y^*)$ is an optimal solution, then $x^*$ must be feasible in the old LP. We would like it to be a basis. (Which it may not be, as $y_i$ is not a part of the old LP)
+\item If we use the simplex algorithm to solve the new LP we always get an optimal bfs $(x^*,y^*)$. Let $B=\{\kthings{b}{m}\}$ be its basis in the new LP. If every $b_i$ corresponds to some $x$ variable, it is not difficult to see that $B$ is also a feasible basis for the old LP, since the vectors are the same in both LPs. However we may also have some of the $y$ indices. Look at $F=\{b_i | b_i \text{is $x$ index}\}$. We can augment $F$ with columns from $A$ to get a basis for the old LP.
 \end{enumerate}
 
-It is not so nice that we have to do some postprocessing to get a basis. A different approach to finding the initial solution is solving the following LP
+It is not so nice that we have to do some post processing to get a basis. A different approach to finding the initial solution is solving the following LP
 
 \begin{align*}
 \min \quad & cx + M\sum_{i=1} y_i\\
