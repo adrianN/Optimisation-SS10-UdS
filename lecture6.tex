@@ -1,0 +1,129 @@
+\subsubsection*{Cycling}
+
+Sometimes, if the system is degenerate, the simplex algorithm can start 
+
+\begin{Ex}[Cycling]\label{Ex:cycling} In this system we can cycle, if we choose columns in an unlucky way.
+\begin{center}
+\begin{tabular}{c|cccccc}
+    & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\
+    & -2.3 & -2.15 & 13.55 & 0.4 & 0 & 0\\
+$x_5$=0 & 0.4 & 0.2 & -1.4 & -0.2 & 1 & 0 \\
+$x_6$=0 & -7.8 & -1.4 & 7.9 & 0.4 & 0 & 1\\
+\end{tabular}
+\end{center}
+
+We select the first column to put it into the basis:
+
+\begin{center}
+\begin{tabular}{c|cccccc}
+    & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\
+    & 0 & -1 & 5.5 & -0.75 & 5.75 & 0\\
+$x_1$=0 & 1 & 0.5 & -3.5 & -0.5 & 2.5 & 0 \\
+$x_6$=0 & 0 & 2.5 & -19.5 & -3.5 & 19.5 & 1\\
+\end{tabular}
+\end{center}
+
+Now we use $x_2$. $x_6$
+
+\begin{center}
+\begin{tabular}{c|cccccc}
+    & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$\\
+    & 0 & 0 & -2.3 & -2.15 & 13.55 & 0.4\\
+$x_1$=0 & 1 & 0 & 0.4 & 0.2 & 2.5 & -0.2 \\
+$x_2$=0 & 0 & 1 & -7.8 & -1.4 & 7.8 & .4\\
+\end{tabular}
+\end{center}
+
+This is again the first table, only shifted two columns to the right. Now we could just make the same choices for the pivots and start a cycle (the cycle has length six until we get back to the first table).
+\end{Ex}
+
+To avoid the cycling problem exemplified in example \ref{Ex:cycling}, we introduce some additional rules. There are many possibilities for the ruleset. We go with Bland's rule.
+
+\begin{thm}[Bland's Rule] Suppose simplex picks column 
+
+\[j=\min \{j|\bar c_j < 0\}\]
+
+(i.e. the one with minimal index) and row $i$ such that $u_i>0$, minimises the ratio $x_{b_i}/u_i$ and among those the one with minimal $b_i$. Then simplex never cycles.
+\end{thm}
+
+In the second step of example \ref{Ex:cycling} we chose to remove $x_6$ instead of $x_1$ as Bland's rule mandates.
+
+\begin{pr} Assume the algorithm cycles and w.l.o.g. we start on the cycle. Now remove all variables that are never basic on the cycle, they don't make any difference as they are always 0. Further remove all variables that are always in the basis. The algorithm also has to cycle on this reduced instance. 
+
+It has to be the case that all the remaining variables have value 0. %why? 
+So according to Bland's rule we always remove the basic variable with the smallest index from the basis, since they all have the same ratio.
+
+We look at two moments in the execution of the algorithm:
+
+\begin{enumerate}
+\item \label{blandsRuleMom1} We bring the variable with the largest index $q$ into the basis
+\item \label{blandsRuleMom2} We remove $q$ from the basis and add $p$
+\end{enumerate}
+
+\paragraph{Observations} In moment \ref{blandsRuleMom1} $q\not \in B$ and $q$ is the only variable with $<0$ cost (or else we would have chosen the one with lower index. In moment \ref{bladnsRuleMom2} $q\in D$ and $p\not \in D$. Again because of Bland's rule $p$ has to be the entry with lowest index that has a negative costchange. $x_q$, the index we'll kick out is the first one to have a positive or zero entry in column $p$. In both cases all the basic variables have value 0.
+
+Consider 
+\[u=A_D^{-1}A_p\]
+
+Remember our observations about the direction $d$ we use to get to the next basis:
+
+\[d_p =1 \quad \forall b_i \in D\ d_{b_i} = -u_i \quad \forall x\not \in D\cup p\ d_k=0\quad Ad=0\]
+
+We will compute the  change in cost in two ways. Let $\bar c$ be the old reduced cost vector (moment \ref{blandsRuleMom1}) and $\hat c$ the new one (moment \ref{blandsRuleMom2})
+
+\begin{itemize}
+\item First we have 
+\[\bar cd = c-c_BA_B^{-1}A)d=cd-c_bA_B^{-1}\underbrace{Ad}_{=0} = cd = \hat c_p<0\]
+\item On the other hand we have
+\[\bar c d = \sum_{i=}q \bar c_id_i = \bar \underbrace{c_q}_{<0}\underbrace{d_q}_{<0} + \sum _{i=1}^{q-1}\bar \underbrace{c_i}_{\geq 0}\underbrace{d_i}_{\geq 0} >0\]
+$d_i$ are $\geq 0$ because our assumption about the entries in column $p$. %TODO
+\end{itemize}
+
+So the cost change should be both positive and negative. That is a contradiction.
+\end{pr}
+
+So by using Bland's Rule we can remove the assumption that the system is nondegenerate and still guarantee termination at an optimal value.
+
+\subsubsection*{Finding an Initial Feasible Basis}
+
+Until now we don't now how to find the initial solution we need to start with the simplex algorithm. We know a method (see section \ref{Sec:FourierMotzkin}) to check whether it is feasible at all, but that wasn't particularly efficient. We will find a bsf by solving another LP, which is easier. For an LP with $Ax=b$ and $x>0$ we solve
+
+\begin{align*}
+\min \quad & \sum_{i=1}^m y_i\\
+&Ax+y=b\\
+&x,y\geq 0
+\end{align*}
+
+We observe the following things:
+
+\begin{enumerate}
+\item If the optimal value in the new LP is $<0$ then the old LP is not feasible because any solution for the original LP gives a trivial assignment for $x$ s.t. all $y_i$ are 0.
+\item If the optimal value of the new LP is zero and $(x^*, y^*)$ is an optimal solution, then $x^*$ must be feasible in the old LP. We would like it to be basic also.
+\item If we use the simplex algorithm to solve the new LP we always get an optimal bfs $(x^*,y^*)$. Let $B=\{\kthings{b}{m}\}$ be its basis in the new LP. If every $b_i$ corresponds to some $x$ variable, it is not dificult to see that $B$ is also a feasible basis for the old LP, since the vectors are the same in both LPs. However we may also have some of the $y$ indices. Look at $F=\{b_i | b_i \text{is $x$ index}\}$. We can augment $F$ with columns from $A$ to get a basis for the old LP.
+\end{enumerate}
+
+It is not so nice that we have to do some postprocessing to get a basis. A different approach to finding the initial solution is solving the following LP
+
+\begin{align*}
+\min \quad & cx + M\sum_{i=1} y_i\\
+&Ax+y=b\\
+&x,y\geq 0
+\end{align*}
+
+where $M$ is a suitably huge constant such that it is bigger than anything except itself. This solution always provides a basis for the original LP, but the implementation is a bit tricky because $M$ has to be handled symbolically.
+
+\subsubsection*{Row Independence}
+
+The remaining problem are cases were the rows of $A$ are not linearly independent. Some of those constraints have to be redundant. We want to find a maximal independent subset $D$ of rows of $A$. Call the remaining rows $F$. We then split $b$ accordingly into $d,f$:
+
+\[A=\left[ D \atop F\right] \qquad b = \left[d\atop f\right]\]
+
+Now take some row $j$ from $F$. We get something that looks like this:
+
+\[a_jx=f_j\]
+
+$a_j$ is a linear combination of rows from $D$
+
+\[a_j=\trans z D\]
+
+where $z$ is a vector of coefficients. If $\trans z d = f_i$ there is $Dx=d$ otherwise $\trans z d \neq f_i$ there is no $x$ s.t. $Dx=d$ and the LP is infeasible.
