@@ -7,7 +7,7 @@ Imagine we had the following table at the beginning of an iteration:
 \begin{center}
 %c is a row vector!
 \begin{tabular}{c|c}
-$-c_BA_B^{-1}b$ & $c-c_BA_B^{-1}A$\\\hline
+$-c^{T}_BA_B^{-1}b$ & $c^{T}-c^{T}_BA_B^{-1}A$\\\hline
 $A^{-1}_B b$ & $A_B^{-1}A$
 \end{tabular}
 \end{center}
@@ -36,10 +36,10 @@ Then we get $RA_B^{-1} = A_D^{-1}$. You can find $R$ yourself by doing gaussian 
 Suppose we have the following LP
 
 \begin{align*}
-\min \qquad& -10x_1 -12x_2 -12x_3\\
-\text{s.t.}\qquad & x_1+2x_2 +2_x2\leq 20\\
-&2x_1 +x_2+2_x3\leq 20\\
-& 2x_1+2x_2 +x_3\leq 20\\
+\min \qquad& -10 x_1 - 12 x_2 - 12 x_3\\
+\text{s.t.}\qquad & x_1 + 2 x_2 +2 x_3 \leq 20\\
+& 2x_1 + x_2 + 2 x_3\leq 20\\
+& 2x_1 + 2 x_2 + x_3\leq 20\\
 & x_1,x_2,x_3 \geq 0
 \end{align*}
 
@@ -53,12 +53,12 @@ We convert that to standard form by introducing slack variables:
 		  & x_1,x_2,x_3,x_4,x_5,x_6   \geq 0
 \end{align*}
 
-Since we can't handle more complicated cases yet, this LP has the origin as a feasible solution. So we can start by putting all the slack variables in our basis $B=\{4,5,6\}, A_B=\mathbb{I}$ (remember, non-basic variables are always 0). Our tableau looks like this
+Since we can't handle more complicated cases yet, this LP has the origin as a feasible solution. So we can start by putting all the slack variables in our basis $B=\{4,5,6\}, A_B=\mathbb{I}$. Our tableau looks like this
 
 \begin{center}
 \begin{tabular}{c|cccccc}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
-0 & -10 & -12 & -12 & 0 & 0 & 0\\
+0 & -10 & -12 & -12 & 0 & 0 & 0\\\hline
 $x_4=20$ & 1 & 2 & 2 & 1 &  0 & 0 \\
 $x_5=20$ & 2 & 1 & 2 & 0 &  1 & 0\\
 $x_6=20$ & 2 & 2 & 1 & 0 &  0 & 1\\
@@ -84,7 +84,7 @@ Now we want to introduce $x_1$ into the basis. That means we need to make all co
 \begin{center}
 \begin{tabular}{c|ccccccr}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\cline{1-7}
-0 & -10 & -12 & -12 & 0 & 0 & 0 &\hspace{1cm} $+10\cdot x_1$\\
+0 & -10 & -12 & -12 & 0 & 0 & 0 &\hspace{1cm} $+10\cdot x_1$\\\hline
 $x_4=20$ & 1 & 2 & 2 & 1 &  0 & 0 &\hspace{1cm} $-1\cdot x_1$\\
 $x_1=10$ & 1 & 1/2 & 1 & 0 &  1/2 & 0\\
 $x_6=20$ & 2 & 2 & 1 & 0 &  0 & 1 &\hspace{1cm} $-2\cdot x_1$\\
@@ -94,7 +94,7 @@ $x_6=20$ & 2 & 2 & 1 & 0 &  0 & 1 &\hspace{1cm} $-2\cdot x_1$\\
 \begin{center}
 \begin{tabular}{c|cccccc}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
-100 & 0 & -7 & -2 & 0 & 5 & 0\\
+100 & 0 & -7 & -2 & 0 & 5 & 0\\\hline
 $x_4=10$ & 0 & 3/2 & 1 & 1 & 1/2 & 0 \\
 $x_1=10$ & 1 & 1/2 & 1 & 0 &  1/2 & 0\\
 $x_6=0$ & 0 & 1 & -1 & 0 & -1 &  1\\
@@ -109,7 +109,7 @@ so we choose $x_3$ instead. Then we can choose between $x_1$ with $10/1=10$ and 
 \begin{center}
 \begin{tabular}{c|cccccc}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
-120 & 0 & -4 & 0 & 2 & 6 & 0\\
+120 & 0 & -4 & 0 & 2 & 6 & 0\\\hline
 $x_3=10$ & 0 & 3/2 & 1 & 1 & 1/2 & 0 \\
 $x_1=0$ &0  & -1 & 0 & -1 &  1 & 0\\
 $x_6=0$ & 0 & 5/2 & 0 & 1 & -3/2 &  1\\
@@ -121,7 +121,7 @@ The final iteration brings in $x_2$ and kicks out $x_6$
 \begin{center}
 \begin{tabular}{c|cccccc}
          & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
-120      &\\
+120      &\\\hline
 $x_3=10$ &\\
 $x_1=0$  &\\
 $x_2=0$  &\\
