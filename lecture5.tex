@@ -12,7 +12,7 @@ $A^{-1}_B b$ & $A_B^{-1}A$
 \end{tabular}
 \end{center}
 
-In the lower right cell we can get the vector $u$. By dividing the components of $u$ by the number in the top left (note: there seems to be a mistake here) we can find the basic index we need to kick out. It will turn out that computing the inverse matrices it easy, as they change only in one column from iteration to iteration.
+In the lower right cell we can get the vector $u$. By dividing the components of $u$ by the number in the first column we can find the basic index we need to kick out. It will turn out that computing the inverse matrices it easy, as they change only in one column from iteration to iteration.
 
 Suppose we have $A_B^{-1}$ and want to find $A_D^{-1}$, where $D=B\cup j \backslash b_i$. Suppose we already had the correct solution with $A_B^{-1}$ 
 
@@ -53,7 +53,7 @@ We convert that to standard form by introducing slack variables:
 		  & x_1,x_2,x_3,x_4,x_5,x_6   \geq 0
 \end{align*}
 
-Since we can't handle more complicated cases yet, this LP has the origin as a feasible solution. So we can start by putting all the slack variables in our basis $B=\{4,5,6\}, A_B=\mathbb{I}$. Our tableau looks like this
+Since we can't handle more complicated cases yet, this LP has the origin as a feasible solution. So we can start by putting all the slack variables in our basis $B=\{4,5,6\}, A_B=\mathbb{I}$. Because we get the identity matrix as basis we don't have to invert it to get the initial tableau $A_B^{-1}A$. Our tableau looks like this
 
 \begin{center}
 \begin{tabular}{c|cccccc}\label{tab:pivotExample}
@@ -95,24 +95,22 @@ $x_6=20$ & 2 & 2   & 1 & 0 &  0   & 1 &\hspace{1cm} $-2\cdot x_1$\\
 \begin{tabular}{c|cccccc}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
 100 & 0 & -7 & -2 & 0 & 5 & 0\\\hline
-$x_4=10$ & 0 & 3/2 & 1 & 1 & 1/2 & 0 \\
+$x_4=10$ & 0 & 3/2 & 1 & 1 & -1/2 & 0 \\
 $x_1=10$ & 1 & 1/2 & 1 & 0 &  1/2 & 0\\
-$x_6=10$ & 0 & 1 & -1 & 0 & -1 &  1\\
+$x_6= 0$ & 0 & 1 & -1 & 0 & -1 &  1\\
 \end{tabular}
 \end{center}
 
 Now we can choose between $x_2$ with $-7$ and $x_3$ with $-2$. $x_2$ wouldn't be good, %why?
 so we choose $x_3$ instead. Then we can choose between $x_1$ with $10/1=10$ and $x_4$ with $20/2=10$. Let's use $x_4$. Again we replace $x_4$ on the left by $x_3$, scale that line by $1/2$ (since the coefficient was 2) and do gaussian elimination until we have just a $1$ in that column. That gives us
 
-
-%check if x_1 really has all 0 in its column
 \begin{center}
 \begin{tabular}{c|cccccc}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
 120 & 0 & -4 & 0 & 2 & 6 & 0\\\hline
 $x_3=10$ & 0 & 3/2 & 1 & 1 & 1/2 & 0 \\
-$x_1=0$ &0  & -1 & 0 & -1 &  1 & 0\\
-$x_6=0$ & 0 & 5/2 & 0 & 1 & -3/2 &  1\\
+$x_1=0$ &1  & -1 & 0 & -1 &  1 & 0\\
+$x_6=10$ & 0 & \cellcolor{gruen}5/2 & 0 & 1 & -3/2 &  1\\
 \end{tabular}
 \end{center}
 
@@ -121,10 +119,10 @@ The final iteration brings in $x_2$ and kicks out $x_6$
 \begin{center}
 \begin{tabular}{c|cccccc}
          & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
-120      &\\\hline
-$x_3=10$ &\\
-$x_1=0$  &\\
-$x_2=0$  &\\
+136      & 0 & 0 & 0 & 3.6 & 1.6 & 1.6 \\\hline
+$x_3=4$ & 0 & 0 & 1 & 0.4 & 0.4 & -0.6\\
+$x_1=4$  & 1 & 0 & 0 & -0.6 & 0.4 & 0.4\\
+$x_2=4$  & 0 & 1 & 0 & 9.4 & -0.6 & 0.4\\
 \end{tabular}
 \end{center}
 \end{Ex}
