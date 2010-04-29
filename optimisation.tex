@@ -5,6 +5,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{microtype}
 \usepackage{graphicx}
+\usepackage{colortbl}
 \usepackage{ae}
 \usepackage{amssymb}
 \usepackage{amsmath}
@@ -33,6 +34,9 @@
 \rfoot{\includegraphics{./images/by-nc-sa.pdf}}
 \fancyhead{}
 \lfoot{Found a mistake? Write an e-mail!}
+
+\definecolor{gruen}{rgb}{0.5,1,0.5}
+
 \renewcommand{\footrulewidth}{0.4pt}
 \renewcommand{\headrulewidth}{0pt}
 \newcommand{\N}[0]{\mathbb{N}}
@@ -46,6 +50,8 @@
 \newcommand{\norm}[1]{|\!|#1|\!|}
 \newcommand{\rank}{\mbox{rank }}
 \renewcommand{\bar}{\overline}
+\renewcommand{\arraystretch}{1.5}
+
 \newcommand{\trans}[1]{{#1}^\text{\upshape \sffamily T}}
 \newtheoremstyle{leplain} %name
     {3pt} %above

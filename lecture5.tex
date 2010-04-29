@@ -60,7 +60,7 @@ Since we can't handle more complicated cases yet, this LP has the origin as a fe
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\hline
 0 & -10 & -12 & -12 & 0 & 0 & 0\\\hline
 $x_4=20$ & 1 & 2 & 2 & 1 &  0 & 0 \\
-$x_5=20$ & {\bf 2} & 1 & 2 & 0 &  1 & 0\\
+$x_5=20$ & \cellcolor{gruen}{\bf 2} & 1 & 2 & 0 &  1 & 0\\
 $x_6=20$ & 2 & 2 & 1 & 0 &  0 & 1\\
 \end{tabular}
 \end{center}
@@ -84,7 +84,7 @@ Now we want to introduce $x_1$ into the basis. That means we need to make all co
 \begin{center}
 \begin{tabular}{c|ccccccr}
   & $x_1$ & $x_2$ & $x_3$ & $x_4$ & $x_5$ & $x_6$ \\\cline{1-7}
-0 & -10 & -12 & -12 & 0 & 0 & 0 &\hspace{1cm} $+10\cdot x_1$\\\hline
+0 & -10 & -12 & -12 & 0 & 0 & 0 &\hspace{1cm} $+10\cdot x_1$\\\cline{0-6}
 $x_4=20$ & 1 & 2   & 2 & 1 &  0   & 0 &\hspace{1cm} $-1\cdot x_1$\\
 $x_1=10$ & 1 & 1/2 & 1 & 0 &  1/2 & 0\\
 $x_6=20$ & 2 & 2   & 1 & 0 &  0   & 1 &\hspace{1cm} $-2\cdot x_1$\\
