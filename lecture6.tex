@@ -74,7 +74,7 @@ We will compute the  change in cost in two ways. Let $\bar c$ be the old reduced
 
 \begin{itemize}
 \item First we have 
-\[\bar cd = \bar c^{T} d = (c - c_B^T A_B^{-1} A) d= cd - c_b^T A_B^{-1}\underbrace{Ad}_{=0} = cd = \hat c_p<0\]
+\[\bar cd = (c - c_B A_B^{-1} A) d= cd - c_B A_B^{-1}\underbrace{Ad}_{=0} = cd = \hat c_p<0\]
 
 \item On the other hand we have
 \[\bar c d = \sum_{i=1}^{q} \bar c_i d_i = \underbrace{\bar c_q}_{<0}\underbrace{d_q}_{<0} + \sum _{i=1}^{q-1} \underbrace{\bar c_i}_{\geq 0}\underbrace{d_i}_{\geq 0} \Rightarrow \bar c d >0\]
