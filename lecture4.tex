@@ -12,7 +12,7 @@ Recall that an LP is in standard form if
 
 and $A\in \R^{m\times n}$ has $m$ linearly independent rows. Note that we use a row vector for $c$.
 
-A \emph{basis} $B\subseteq [1,n]$ is as set of $m$ column indices such that $A_B$ has full rank $m$ (Note that $A_B$ can be inverted as the rows are linearly independent). It induces a \emph{basic solution} (see \ref{Def:BasicSolution} for a basic solution definition)
+A \emph{basis} $B\subseteq [1,n]$ is as set of $m$ column indices such that the matrix formed by selecting columns of $A$ if their indices are in $B$ has full rank $m$. We use the notation $A_B$ to describe that matrix. Note that $A_B$ can be inverted as the rows are linearly independent. A basis induces a \emph{basic solution} (see \ref{Def:BasicSolution} for a basic solution definition)
 
 \[\begin{cases} x_B = A^{-1}_Bb\\ x_{\bar B} = 0\end{cases}\]
 
