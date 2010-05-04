@@ -11,7 +11,7 @@ s.t.\quad & x_1 -x_2 +3x_3 \geq 10\\
 
 We can easily see than the optimal solution of the LP has to be greater than 10, because the objective function ist strictly greater than the first constraint (and that has to be satisfied in any optimal solution). We can strengthen the observation for example by adding the first two constraints. We get
 
-\[6x_1+x_2+2_x3\geq 16\]
+\[6x_1+x_2+2x_3\geq 16\]
 
 Since the sum of the two constraints has to be satisfied and is still smaller than the objective function, we know that the optimal value has to be greater than 16. Similarly we can first scale one of the rows to calculate tigther lower bounds. 
 
@@ -24,7 +24,7 @@ That means for the above constraints
 \begin{align*}
 y_1+5y_2 \leq 7\\
 -y_1 +2y_2 \leq 1\\
-3y_i - y_2 \leq 5
+3y_1 - y_2 \leq 5
 \end{align*}
 
 Then we get LP $\geq 10y_1 + 6y_2$. If we want to find the optimal values for $y_1$ and $y_2$ we suddenly get a new LP:
