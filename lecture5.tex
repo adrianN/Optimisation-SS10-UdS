@@ -20,7 +20,7 @@ Suppose we have $A_B^{-1}$ and want to find $A_D^{-1}$, where $D=B\cup j \backsl
 
 So it's not the correct inverse, but the difference is very small. So we want to find a correction matrix $R$ that gives us the right answer. It is the identity matrix, except for the column that is wrong.
 
-\[R= \begin{pmatrix} %needs diagonal dots
+\[R= \begin{pmatrix} 
 1 & \ldots & -u_1/u_i & \ldots \\
 0 & \ldots & -u_2/u_i & \ldots \\
 \vdots & \ddots & \vdots \\
@@ -53,7 +53,9 @@ We convert that to standard form by introducing slack variables:
 		  & x_1,x_2,x_3,x_4,x_5,x_6   \geq 0
 \end{align*}
 
-Since we can't handle more complicated cases yet, this LP has the origin as a feasible solution. So we can start by putting all the slack variables in our basis $B=\{4,5,6\}, A_B=\mathbb{I}$. Because we get the identity matrix as basis we don't have to invert it to get the initial tableau $A_B^{-1}A$. Our tableau looks like this
+Since we can't handle more complicated cases yet, this LP has the origin as a feasible solution. I think you can recognize that by looking at $b$. If everything is positive, the origin is in the feasible region.
+
+So we can start by putting all the slack variables in our basis $B=\{4,5,6\}, A_B=\mathbb{I}$. This is nice because we get the identity matrix as basis and we don't have to invert it to get the initial tableau $A_B^{-1}A$. Our tableau looks like this
 
 \begin{center}
 \begin{tabular}{c|cccccc}\label{tab:pivotExample}
@@ -77,7 +79,7 @@ x_1 + 2 x_2 + 2 x_2 + x_4 = 20 & \quad \Rightarrow & x_4 = 20 - x_1    & \Righta
 2 x_1 + 2 x_2 + x_3 + x_6 = 20 & \quad \Rightarrow & x_6 = 20 - 2 x_1  &\Rightarrow x_1 = 10
 \end{align*}
 
-Since all the non-basic variables are 0 and the coefficients of the basic variables always form a diagonal matrix, each line gives us a simple equation. In this example the basis is degenerate. Since $x_5$ and $x_6$ both achieve the minimum we have to choose one (a rule for this will be introduced later in theorem \ref{Thm:blandsRule}). For example $x_5$. This is called the pivot.
+Since all the non-basic variables are $0$ and the coefficients of the basic variables always form an identity matrix, each line gives us a simple equation. In this example the basis is degenerate. Since $x_5$ and $x_6$ both achieve the minimum we have to choose one (a rule for this will be introduced later in theorem \ref{Thm:blandsRule}). For example $x_5$. This is called the pivot.
 
 Now we want to introduce $x_1$ into the basis. That means we need to make all coefficients in its column 0 (including the one in the objective function!), except for the one in the line that achieves the minimum. That line gets divided be the coefficient (in an alternative method all other lines get multiplied by the coefficient, that avoids fractions and is called \emph{integer pivoting}). We use the normal row operations we know from gaussian elimination. The '2' in table \ref{tab:pivotExample} at the intersection of the second column ($x_1$) and the fourth row ($x_5$ leaving the basis) is called pivot element.
 
@@ -127,4 +129,4 @@ $x_2=4$  & 0 & 1 & 0 & 9.4 & -0.6 & 0.4\\
 \end{center}
 \end{Ex}
 
-
+Now look again at the matrix $R$ from before the example. As you can see it does exactly the same thing as we did by hand to turn the column we selected to enter basis into a unit vector. The updates for the costs and the values of the basic variables get updated by recalculating the equations for them.

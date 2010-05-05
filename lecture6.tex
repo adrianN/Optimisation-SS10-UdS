@@ -1,6 +1,6 @@
 \subsubsection*{Cycling}
 
-Sometimes, if the system is degenerate, the simplex algorithm can start 
+Sometimes, if the system is degenerate and we're doing unlucky choices, the simplex algorithm can start to cycle.
 
 \begin{Ex}[Cycling]\label{Ex:cycling} In this system we can cycle, if we choose columns in an unlucky way.
 \begin{center}
@@ -23,7 +23,7 @@ $x_6$=0 & 0 & \cellcolor{gruen}{\bf 2.5} & -19.5 & -3.5 & 19.5 & 1&\hspace{1cm} 
 \end{tabular}
 \end{center}
 
-Now we use replace $x_6$ with $x_2$.
+Now we replace $x_6$ with $x_2$.
 
 \begin{center}
 \begin{tabular}{c|ccccccr}
@@ -37,7 +37,7 @@ $x_2$=0 & 0 & 1 & -7.8 & -1.4 & 7.8 & 0.4&\hspace{1cm} $\frac{1}{2.5} \cdot \tex
 This is again the first table, only shifted two columns to the right. Now we could just make the same choices for the pivots and start a cycle (the cycle has length six until we get back to the first table).
 \end{Ex}
 
-To avoid the cycling problem exemplified in example \ref{Ex:cycling}, we introduce some additional rules for choosing the pivot element. There are many possibilities for the ruleset. We go with Bland's rule. The reason that we can make those rules is, that the Simplex Algorithm has some degree of freedom in choosing the pivot element. 
+To avoid the cycling problem exemplified in example \ref{Ex:cycling}, we introduce some additional rules for choosing the pivot element. There are many possibilities for the ruleset. We go with Bland's rule. The reason that we can make those rules is that the Simplex Algorithm has some degree of freedom in choosing the pivot element. 
 
 \begin{thm}[Bland's Rule]\label{Thm:blandsRule} Suppose simplex picks column 
 
@@ -46,11 +46,12 @@ To avoid the cycling problem exemplified in example \ref{Ex:cycling}, we introdu
 (i.e. the one with minimal index) and row $i$ such that $u_i>0$, minimises the ratio $x_{b_i}/u_i$ and among those the one with minimal $b_i$. Then simplex never cycles.
 \end{thm}
 
-In the second step of example \ref{Ex:cycling} we chose to remove $x_6$ instead of $x_1$ as Bland's rule mandates.
+In the second step of example \ref{Ex:cycling} we chose to remove $x_6$ instead of $x_1$ as Bland's rule would mandate.
 
 \begin{pr} Assume the algorithm cycles and w.l.o.g. we start on the cycle. Now remove all variables that are never basic on the cycle, they don't make any difference as they are always 0. Further remove all variables that are always in the basis. The algorithm also has to cycle on this reduced instance. 
 
-It has to be the case that all the remaining variables have value 0. %why? 
+It has to be the case that all the remaining variables have value 0. I think this is because otherwise the objective value would change in each iteration and we would have to terminate after some time. %right?
+
 So according to Bland's rule we always remove the basic variable with the smallest index from the basis, since they all have the same ratio.
 
 We look at two moments in the execution of the algorithm:
@@ -61,7 +62,7 @@ We look at two moments in the execution of the algorithm:
 \end{enumerate}
 
 \paragraph{Observations} In moment \ref{blandsRuleMom1}: $q\not \in B$ and $q$ is the only variable with $<0$ cost (or else we would have chosen the one with lower index. \\
-In moment \ref{blandsRuleMom2}: $q\in D$ and $p\not \in D$. Again because of Bland's rule $p$ has to be the entry with lowest index that has a negative cost change. $x_q$, the index we'll kick out is the first one to have a positive or zero entry in column $p$. In both cases all the basic variables have value 0.
+In moment \ref{blandsRuleMom2}: $q\in D$ and $p\not \in D$. Again because of Bland's rule $p$ has to be the entry with lowest index that has a negative cost change. $x_q$, the index we'll kick out, is the first one to have a positive or zero entry in column $p$. In both cases all the basic variables have value 0. %why
 
 Consider 
 \[u=A_D^{-1}A_p\]
