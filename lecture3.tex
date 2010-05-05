@@ -248,7 +248,7 @@ This can be accomplished by an application of Farkas' Lemma.
 \begin{thm}[Farkas' lemma] Let $A\in \R^{m\times n}$ and $b\in \R^m$. Then either 
 \begin{itemize}
 \item $\exists x\in \R^n: Ax\geq b$ or
-\item $\exists y\in \R^m, y\geq 0, \trans y A=0: \trans y \cdot b<0$
+\item $\exists y\in \R^m, y\geq 0, \trans y A=0: \trans y \cdot b>0$
 \end{itemize}
 \end{thm} 
 
@@ -259,7 +259,7 @@ Ax &\geq b\\
 \trans y Ax&\geq \trans y b\\
 0 &\geq \trans y b
 \end{align*}
-Since $\trans y b<0$ it is a contradiction.
+Since $\trans y b>0$ it is a contradiction.
 
 This theorem is very nice if we want to check if some system of inequalities is feasible. We just have to find the vector $y$. This lemma can be proven by our earlier results. 
 
