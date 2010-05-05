@@ -39,6 +39,14 @@ Then we get LP $\geq 10y_1 + 6y_2$. If we want to find the optimal values for $y
 
 So to find the optimal value for the lower bound of the old LP, we need to find the optimal value for a new LP. It will turn out, that the optimal value of this LP is actually the same as the optimal value of the old LP. It is its \emph{dual}.
 
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics{./images/dual.pdf}
+\end{center}
+\caption{A balance of forces at the optimal solution}
+\label{Fig:ballsOfSteel}
+\end{figure}
+
 To get an idea why the dual has the same cost, have a look at figure \ref{Fig:ballsOfSteel}. Suppose we turn the feasible region such as on the right side. The optimal solution $x^*$ is the lowest point. A ball placed in the region will fall to the optimal solution. There a vector pointing in the direction of gravity has to be canceled by the constraints. That means that the objective $c$ has to be canceled by the constraints.
 
 \[\exists y_{b_i}:\ c = \sum_{b_i\in B} y_{b_i} a_{b_i} \Leftrightarrow \trans y A=c \Rightarrow \trans y b = \trans y A x^* = cx^*\]
@@ -169,10 +177,10 @@ When we run the simplex algorithm we have three possible answers. Let's see how 
 \begin{center}
 \begin{tabular}{lc|ccc|}\cline{3-5}
     & & \multicolumn{3}{c|}{Dual}\\\cline{3-5}
-   &  & Feasible Bounded & Feasible Unbounded & Not Feasible\\\cline{2-5}
-\multicolumn{1}{c}{\multirow{3}{*}{\begin{sideways}Primal\end{sideways}}}& Feasible, Bounded & \ok  & \no  & \no   \\
-&\multicolumn{1}{|c|}{Feasible, Unbounded} & \no &  \no & \ok  \\
-&\multicolumn{1}{|c|}{Not Feasible} &  \no  & \ok  & \ok  \\\hline
+   &  & Feasible Bounded & Feasible Unbounded & Not Feasible\\\hline
+\multicolumn{1}{|c}{\multirow{3}{*}{\begin{sideways}Primal\end{sideways}}}& \multicolumn{1}{|c|}{Feasible, Bounded} & \ok  & \no  & \no   \\
+\multicolumn{1}{|c}{}&\multicolumn{1}{|c|}{Feasible, Unbounded} & \no &  \no & \ok  \\
+\multicolumn{1}{|c}{}&\multicolumn{1}{|c|}{Not Feasible} &  \no  & \ok  & \ok  \\\hline
 \end{tabular}
 \end{center}
 
@@ -180,6 +188,7 @@ The Unbounded --- Not Feasible result follows from weak duality. If one is unbou
 
 \begin{Ex}[Max-Flow] We already saw the LP for the maximum flow problem and its dual the min cut LP in the first lecture. See example \ref{Ex:maxFlowMinCut}. We have variables $c_{uv} \geq x_{uv}\geq 0$ for each edge $(u,v)$ in the graph where  $c_{uv}$ is the capacity. Also we have the flow conservation constraints.
 
+%TODO wo zaubert der diese nummerierung her?
 \begin{align}
 \max \quad & \sum_{u\in V} x_{su}\\
 &\sum_{u\in V} x_{uv} - \sum_{u\in V} x_{vu} = 0 && \forall v \neq s,t \label{maxFlow1}\\
