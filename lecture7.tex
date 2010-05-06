@@ -192,8 +192,8 @@ The Unbounded --- Not Feasible result follows from weak duality. If one is unbou
 \begin{align}
 \max \quad & \sum_{u\in V} x_{su}\\
 &\sum_{u\in V} x_{uv} - \sum_{u\in V} x_{vu} = 0 && \forall v \neq s,t \label{maxFlow1}\\
-&x_{uv} \leq c_{uv}\label{maxFlow2}\\
-&x_{uv} \geq 0
+&x_{uv} \leq c_{uv}	&& \forall (u,v)\in E\label{maxFlow2}\\
+&x_{uv} \geq 0 && \forall (u,v)\in E
 \end{align}
 
 We construct the dual problem by associating a variable $\alpha_v$ for each constraint from \ref{maxFlow1} and $\beta_{uv}$ for each constraint from \ref{maxFlow2}. By looking at the definition \ref{Def:dual} we can see how the constraints have to be constructed.
@@ -212,7 +212,7 @@ Line \ref{mincut1} is for variables $x_{uv}$, line \ref{mincut2} is for variable
 Lets do some observations on the new LP: 
 
 \begin{itemize}
-\item We can rewrite the constraints like this
+\item We can rewrite the constraints in \ref{mincut1} like this
 
 \[\alpha_u \leq \alpha_v + \beta_{uv}\]
 
