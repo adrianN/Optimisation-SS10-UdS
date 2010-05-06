@@ -21,7 +21,7 @@ For each strategy there is a winning counter strategy. The players want to maxim
 The first term is -1, the second 1. This observation carries over to all games:
 
 \begin{lem}\label{2pzsLemma1} For all game matrices $D\in R^{n\times m}$
-\[\max_{i\in \{R,P,S\}} \min_{j\in \{R,P,S\}} D(i,j)} \leq \min_{j\in \{R,P,S\}}\max_{i\in \{R,P,S\}} D(i,j)\]
+\[\max_{i\in \{R,P,S\}} \min_{j\in \{R,P,S\}} D(i,j) \leq \min_{j\in \{R,P,S\}}\max_{i\in \{R,P,S\}} D(i,j)\]
 \end{lem}
 
 More interesting than the case of a deterministic choice of exactly one strategy is the case where randomised strategies are allowed, e.g. each player assigns a probability distribution to his available strategies.
@@ -43,14 +43,14 @@ Now we can rewrite the lemma \ref{2pzsLemma1} as follows
 
 \begin{lem} For all 2P-ZS games we have
 
-\[\max_x\min_y\E_{{i~x}\atop {j~y} [D_{ij}] \leq \min_\max_x\E_{{i~x}\atop {j~y} [D_{ij}]\]
+\[\max_x\min_y\E_{{i~x}\atop {j~y}} [D_{ij}] \leq \min_y\max_x\E_{{i~x}\atop {j~y}} [D_{ij}]\]
 
 \end{lem}
 
 We can rewrite the expectations like this
 
 \begin{align*}
-\E_{{i~x}\atop {j~y} [D_{ij}] &= \sum_{i,j} x_i D_{ij}y_j\\
+\E_{{i~x}\atop {j~y}} [D_{ij}] &= \sum_{i,j} x_i D_{ij}y_j\\
 	&=\sum_j y_j \left(\sum_i x_iD_{ij}\right)\\
 	&=\sum_j y_j \E[x|y]
 	&=\trans x D y
@@ -58,9 +58,9 @@ We can rewrite the expectations like this
 
 Now we show that with mixed strategies the inequality is actually an equality
 
-\begin{Thm}[Minimax theorem] Von Neumann discovered
+\begin{thm}[Minimax theorem] Von Neumann discovered
 \[\max_x\min \trans xDy = \min_y\max_x \trans x Dy\]
-\end{Thm}
+\end{thm}
 
 \begin{pr} We will prove this by giving two primal-dual LPs and invoking theorem \ref{thm:strongDuality}. Let
 
@@ -135,7 +135,7 @@ return "no"
 Since this is a randomised algorithm we want to study the expected runtime. 
 
 \begin{Def}[Expected Runtime] The worst-case expected complexity of a randomized algorithm $a$
-\max_{i\in I} \E[D(i,a)]
+\[\max_{i\in I} \E[D(i,a)]\]
 \end{Def}
 
 In our case it doesn't make sense to have a null column in the worst case complexity. Adding ones also makes the algorithm quit faster. Let $O$ then be the set of $n\times n$ matrices with a single one per column.
@@ -143,7 +143,7 @@ In our case it doesn't make sense to have a null column in the worst case comple
 Then we have
 
 \begin{align*}
-\max_{i\in O} \E[\text{# entries read}] &= \max_{i\in O} \sum_b \E[\text{ entries read in } i_b]\\
+\max_{i\in O} \E[\text{\# entries read}] &= \max_{i\in O} \sum_b \E[\text{ entries read in } i_b]\\
 	&=\max_{i\in O}\sum_b \sum_{j=1}^n \frac jn\\
 	&=\sum_b \frac 1n \frac{n(n+1)}{2} 
 	&=\frac{n(n+1)}{2}
@@ -167,7 +167,7 @@ Let $x$ be a probability distribution over $I$ that picks random elements in $O$
 
 Fix an algorithm $a$ and look at $\E_{i~x}[D(i,u)]$. We can focus on what happens in a single column $b$, since the columns are indepedent from each other. The algorithm has to read entries in the column until it reads an one. If it checks an entry it is a one with probability $\frac{1}{n}$. The probability that it does $k$ steps is
 
-\[\frac{1}{n} + \frac{n-1}{n}\left( \frac{1}{n-1}^2+\frac{n-2}{n-1}\left(\ldots = \frac{1}{n} + \frac 2n + \frac 3n + \ldots= \frac{n+1}{2}\]
+\[\frac{1}{n} + \frac{n-1}{n}\left( \frac{1}{n-1}^2+\frac{n-2}{n-1}\left(\ldots = \frac{1}{n} + \frac 2n + \frac 3n + \right.\right.\ldots= \frac{n+1}{2}\]
 
 So in one column we need $O(n)$, and the complexity is $O(n^2)$.
 
