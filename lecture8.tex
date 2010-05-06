@@ -43,14 +43,14 @@ Now we can rewrite the lemma \ref{2pzsLemma1} as follows
 
 \begin{lem} For all 2P-ZS games we have
 
-\[\max_x\min_y\E_{{i~x}\atop {j~y}} [D_{ij}] \leq \min_y\max_x\E_{{i~x}\atop {j~y}} [D_{ij}]\]
+\[\max_x\min_y\E_{{i\sim x}\atop {j\sim y}} [D_{ij}] \leq \min_y\max_x\E_{{i\sim x}\atop {j\sim y}} [D_{ij}]\]
 
 \end{lem}
 
 We can rewrite the expectations like this
 
 \begin{align*}
-\E_{{i~x}\atop {j~y}} [D_{ij}] &= \sum_{i,j} x_i D_{ij}y_j\\
+\E_{{i\sim x}\atop {j\sim y}} [D_{ij}] &= \sum_{i,j} x_i D_{ij}y_j\\
 	&=\sum_j y_j \left(\sum_i x_iD_{ij}\right)\\
 	&=\sum_j y_j \E[x|y]
 	&=\trans x D y
@@ -154,18 +154,18 @@ So randomisation doesn't buy us anything. But is there a smarter algorithm than 
 We can redefine the expected runtime using this view:
 
 \begin{Def} The worst-case expeted complexity of a probability distribution $y$ over A is
-\[\max_{i\in I} \E_{a~y}[D(i,a)] = \max_{i\in I} \sum_{a\in A} y_a D(i,a)\]
+\[\max_{i\in I} \E_{a\sim y}[D(i,a)] = \max_{i\in I} \sum_{a\in A} y_a D(i,a)\]
 \end{Def}
 
 Note the similarity to mixed strategies in games. To find a bound for the runtime of the most efficient randomised algorithm we want to bound 
 
-\[\min_y \max_i \E_{a~y}[D(i,a)] \leq \max_x\min_{a\in A} \E_{i~x}[D(i,a)]\]
+\[\min_y \max_i \E_{a\sim y}[D(i,a)] \leq \max_x\min_{a\in A} \E_{i\sim x}[D(i,a)]\]
 
 That formula means that the worst case complexity of any algorithm can't be smaller than the performance of the best deterministic algorithm over the worst distribution of instances. So we need to find a distribution that is bad for any deterministic algorithm. This is different from the first case where we had a fixed algorithm and could build a tailor-made matrix to make its life hard.
 
 Let $x$ be a probability distribution over $I$ that picks random elements in $O$ (remember: the set of matrices with one 1 per column) uniformly.
 
-Fix an algorithm $a$ and look at $\E_{i~x}[D(i,u)]$. We can focus on what happens in a single column $b$, since the columns are indepedent from each other. The algorithm has to read entries in the column until it reads an one. If it checks an entry it is a one with probability $\frac{1}{n}$. The probability that it does $k$ steps is
+Fix an algorithm $a$ and look at $\E_{i\sim x}[D(i,u)]$. We can focus on what happens in a single column $b$, since the columns are indepedent from each other. The algorithm has to read entries in the column until it reads an one. If it checks an entry it is a one with probability $\frac{1}{n}$. The probability that it does $k$ steps is
 
 \[\frac{1}{n} + \frac{n-1}{n}\left( \frac{1}{n-1}^2+\frac{n-2}{n-1}\left(\ldots = \frac{1}{n} + \frac 2n + \frac 3n + \right.\right.\ldots= \frac{n+1}{2}\]
 
