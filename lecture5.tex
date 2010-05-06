@@ -79,7 +79,7 @@ The top row shows us the reduced cost vector, i.e. the cost change if we walk al
 We have to choose one of the non-basic variables with negative reduced cost, for example $x_1$ (there will be a rule to avoid cycling later) and add it to the basis. To decide which element to kick out of the basis we walk over the column of $x_1$ and divide the value of the variable of each row (in the first column) by the value in $x_i$'s column. This is "minimize $|x_{b_i}/d_{b_i}|$ step in the algorithm. It corresponds to rewriting every line of the LP to look for the constraint that becomes tight first. Like this:
 
 \begin{align*}
-x_1 + 2 x_2 + 2 x_2 + x_4 = 20 & \quad \Rightarrow & x_4 = 20 - x_1    & \Rightarrow x_1 = 20\\
+x_1 + 2 x_2 + 2 x_3 + x_4 = 20 & \quad \Rightarrow & x_4 = 20 - x_1    & \Rightarrow x_1 = 20\\
 2 x_1 +x_2 + 2 x_3 + x_5 = 20  & \quad \Rightarrow & x_5 = 20 - 2 x_1  & \Rightarrow x_1 = 10 \\
 2 x_1 + 2 x_2 + x_3 + x_6 = 20 & \quad \Rightarrow & x_6 = 20 - 2 x_1  &\Rightarrow x_1 = 10
 \end{align*}
