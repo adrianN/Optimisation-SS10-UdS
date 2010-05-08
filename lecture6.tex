@@ -50,7 +50,7 @@ In the second step of example \ref{Ex:cycling} we chose to remove $x_6$ instead 
 
 \begin{pr} Assume the algorithm cycles and w.l.o.g. we start on the cycle. Now remove all variables that are never basic on the cycle, they don't make any difference as they are always 0. Further remove all variables that are always in the basis. The algorithm also has to cycle on this reduced instance. 
 
-It has to be the case that all the remaining variables have value 0. I think this is because otherwise the objective value would change in each iteration and we would have to terminate after some time. %right?
+It has to be the case that all the remaining variables have value 0. Because the system is degenerate there has to be at least one basic variable that is zero. We always select the variable that minimises $x_{b_i}/u_i$ (for $u_i>0$), so the one with $x_{b_i}=0$ will always be chosen. But since we removed all variables that never leave the basis, all remaining variables have to be 0. 
 
 So according to Bland's rule we always remove the basic variable with the smallest index from the basis, since they all have the same ratio.
 
