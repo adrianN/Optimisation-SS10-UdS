@@ -161,7 +161,7 @@ We can redefine the expected runtime using this view:
 
 Note the similarity to mixed strategies in games. To find a bound for the runtime of the most efficient randomised algorithm we want to bound 
 
-\[\min_y \max_i \E_{a\sim y}[D(i,a)] \leq \max_x\min_{a\in A} \E_{i\sim x}[D(i,a)]\]
+\[\min_y \max_i \E_{a\sim y}[D(i,a)] \geq \max_x\min_{a\in A} \E_{i\sim x}[D(i,a)]\]
 
 That formula means that the worst case complexity of any algorithm can't be smaller than the performance of the best deterministic algorithm over the worst distribution of instances. So we need to find a distribution that is bad for any deterministic algorithm. This is different from the first case where we had a fixed algorithm and could build a tailor-made matrix to make its life hard.
 
