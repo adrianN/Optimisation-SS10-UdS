@@ -1,0 +1,162 @@
+\subsection{The Maximum Assingment Problem}
+
+We're given a complete bipartite graph $G=((U,V),E)$ and a cost function $c$ on the edges. We have $|V|=|U|=n$. We're looking for a bijective mapping $\sigma : V \rightarrow U$ that maximises the cost of the assignment, defined as 
+
+\[\text{cost}(\sigma) = \sum_{j\in V} c(\sigma(j),j)\]
+
+There're tons of different interesting applications for this problem, for example the stable marriage problem in which we want to match boys and girls such that every pair is as satisfied as possible with each other.
+
+We can solve this problem using an integer linear program. We introduce a variable $x_{ij}$ for every $i\in U,j\in V$, if $x_{ij}=1$ then $\sigma(i)=i$. Now the constraints must ensure that the variables actually encode an assigment.
+
+\begin{align*}
+\max \quad &  \sum_{i,j} x_{ij} c(i,j)\\
+s.t.\max & \sum_{x_{ij}} x_{ij}=1 && \forall j\in V \\
+&\sum_{j\in V} x_{ij} = 1 && \forall i\in U\\
+&x_{ij}\in \{0,1\}
+\end{align*}
+
+To find the dual of this program we first relax the integrality constraints, because our algorithm for duals only works on normal linear programs.
+
+\begin{align*}
+\max \quad & \sum c(i,j)x_{ij}\\
+s.t & \sum_{x_{ij}} x_{ij}=1 && \forall j\in V \\
+	&\sum_{j\in V} x_{ij} = 1 && \forall i\in U\\
+	&x_{ij} \in [0,1]
+\end{align*}
+
+If we remove the integrality constraints we increase the size of the feasible region. So the value of an optimal solution for the new LP can only be greater (or equal) than the value for the integer linear program. %wir lassen was weg?
+
+Now we can easily construct the dual program like this:
+
+\begin{align*}
+\min \quad & \sum_{j\in V} p_j + \sum_{i\in U} r_i\\
+s.t.\quad & p_j+r_i\geq c(i,j) &&\forall i\in U, j\in V\\
+& p_j,r_i \text{ free} &&\forall j\in V,i\in U
+\end{align*}
+
+From the dual we can derive an algorithm that solves the original problem. We want to get 
+
+\begin{itemize}
+\item An assignment $\sigma$
+\item A feasible solution for a Dual $(p,r)$
+\item $\text{cost} \approx \sum p_j + \sum r_i$
+\end{itemize}
+
+The first two points are easy, but it will take more work to solve the third problem.
+
+We start be reinterpreting the assignment problems a bit: Interpret $U$ as a set of bidders and $V$ as a set of objects. The cost function $c(i,j)$ describes how much $i$ values object $j$. The dual variable $p_j$ can be interpreted as a price for object $p_j$.
+
+The algorithm then looks like this:
+
+\begin{lstlisting}
+Action-Mechanism (U,V,c,$\delta$)
+for each $j\in V$, p_j =0, $\sigma(j) = \bot$
+Q = set U
+while Q not empty
+	i = get some bidder in Q
+	j = find object maximising revenue $c(i,j)-p_j$
+	if $\sigma(j) \neq \bot$
+		add $\sigma(j)$ to Q
+	$\sigma(j)$ = i
+	$r_i$ = c(i,j)-$p_j$
+	$p_j$ = p_j 0 \delta
+return $\sigma$
+\end{lstlisting}
+
+It is not intuitively clear that this algorithm always terminates. We'll show that now.
+
+\begin{lem} The algorithm AM always terminates in at most 
+\[n\left(\frac {c_max}{\delta} +1\right)\]
+iterations
+\end{lem}
+
+Some observations:
+
+\begin{itemize}
+\item Once object $j$ is assigned it remains assigned. 
+\item If at some point 
+\[\max_i c(i,j) - p_j <0\]
+then $j$ is never chosen in %TODO ref auf zeilennummer
+\item The price 
+\[p_j\leq \delta \left( \frac{c_max}{\delta} +1\right) \quad \forall j\in V\] %bruch abrunden
+\item Since some price is increased by $\delta$ in each iteration, the number of iterations is bounded by
+\[n\left(\frac {c_max}{\delta} +1\right)\]
+\end{itemize}
+
+So we have an algorithm that does something and terminates, but we don't know how good the solution is that it produces. We'll proceed to compare the value of the solution we find to the value of the optimal dual solution.
+
+\begin{lem}\label{marriageApprox} At the end of the algorithm we have an assignment $\sigma$ and a feasible dual solution $(p,q)$ such that
+\[\sum p_j + \sum r_i = \text{cost}(\sigma) + \delta n\]
+\end{lem}
+
+Look at $i,j$ such that $\sigma(j)=i$ at the point in time where the algorithm made that assignment. The assignment is done if $r_i=c(i,j)-p_j$ was maximal. We can rewrite that to $c(i,j) = r_i+p_j$ after that we increase $p_j$ by $\delta$ and get $c(i,j) +\delta = r_i+p_j$. Now if we look at the cost of the assignment we get
+
+\[\text(cost)(\sigma) = \sum_{j\in V} c(\sigma(j),j) = \sum_{j\in V} p_j + \sum_{i\in U} r_i - n\delta\]
+
+This is nearly what we want to prove, we just have to show that we also have a feasible solution. In particular we want
+
+\[p_j+r_i \geq c(i,j) \qquad \forall i,j\]
+
+However since we chose $r_i$ such that $c(i,j)-p_j$ was maximal when we did the assignment. So at this point in time $p_j + r_i \geq c(i,j)$. Now the $p_j$ can only increase over time, so if that condition held then, it will always hold in the future too and lemma \ref{marriageApprox} holds.
+
+Next we want to find a bound on the number of iterations such that we find not only an approximate solution, but the optimal one.
+
+\begin{thm} Suppose that the edge costs are integers ($c:E\rightarrow \N$) and $\delta \frac{1}{n+1}$. Then AM finds an optimal assignment in $O(c_{max}n^3)$ time.
+\end{thm}
+
+\begin{pr} The running time is easy to bound, each iteration can be done in O(n).
+
+For the optimality we see that the difference between the optimal dual costs and the solution the algorithm finds is smaller than 1 if we choose $\delta$ like that. Since we assume integer costs two different costs must have a difference of at least 1. Hence our solution must be optimal.
+\end{pr}
+
+A cool application for maximum matching is "popular assignments". Again we have a set $U$ of bidders and a set $V$ of objects. For each $i\in U$ and two $j_i,j_2\in V$ we have three options
+
+\begin{itemize}
+\item $i$ prefers $j_1$
+\item $i$ prefers $j_2$
+\item $i$ doesn't care
+\end{itemize}
+
+(We want preference to be transitive.) So for each bidder we have a partial order on the objects.
+
+Now we want to make everyone as happy as possible. We extend the preference relation to assigments by for defining an order on assigments. For each bidder $i\in U$ and assigments $\sigma,\tau$, $i$ prefers $\sigma$ to $\tau$ if $\sigma^{-1}(i)$ is preferred to $\tau^{-1}(i)$.
+
+\begin{Def} An assignment $\sigma$ is popular, if for any other assignment $\tau$ the number of bidders that prefer $\sigma$ to $\tau$ is at least as large as the number of bidders that prefer $\tau$ to $\sigma$
+\end{Def}
+
+There are examples where a popular assignment doesn't exist. For example $U=\{x,y,z\}$, $V = \{a,b,c\}$
+
+\begin{center}
+\begin{tabular}{c|ccc}
+X & \cellcolor{gruen} a & b & \cellcolor{rot}c\\\hline
+Y & a & \cellcolor{rot}b & \cellcolor{gruen}c\\\hline
+Z & \cellcolor{rot}a & \cellcolor{gruen}b & c\\
+\end{tabular}
+\end{center}
+
+Here the number of bidders that prefer green to red is 1 and the number of bidders that prefer red to green is 2. In fact no possible assignment exists here.
+
+So an interesting problem would be to check whether there is a popular assignment. However we do something similar. We have an easy way to check that an assignment is not popular (just give a more popular assignment). Is there a way to find a similar certificate to prove that an assignment ist popular? Turns out, yes.
+
+\begin{Def} Let $\Delta(\sigma,\tau)$ be the number of bidders that prefer $\tau$ to $\sigma$ minus the number of bidders that prefer $\sigma$ to $\tau$
+
+$\sigma$ is popular if 
+
+\[\max _T \Delta (\sigma, \tau) \leq 0\]
+\end{Def}
+
+That looks suspiciously like an application for the maximum matching. Define a cost function like this
+
+\[c(i,j) = \begin{cases}
+1 & i \text{ prefers } j \text{ to } \sigma(i)\\
+-1 & i \text{ prefers } \sigma(j) \text{ to } j\\
+0 & i \text{ is indifferent}
+\end{cases}\]
+
+Here we use negative numbers for our cost function, the algorithm we have isn't designed for that. Luckily since all assignments have the same number of pairs we can just add a constant to all costs and the costs of all assignments go up by the same amount.
+
+Now we get
+
+\[\max_\tau \text{cost}(\tau) = \max_\tau \Delta(\sigma,\tau)\]
+
+if we solve that we find not only the best assignment, but also a certificate. %unsure here.
