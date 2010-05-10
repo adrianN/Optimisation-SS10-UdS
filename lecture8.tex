@@ -1,7 +1,7 @@
 \section{Applications of Linear Programs and Duality}
 \subsection{Two player zero-sum games}
 
-You might also want to about this in this \href{http://www.cambridge.org/journals/nisan/}{book} (user:agt1user, pass:camb2agt). Section 1.4. I think it's fairly well described there.
+You might also want to about this in this book\footnote{(user:agt1user, pass:camb2agt) \url{http://www.cambridge.org/journals/nisan/}}. Section 1.4. describes the concepts presented in this lecture fairly well.
 
 An example for a two player zero sum game is Rock-Paper-Scissors. We have two players, both of which can choose between one of the strategies \{rock, paper, scissors\}. If a player wins he gets some kind of payoff, e.g. 1 unit of the credit of your choice. We can encode the game in a matrix $D$:
 
@@ -18,7 +18,7 @@ For each strategy there is a winning counter strategy. The players want to maxim
 
 \[\max_{i\in \{R,P,S\}} \min_{j\in \{R,P,S\}} D(i,j) \qquad \min_{j\in \{R,P,S\}}\max_{i\in \{R,P,S\}} D(i,j)\]
 
-The first term is -1, the second 1. This observation carries over to all games:
+The first term is -1, the second 1. Note that in this example it is assumed that one player makes a choice and the other player makes his move after beeing informed about this choice. This observation carries over to all games:
 
 \begin{lem}\label{2pzsLemma1} For all game matrices $D\in R^{n\times m}$
 \[\max_{i\in \{R,P,S\}} \min_{j\in \{R,P,S\}} D(i,j) \leq \min_{j\in \{R,P,S\}}\max_{i\in \{R,P,S\}} D(i,j)\]
@@ -32,7 +32,7 @@ But first let's define games formally.
 \begin{enumerate}
 \item $S_1$, a set of strategies $n$ for player 1
 \item $S_2$, a set of strategies $m$ for player 2
-\item A payoff matrix $D\in R^{n\times m}$ s.t. the sum of all rows and all columns is zero %me thinks
+\item A payoff matrix $D\in R^{n\times m}$ %s.t. the sum of all rows and all columns is zero %me thinks
 \end{enumerate}
 \end{Def}
 
@@ -47,6 +47,7 @@ Now we can rewrite the lemma \ref{2pzsLemma1} as follows
 
 \end{lem}
 
+The notation $\E_{{i\sim x}\atop {j\sim y}} [D_{ij}]$ should be understood as: 'The expected value of $D_{ij}$ with $i,j$ being choosen according to the propability distributions $x$ and $y$ '.\\ 
 We can rewrite the expectations like this
 
 \begin{align*}
@@ -71,35 +72,35 @@ The LP that computes the optimal strategy for the first player is
 \begin{align*}
 \max \quad & z\\
 s.t.\quad & z \leq \sum_{i=1}^n x_i D_{ij} & \forall j=1\ldots m\\
-&\trans 1 x = 1
+&\trans 1 x = 1\\
 &x\geq 0
 \end{align*}
 
-This works because once the other players strategy $j$ is fixed we can just select the pure strategy that maximises our payoff.
+This works because once the other players strategy $j$ is fixed we can just select the pure strategy that maximises our payoff. Note that the $m$ constraints of the form $z \leq \sum_{i=1}^n x_i D_{ij}, \forall j=1 \ldots m$ can be written as $z=\min_{j=1\ldots m} \sum_{i=1}^n x_i D_{ij}$.
 
 The dual of this program is
 
 \begin{align*}
 \min \quad & t \\
-s.t.\quad & \sum_{j=1}^n t-y_jD_{ij}  \geq 0 & \forall i=1\ldots n
-& \trans 1 y = 1
+s.t.\quad & \sum_{j=1}^n t-y_jD_{ij}  \geq 0 & \forall i=1\ldots n\\
+& \trans 1 y = 1\\
 &t \text{ free}\\
 &y\geq 0
 \end{align*}
 
-Where the $y_j$ are the variables for the $z \leq \sum_{i=1}^n x_i D_{ij}$ constraints and $t$ the variable for the $\trans 1 x=1$ constraint. 
+Where the $y_j$ are the variables for the $z \leq \sum_{i=1}^n x_i D_{ij}$ constraints and $t$ is the variable for the $\trans 1 x=1$ constraint. 
 
 We can rewrite the first constraint to set $t$ to the maximum of $\sum_{j=1}^n y_jD_{ij}$
 
 \begin{align*}
 \min \quad & t \\
-s.t.\quad & t = \max_i \sum^m_{j=1} y_j D_{ij} & \forall i=1\ldots n
-& \trans 1 y = 1
+s.t.\quad & t = \max_i \sum^m_{j=1} y_j D_{ij} & \forall i=1\ldots n\\
+& \trans 1 y = 1\\
 &t \text{ free}\\
 &y\geq 0
 \end{align*}
 
-Which gives us the optimal mixed strategy of the second player.
+Which gives us the optimal mixed strategy of the second player. Because of theorem \ref{thm:strongDuality} (Strong duality) it follows that $z^{*}=t^{*}$. This implies that the optimal strategie yields a return of $0$ for both playes, as it is a zero-sum game.
 \end{pr}
 
 \subsection{Lower Bounds for Randomised Algorithms}
@@ -118,7 +119,7 @@ We want to find an algorithm that has the best possible worst case complexity, i
 
 Which is pretty similar to the game objectives in the previous section. Player one chooses an algorithm and player two tries to find the worst instance for it.
 
-Fix an algorithm $a$. What is $D(i,a)$ (for any sensible $a$)? The algorithm checks the entries in some particular order, an adversary will choose a matrix such that the last entry that is checked in every column is the only one in it. That way the algorithm needs $n^2$ steps.
+Fix an algorithm $a$. What is $D(i,a)$ (for any sensible $a$)? The algorithm checks the entries in some particular order, an adversary will choose a matrix such that the last entry that is checked in every column is the only '1' in it (could be any number $\neq 0$). That way the algorithm needs $n^2$ steps.
 
 Can randomisation help? Let {\sc Rand-Check} be the algorithm that picks a random permutation of the columns and then checks that column randomly
 
@@ -138,7 +139,8 @@ Since this is a randomised algorithm we want to study the expected runtime.
 \[\max_{i\in I} \E[D(i,a)]\]
 \end{Def}
 
-In our case it doesn't make sense to have a null column in the worst case complexity. Adding ones also makes the algorithm quit faster. Let $O$ then be the set of $n\times n$ matrices with a single one per column.
+We try to build some intuition for the structure of the worst-case instance. For this we take the view of the adversary.
+It doesn't make sense to have a null column, as this would give the algorithm the chance to finish before it tried at least on element from all columns. Adding ones also makes the algorithm quit faster. Therefore let $O$ then be the set of $n\times n$ matrices with a single one value per column.
 
 Then we have
 
@@ -169,5 +171,5 @@ Fix an algorithm $a$ and look at $\E_{i\sim x}[D(i,u)]$. We can focus on what ha
 
 \[\frac{1}{n} + \frac{n-1}{n}\left( \frac{1}{n-1}^2+\frac{n-2}{n-1}\left(\ldots = \frac{1}{n} + \frac 2n + \frac 3n + \right.\right.\ldots= \frac{n+1}{2}\]
 
-So in one column we need $O(n)$, and the complexity is $O(n^2)$.
+So in one column we need $O(n)$, and we have $n$ of those therefore the complexity is $O(n^2)$.
 
