@@ -1,4 +1,4 @@
-\subsubsection*{Cycling}
+\subsubsection{Cycling}
 
 Sometimes, if the system is degenerate and we're doing unlucky choices, the simplex algorithm can start to cycle.
 
@@ -88,9 +88,13 @@ So the cost change should be both positive and negative. That is a contradiction
 
 So by using Bland's Rule we can remove the assumption that the system is non degenerate and still guarantee termination at an optimal value.
 
-\subsubsection*{Finding an Initial Feasible Basis}
+\subsubsection{Finding an Initial Feasible Basis}
 
-Until now we don't now how to find the initial solution we need to start with the simplex algorithm. We know a method (see section \ref{Sec:FourierMotzkin}) to check whether it is feasible at all, but that wasn't particularly efficient. We will find a bfs by solving another LP, which is easier. For an LP with $Ax=b$ and $x>0$ we solve
+Until now we don't now how to find the initial solution we need to start with the simplex algorithm. We know a method (see section \ref{Sec:FourierMotzkin}) to check whether it is feasible at all, but that wasn't particularly efficient. 
+
+If it is possible to introduce nonnegative slack variables in all constraints the feasible region contains the origin and we can choose the slack variables as initial solution. This is always the case for systems of the form $Ax\leq b$ with $b\geq 0$. In this case the initial basis matrix is the identity matrix and we don't have to work to get the initial tableau.
+
+For an LP with $Ax=b$ and $x\geq 0$ the initial solution is not so obvious. To find it we solve an auxilliary LP that is defined like this.
 
 \begin{align*}
 \min \quad & \sum_{i=1}^m y_i\\
@@ -98,13 +102,27 @@ Until now we don't now how to find the initial solution we need to start with th
 &x,y\geq 0
 \end{align*}
 
+Here the initial basis is obvious: Let $x=0$ and $y=b$. Again we get the identity matrix as initial basis matrix and can easily apply the tableau method.
+
 We observe the following things:
 
 \begin{enumerate}
-\item If the optimal value in the new LP is $<0$ then the old LP is not feasible because any solution for the original LP gives a trivial assignment for $x$ s.t. all $y_i$ are 0.
+\item If the optimal value in the new LP is $\neq 0$ then the old LP is not feasible because any solution for the original LP gives a trivial assignment for $x$ s.t. all $y_i$ are 0.
 \item If the optimal value of the new LP is zero and $(x^*, y^*)$ is an optimal solution, then $x^*$ must be feasible in the old LP. We would like it to be a basis. (Which it may not be, as $y_i$ is not a part of the old LP)
-\item If we use the simplex algorithm to solve the new LP we always get an optimal bfs $(x^*,y^*)$. Let $B=\{\kthings{b}{m}\}$ be its basis in the new LP. If every $b_i$ corresponds to some $x$ variable, it is not difficult to see that $B$ is also a feasible basis for the old LP, since the vectors are the same in both LPs. However we may also have some of the $y$ indices. Look at $F=\{b_i | b_i \text{is $x$ index}\}$. We can augment $F$ with columns from $A$ to get a basis for the old LP.
+\item If we use the simplex algorithm to solve the new LP we always get an optimal bfs $(x^*,y^*)$. Let $B=\{\kthings{b}{m}\}$ be its basis in the new LP. If every $b_i$ corresponds to some $x$ variable, it is not difficult to see that $B$ is also a feasible basis for the old LP, since the vectors are the same in both LPs. However we may also have some of the $y$ indices. Note that the $y_{b_i}$ have to be zero if the solution is optimal. Hence we have a degenerate bfs as optimal solution.
 \end{enumerate}
+
+So it can happen that the bfs we get for the auxilliary LP is not a basis for the original LP because the basis $F$ contains some of the artificial variables $y$. We want to derive a feasible basis from that solution.
+
+Let $A_{b_1},\ldots A_{b_k}$ be the columns of A that are also in the basis $F$. Since $F$ is a basis these columns have to be linearly indepedent. If $A$ has full rank $m$ we can augment the $A_{b_i}$ by $m-k$ additional linearly indepedent vectors from $A$ (we can always transform the LP s.t. the matrix has full rank without changing the feasible region). Since the $y_F$ were zero we can just drop them out of the basis after the augmenting is done and get another basic feasible solution that also gives us a basis for the original problem.
+
+It is not at all obvious how to find the columns of $A$ that we can safely add to our basis. Luckily we can have a hard look at our simplex tableau and spot them. First we describe the procedure, then we check that it's actually correct.
+
+To find a column of $A$ that we can add to our basis first we find a column of $F$ that contains an artificial variable, say $y_l$. Then look at the corresponding row $l$ in the tableau and find a column of $A$, say $A_j$, with a nonzero entry in that row. Using the normal row operations we introduce $x_j$ into the basis and kick out $y_l$. It's ok if the pivot element $(l,j)$ is negative in this step.
+
+So why is this correct? In the tableau we have $F^{-1}\bar A$ (where $\bar A$ is the extended matrix that also contains entries for the artificial variables). So in all the $k$ $A_{b_i}$ that we already have in our basis we have the $i$th unit vector. Since w.l.o.g. $k<l$ the $l$th entry in these vectors is $0$. That must also be true in any linear combination of the columns $F^{-1}A_{b_1},\ldots, F^{-1}A_{b_k}$. By looking for a column that has a nonzero entry at position $l$ we find a vector $F^{-1}A_j$ that must be linearly independent from all $F^{-1}A_{b_i}$. But since $F^{-1}$ is invertible this must also hold for $A_{b_i}$ and $A_j$.
+
+It could of course happen that we don't find any entry in the $l$th row that is nonzero. Then the rows of $A$ must linearly depedent since $(F^{-1}A)_l=\trans f_l A=0$. Because the problem is feasible we must also have $\trans f_l b = 0$ and the constraint $\trans f_l A x = \trans f b$ is redundant and can be eliminated by deleting the $l$th row of the tableau. 
 
 It is not so nice that we have to do some post processing to get a basis. A different approach to finding the initial solution is solving the following LP
 
