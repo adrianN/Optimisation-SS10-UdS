@@ -60,6 +60,7 @@
 \newcommand{\no}{{\large $\mathbb{\times}$}}
 \renewcommand{\bar}{\overline}
 \renewcommand{\arraystretch}{1.5}
+\newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}}
 
 \newcommand{\trans}[1]{{#1}^\text{\upshape \sffamily T}}
 \newtheoremstyle{leplain} %name
@@ -77,7 +78,7 @@
 
 \date{}\begin{document}
 \lstdefinelanguage{pseudocode}{
-    morekeywords = {repeat, until, if, while, for, return, break},
+    morekeywords = {repeat, until, if, unless, while, for, return, break},
     sensitive = false,
     morecomment=[l]{//},
     morecomment=[s]{/*}{*/},
@@ -131,4 +132,7 @@
 
 \marginpar{Lecture 9}
 \input{./lecture9}
+
+\marginpar{Lecture 10}
+\input{./lecture10}
 \end{document}

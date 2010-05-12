@@ -114,7 +114,7 @@ We observe the following things:
 
 So it can happen that the bfs we get for the auxilliary LP is not a basis for the original LP because the basis $F$ contains some of the artificial variables $y$. We want to derive a feasible basis from that solution.
 
-Let $A_{b_1},\ldots A_{b_k}$ be the columns of A that are also in the basis $F$. Since $F$ is a basis these columns have to be linearly indepedent. If $A$ has full rank $m$ we can augment the $A_{b_i}$ by $m-k$ additional linearly indepedent vectors from $A$ (we can always transform the LP s.t. the matrix has full rank without changing the feasible region). Since the $y_F$ were zero we can just drop them out of the basis after the augmenting is done and get another basic feasible solution that also gives us a basis for the original problem.
+Let $A_{b_1},\ldots A_{b_k}$ be the columns of A that are also in the basis $F$. Since $F$ is a basis these columns have to be linearly indepedent. If $A$ has full rank $m$ we can augment the $A_{b_i}$ by $m-k$ additional linearly indepedent vectors from $A$ (as we'll see later we can always transform the LP s.t. the matrix has full rank without changing the feasible region). Since the $y_F$ were zero we can just drop them out of the basis after the augmenting is done and get another basic feasible solution that also gives us a basis for the original problem.
 
 It is not at all obvious how to find the columns of $A$ that we can safely add to our basis. Luckily we can have a hard look at our simplex tableau and spot them. First we describe the procedure, then we check that it's actually correct.
 

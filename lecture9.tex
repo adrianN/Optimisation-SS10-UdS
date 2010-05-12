@@ -88,7 +88,7 @@ So we have an algorithm that does something and terminates, but we don't know ho
 \begin{lem}\label{marriageApprox} At the end of the algorithm we have an assignment $\sigma$ and a feasible dual solution $(p,q)$ such that
 \[\sum p_j + \sum r_i = \text{cost}(\sigma) + \delta n\]
 \end{lem}
-
+\begin{pr}
 Look at $i,j$ such that $\sigma(j)=i$ at the point in time where the algorithm made that assignment. The assignment is done if $r_i=c(i,j)-p_j$ was maximal. We can rewrite that to $c(i,j) = r_i+p_j$ after that we increase $p_j$ by $\delta$ and get $c(i,j) +\delta = r_i+p_j$. Now if we look at the cost of the assignment we get
 
 \[\text(cost)(\sigma) = \sum_{j\in V} c(\sigma(j),j) = \sum_{j\in V} p_j + \sum_{i\in U} r_i - n\delta\]
@@ -98,6 +98,27 @@ This is nearly what we want to prove, we just have to show that we also have a f
 \[p_j+r_i \geq c(i,j) \qquad \forall i,j\]
 
 However since we chose $r_i$ such that $c(i,j)-p_j$ was maximal when we did the assignment. So at this point in time $p_j + r_i \geq c(i,j)$. Now the $p_j$ can only increase over time, so if that condition held then, it will always hold in the future too and lemma \ref{marriageApprox} holds.
+\end{pr}
+
+\begin{cor} The LP is integral. That is, every extreme point is a 0-1 vector.\end{cor}
+
+\begin{pr} Suppose there is an extreme point $x$ that is fractional. That means $x$ is a vertex and there is some cost vector $c$ such that $x$ is optimal with respect to $c$
+
+\[cx \geq cy \quad \forall \text{feasible } y\neq x\]
+
+We get
+
+\[\delta = \frac{cx - \text{cost}(\tau)}{(n+1)}\]
+
+where $\tau$ is an optimal assignment for $c$. By lemma \ref{marriageApprox} we have
+
+\begin{align*}
+\sum p_j + \sum r_i &= \text{cost}(\sigma) + n\delta \\
+ &\leq \text{cost}(\tau) + \frac{n}{n+1} (cx-\text{cost}(\tau)\\
+ &\leq cx
+\end{align*}
+
+\end{pr}
 
 Next we want to find a bound on the number of iterations such that we find not only an approximate solution, but the optimal one.
 
@@ -160,3 +181,4 @@ Now we get
 \[\max_\tau \text{cost}(\tau) = \max_\tau \Delta(\sigma,\tau)\]
 
 if we solve that we find not only the best assignment, but also a certificate. %unsure here.
+
