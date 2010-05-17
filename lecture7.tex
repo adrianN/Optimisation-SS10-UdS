@@ -86,6 +86,20 @@ The dual LP is
 As in the example we introduce a variable $y_i$ for each constraint and one constraint for each variable of the primal LP. We switch the vectors $c$ and $b$
 \end{Def}
 
+The rules for conversion are a bit simpler to remember in form of this table:
+
+\begin{center}
+\begin{tabular}{c|c||c|c}
+Primal & min & max & Dual\\\hline
+\multirow{3}{*}{constraints} & $\geq b_i$ & $\geq 0$ & \multirow{3}{*}{variables}\\
+& $\leq b_i$ & $\leq 0$ &\\
+& $= b_i$ & free &\\\hline
+\multirow{3}{*}{variables} & $\geq 0$ & $\leq c_j$ & \multirow{3}{*}{constraints}\\
+& $\leq 0$ & $\geq c_j$ &\\
+& free & $= c_j$ &
+\end{tabular}
+\end{center}
+
 \begin{thm}[Weak Duality]\label{thm:weakDuality} Given a pair of feasible primal/dual solutions $x,y$
 \[cx \geq  \trans b y\]
 \end{thm}
