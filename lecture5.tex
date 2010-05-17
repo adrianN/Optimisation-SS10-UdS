@@ -86,7 +86,7 @@ x_1 + 2 x_2 + 2 x_3 + x_4 = 20 & \quad \Rightarrow & x_4 = 20 - x_1    & \Righta
 
 Since all the non-basic variables are $0$ and the coefficients of the basic variables always form an identity matrix, each line gives us a simple equation. In this example the basis is degenerate. Since $x_5$ and $x_6$ both achieve the minimum we have to choose one (a rule for this will be introduced later in theorem \ref{Thm:blandsRule}). For example $x_5$. This is called the pivot.
 
-Now we want to introduce $x_1$ into the basis. That means we need to make all coefficients in its column 0 (including the one in the objective function!), except for the one in the line that achieves the minimum. That line gets divided be the coefficient (in an alternative method all other lines get multiplied by the coefficient, that avoids fractions and is called \emph{integer pivoting}). We use the normal row operations we know from gaussian elimination. The '2' in table \ref{tab:pivotExample} at the intersection of the second column ($x_1$) and the fourth row ($x_5$ leaving the basis) is called pivot element.
+Now we want to introduce $x_1$ into the basis. That means we need to make all coefficients in its column 0 (including the one in the objective function!), except for the one in the line that achieves the minimum. That line gets divided be the coefficient (in an alternative method all other lines get multiplied by the coefficient, that avoids fractions and is called \emph{integer pivoting}). We use the normal row operations we know from gaussian elimination. The green '2' in table \ref{tab:pivotExample} at the intersection of the second column ($x_1$) and the fourth row ($x_5$ leaving the basis) is called pivot element.
 
 \begin{center}
 \begin{tabular}{c|ccccccr}
