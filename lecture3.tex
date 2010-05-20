@@ -248,7 +248,7 @@ This can be accomplished by an application of Farkas' Lemma.
 \begin{thm}[Farkas' lemma]\label{Thm:farkasI} Let $A\in \R^{m\times n}$ and $b\in \R^m$. Then either 
 \begin{itemize}
 \item $\exists x\in \R^n: Ax\geq b$ or
-\item $\exists y\in \R^m, y\geq 0, \trans y A=0: \trans y \cdot b>0$
+\item $\exists y\in \R^m, y\geq 0, \trans y A=0: \trans y b>0$
 \end{itemize}
 \end{thm} 
 
@@ -275,7 +275,7 @@ An alternative (equivalent) definition for the Farkas lemma is:
 \end{enumerate}
 \end{thm}
 
-This say either $x$ is in the cone of the columns of $A$ defined like this:
+This says either $x$ is in the cone of the columns of $A$ defined like this:
 
 \begin{Def}[Cone] Let $A=\{\kthings{a}{k}\}$ be a set of vectors in $\R^n$
 \[C(A)=\left\{x\left|x=\sum^m \lambda_i a_i;\ \lambda_i \geq 0\right.\right\}\]
@@ -283,26 +283,30 @@ This say either $x$ is in the cone of the columns of $A$ defined like this:
 
 or there is a direction $y$ in $A$ that splits the space between the cone of $A$ and $b$. Note that $\trans y A\geq 0$ means that all columns of $A$ have a positive dot product with $y$. So all positive linear combinations of the columns (i.e. all points in the cone) are on the opposite side from $b$ of the hyperplane defined by $y$.
 
-To prove that this version implies the one from theorem \ref{Thm:farkasI} let $A'= [A|-A|-I], x'=[x_1|x_2|z]$ such that $x_1,x_2,z\geq 0$ we have
+To prove that this version implies the one from theorem \ref{Thm:farkasI}\footnote{this was an exercise on problem set 3} we want to take a statement from I (theorem \ref{Thm:farkasI}) and transfer it into a version II (theorem \ref{Thm:farkasII}) and then show that those two things imply each other.
+
+Consider a system $Ax\geq b$. We convert it to standard form by first introducing slack variables $A(x+z) =b$. This is not yet the right form of the problem, as we need $x\geq 0$. So do the trick with two variables $x=x_1-x_2$. This gives us an equivalent problem with a new matrix and a new vector $\hat A= [A|-A|-I], \hat x=[x_1|x_2|z]$ such that $x_1,x_2,z\geq 0$.  Let $\hat x_0=(x_1^*,x_2^*,z^*)$ be a feasible solution for the system $\hat A \hat x = b$ then we get a feasible solution for the original system by $x_0=x_1^*-x_2^*$. 
 
 \begin{align*}
-A'x' =b &\Rightarrow A(x_1-x_2)-z=b\\
-	&\Rightarrow A(x_1-x_2) = b+z\\
-	&\Rightarrow Ax^* \geq b
+\hat A \hat x_0 =b &\Rightarrow A(x_1^*-x_2^*)-z^*=b\\
+	&\Rightarrow A(x_1^*-x_2^*) = b+z\\
+	&\Rightarrow Ax_0 \geq b
 \end{align*}
 
-Which proves the first condition. For the other condition we want to prove that not the second condition is \ref{Thm:farkasII} implies not the second condition in \ref{Thm:farkasI} 
+Hence we have a way to get a solution for \ref{Thm:farkasII} from a solution for \ref{Thm:farkasI}.
+
+That proves the first condition. For the other condition suppose than $\hat A \hat x=b, \hat x\geq 0$ is not feasible. From theorem \ref{Thm:farkasI} we get a $y\geq 0\in \R^m$ such that $\trans y \hat A = 0$ and $\trans y b>0$.
+
+We construct a certificate for theorem \ref{Thm:farkasII}. By opening up $\hat A$ we get
+
+\[\trans y[A|-A|-I] \geq 0 \qquad \trans y >0\]
+
+We need $\trans y A \geq 0$ and $\trans y -A\geq 0$. Of course that implies $\trans y A = \trans y -A =0$. From $\trans y -I \geq 0$ we get $y\leq 0$. Obviously we can take $y'=-y$ as a certificate for theorem \ref{Thm:farkasI} as we then have 
+
+\[\trans {y'}A =0\quad \trans{y'} b<0\]
+
+For the other condition we want to prove that not the second condition is \ref{Thm:farkasII} implies not the second condition in \ref{Thm:farkasI} en 
 
 \[A'x' = b \Rightarrow \neq (\exists y, y'A'\geq 0 \wedge \trans yb <0)\]
 
-
-\begin{align*}
-\trans y A' \geq 0 \wedge \trans y b<0\\
-[\trans y A | -\trans y A | -\trans y] \geq 0\wedge \trans y b<0\\
-\underbrace{\trans y A \geq 0 \wedge -\trans y A \geq 0}_{\Rightarrow \trans y A = 0} \wedge \trans y \geq 0\wedge \trans y b < 0\\
-\end{align*}
-
-Now we can choose $y*=-y$ and get $\trans y* b > 0$ and $\trans y*A=0$ which is the proof for
-
-\[A'b'=b,x\geq 0 \Rightarrow \neq (\exists y, y\geq 0 \trans yA=0, \trans yb >0\]
-
+It's easy to show that exactly one of the cases of \ref{Thm:farkasI} is true when one case of \ref{Thm:farkasII} are true. Assume there are two vectors $x_0,y_0$ such that $Ax_0\geq b$ and $\trans y_0A=0,\ \trans y_0b>0$. We can then just multiply $Ax_0\geq b$ by $\trans y$ from the left and get a contradiction.
