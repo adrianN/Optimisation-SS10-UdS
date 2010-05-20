@@ -4,13 +4,13 @@ We're given a complete bipartite graph $G=((U,V),E)$ and a cost function $c$ on 
 
 \[\text{cost}(\sigma) = \sum_{j\in V} c(\sigma(j),j)\]
 
-There're tons of different interesting applications for this problem, for example the stable marriage problem in which we want to match boys and girls such that every pair is as satisfied as possible with each other.
+There're tons of different interesting applications for this problem, for example the stable marriage problem in which we want to match boys and girls such that every pair is as satisfied with each other as possible.
 
 We can solve this problem using an integer linear program. We introduce a variable $x_{ij}$ for every $i\in U,j\in V$, if $x_{ij}=1$ then $\sigma(i)=i$. Now the constraints must ensure that the variables actually encode an assigment.
 
 \begin{align*}
 \max \quad &  \sum_{i,j} x_{ij} c(i,j)\\
-s.t.\max & \sum_{x_{ij}} x_{ij}=1 && \forall j\in V \\
+s.t. & \sum_{x_{ij}} x_{ij}=1 && \forall j\in V \\
 &\sum_{j\in V} x_{ij} = 1 && \forall i\in U\\
 &x_{ij}\in \{0,1\}
 \end{align*}
@@ -49,7 +49,7 @@ We start be reinterpreting the assignment problems a bit: Interpret $U$ as a set
 The algorithm then looks like this:
 
 \begin{lstlisting}
-Action-Mechanism (U,V,c,$\delta$)
+Auction-Mechanism (U,V,c,$\delta$)
 for each $j\in V$, p_j =0, $\sigma(j) = \bot$
 Q = set U
 while Q not empty
@@ -59,14 +59,16 @@ while Q not empty
 		add $\sigma(j)$ to Q
 	$\sigma(j)$ = i
 	$r_i$ = c(i,j)-$p_j$
-	$p_j$ = p_j 0 \delta
+	$p_j$ = p_j + $\delta$
 return $\sigma$
 \end{lstlisting}
+
+
 
 It is not intuitively clear that this algorithm always terminates. We'll show that now.
 
 \begin{lem} The algorithm AM always terminates in at most 
-\[n\left(\frac {c_max}{\delta} +1\right)\]
+\[n\left(\frac {c_{max}}{\delta} +1\right)\]
 iterations
 \end{lem}
 
@@ -91,7 +93,7 @@ So we have an algorithm that does something and terminates, but we don't know ho
 \begin{pr}
 Look at $i,j$ such that $\sigma(j)=i$ at the point in time where the algorithm made that assignment. The assignment is done if $r_i=c(i,j)-p_j$ was maximal. We can rewrite that to $c(i,j) = r_i+p_j$ after that we increase $p_j$ by $\delta$ and get $c(i,j) +\delta = r_i+p_j$. Now if we look at the cost of the assignment we get
 
-\[\text(cost)(\sigma) = \sum_{j\in V} c(\sigma(j),j) = \sum_{j\in V} p_j + \sum_{i\in U} r_i - n\delta\]
+\[\text{cost}(\sigma) = \sum_{j\in V} c(\sigma(j),j) = \sum_{j\in V} p_j + \sum_{i\in U} r_i + n\delta\]
 
 This is nearly what we want to prove, we just have to show that we also have a feasible solution. In particular we want
 
