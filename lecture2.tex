@@ -49,7 +49,6 @@ x,y \geq 0
 \end{enumerate}
 
 Of course the solution we get for the LP in standard form can't be immediately used as a solution for the original LP. However the values of the original variables are easily reconstructed.
-\end{pr}
 
 Solving LPs with just two variables is rather easy. We can use a graphical approach in two dimensions. The constraints define halfplanes in the 2D space. The feasible region of the problem, i.e. all the points that satisfy all constraints, is then the intersection of all the halfplanes. The cost vector now defines a halfspace of its own (i.e. lines with equivalent costs) that can be shifted around by choosing different $x$. If $x$ lies within the feasible region we get a feasible solution. The goal is to shift the lines as far in negative $c$ direction as possible without leaving the feasible region. See figure \ref{Fig:graphSolutionEx}.
 
@@ -165,7 +164,7 @@ Now we want to prove that the three definitions \ref{Def:Vertex}, \ref{Def:Extre
 \end{enumerate}
 \end{thm}
 
-\begin{pr}[Theorem \ref{Thm:cornerEquiv}] The proof takes three steps. We show \ref{enu:corner1} $\Rightarrow$ \ref{enu:corner2} $\Rightarrow$ \enu{corner3} $\Rightarrow$ \ref{enu:corner1}.
+\begin{pr}[Theorem \ref{Thm:cornerEquiv}] The proof takes three steps. We show \ref{enu:corner1} $\Rightarrow$ \ref{enu:corner2} $\Rightarrow$ \ref{enu:corner3} $\Rightarrow$ \ref{enu:corner1}.
 \begin{itemize}
 \item vertex $\Rightarrow$ extreme point: Proof by contraposition. Assume the existence of $y,z \in P$ s.t. $y,z\neq x$ with $x= \lambda y + (1-\lambda )z$. That is, $x$ is not an extreme point because it can be expressed as a convex combination of $y$ and $z$ (definition \ref{Def:ExtremePoint}). We want to show that it's not a vertex either.
 
@@ -208,3 +207,5 @@ Let $I$ be the indices of all active constraints.Then let $c$ be the sum of the 
 
 Also $\forall y\in P, i\in I$ we have $a_i y \geq b_i$. Therefore $c y \geq c x$. The greater then is sharp as $x$ is the unique solution to the active constraints because it's a bfs and the system of active constraints has full rank, i.e. if $n$-lines cross in $n$-dimensional space they do so at \emph{one} point. (Theorem 2.2 in the Linear Optimization book). So $x$ is the optimal solution for some LP and hence a vertex.
 \end{itemize}
+
+\end{pr}
