@@ -81,7 +81,7 @@ a_{11} & a_{12} & \ldots & a_{1n}\\
 a_{21} & a_{22} & \ldots & a_{2n}\\
 \vdots \\
 a_{m1} & a_{m2} & \ldots & a_{mn}
-\end{pmatrix} * \begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix} =\begin{pmatrix} \sum_{i=1}^n a_{1i}x_i\\ \sum_{i=1}^n a_{2i}x_i\\\vdots\\\sum_{i=1}^n a_{mi}x_i\end{pmatrix}\]
+\end{pmatrix} * \begin{pmatrix}x_1\\x_2\\\vdots\\x_n\end{pmatrix} =x_1*\begin{pmatrix} a_{11}\\a_{21}\\\vdots\end{pmatrix} + x_2 *\begin{pmatrix}a_{21}\\a_{22}\\\vdots\end{pmatrix}+\ldots = \begin{pmatrix} \sum_{i=1}^n a_{1i}x_i\\ \sum_{i=1}^n a_{2i}x_i\\\vdots\\\sum_{i=1}^n a_{mi}x_i\end{pmatrix}\]
 
 \end{Ex}
 
@@ -94,10 +94,10 @@ $$Ax=0$$
 \end{Def}
 
 \begin{Def}[Rank of a matrix]
- The rank of a matrix $A$ is the number of linearly independent columns or rows of $A$. The column and row rank is always the same. In other words the row (column) rank is the dimension of the subspace spanned by the rows of $A$. A matrix $A^{m \times n}$ is said to have a full rank if $rank(A)=min(m,n)$
+ The rank of a matrix $A$ is the number of linearly independent columns or rows of $A$. The column and row rank is always the same for square matrices. In other words the row (column) rank is the dimension of the subspace spanned by the rows (columns) of $A$. A matrix $A^{m \times n}$ is said to have a full rank if $rank(A)=min(m,n)$
 \end{Def}
 
-If a matrix $A$ has full rank its kernel has dimension 0 and any system of equations $A x=b$ has a unique solution $A^{-1}b$. You can invert such matrices for example by using a Gauss-Jordan elimination. If the matrix is sparse it may be faster to calculate the inverse by
+If a matrix $A$ has full rank its kernel has dimension 0 and any system of equations $A x=b$ has a unique solution $A^{-1}b$. You can invert such matrices if they are square for example by using a Gauss-Jordan elimination. If the matrix is sparse it may be faster to calculate the inverse by
 
 \[A^{-1} = \frac{1}{\det A} \tilde A \qquad \tilde a_{ij} = (-1)^{i+j} \det A_{ji}\]
 
