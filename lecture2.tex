@@ -1,4 +1,5 @@
-\section{Solving Linear Programs}
+\chapter{The Simplex Method}
+\section{Linear Programs and Polyhedra}
 A linear program in general has the form:
 \begin{eqnarray*}
 \text{minimize:}& \vec c \cdot \vec x \\
@@ -198,8 +199,5 @@ x,y \geq 0
 \item {\bfseries Remove inequalities:} Suppose a constraint $a$ to be $x_1+2x_2 \geq 15$. By adding a new variable $s\in \R$ and the constraint $a-s=15$ we can remove the inequality. So by adding a new vector $s\in \R^n$ with $A \cdot \vec x - s = \vec b$ the inequalities can be removed.
 \end{enumerate}
 
-
-
 Of course the solution we get for the LP in standard form can't be immediately used as a solution for the original LP. However the values of the original variables are easily reconstructed.
-
 \end{pr}

@@ -1,4 +1,4 @@
-\subsubsection{Cycling}
+\subsection{Cycling}
 
 Sometimes, if the system is degenerate and we're doing unlucky choices, the simplex algorithm can start to cycle.
 
@@ -88,7 +88,7 @@ So the cost change should be both positive and negative. That is a contradiction
 
 So by using Bland's Rule we can remove the assumption that the system is non degenerate and still guarantee termination at an optimal value.
 
-\subsubsection{Finding an Initial Feasible Basis}
+\subsection{Finding an Initial Feasible Basis}
 
 Until now we don't now how to find the initial solution we need to start with the simplex algorithm. We know a method (see section \ref{Sec:FourierMotzkin}) to check whether it is feasible at all, but that wasn't particularly efficient. 
 
@@ -134,7 +134,7 @@ It is not so nice that we have to do some post processing to get a basis. A diff
 
 where $M$ is a suitably huge constant such that it is bigger than anything except itself. This solution always provides a basis for the original LP, but the implementation is a bit tricky because $M$ has to be handled symbolically.
 
-\subsubsection*{Row Independence}
+\subsection{Row Independence}
 
 The remaining problem are cases were the rows of $A$ are not linearly independent. Some of those constraints have to be redundant. We want to find a maximal independent subset $D$ of rows of $A$. Call the remaining rows $F$. We then split $b$ accordingly into $d,f$:
 
