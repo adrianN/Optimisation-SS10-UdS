@@ -39,6 +39,8 @@ This is again the first table, only shifted two columns to the right. Now we cou
 
 To avoid the cycling problem exemplified in example \ref{Ex:cycling}, we introduce some additional rules for choosing the pivot element. There are many possibilities for the ruleset. We go with Bland's rule. The reason that we can make those rules is that the Simplex Algorithm has some degree of freedom in choosing the pivot element. 
 
+The choice of the pivoting rule also has implications for the number of iterations until we reach the optimal solution. We'll have a closer look at this in a later section.
+
 \begin{thm}[Bland's Rule]\label{Thm:blandsRule} Suppose simplex picks column 
 
 \[j=\min \{j|\bar c_j < 0\}\]
