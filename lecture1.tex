@@ -17,7 +17,7 @@ The proof is easy: Let $w_{max}$ be the size of the maximal job. No schedule can
 \begin{Ex}[The diet problem.] We have $x_i$ of food $i$. Different foods have different features, e.g. calories, price. You can write down different constraints, for example the amount of fat. The example objective function could be price. If the packaging is discrete we need an integer solution. There are of course instances which require mixed integer/real answers.
 \end{Ex}
 
-There are a large number of problems that can be formulated using LPs. There are efficient solution for normal LPs, ILPs however are NP-complete (but still can be solved comparatively efficient). There is also a large body of knowledge about linear programs. Lastly LPs and ILPs are a good basis for developing approximation algorithms, for example by dropping integrity constraints and rounding cleverly.
+There are a large number of problems that can be formulated using LPs. There are efficient solutions for normal LPs, of which we'll see the simplex method and the interior points method. ILPs however are NP-complete (but still can be solved comparatively efficient). There is also a large body of knowledge about linear programs. Lastly LPs and ILPs are a good basis for developing approximation algorithms, for example by dropping integrity constraints and rounding cleverly.
 
 \begin{Ex}[Max-Flow as LP]\label{Ex:maxFlowMinCut} We want to maximize the flow through a network from source to sink. A flow has to satisfy the capacity and the flow conservation constraints. Those constraints can be formulated as a LP.
 \begin{align*}
