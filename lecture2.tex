@@ -181,11 +181,11 @@ cx &= \lambda cy +(1-\lambda)cz\\
 
 See figure \ref{Fig:extremeBfs}. With $\delta$ we define two vectors:
 
-\[y=x+\epsilon \delta \quad z = x-\epsilon \delta\]
+\[y=x-\epsilon \delta \quad z = x+\epsilon \delta\]
 
 Note that $x=(z+y)/2$. That means that $x$ is not an extreme point if $z,y \in P$, because $x$ is a convex combination of the two. Consider 
 
-\[By = B(x+\epsilon \delta) = Bx + \epsilon B\delta = Bx\]
+\[Bz = B(x+\epsilon \delta) = Bx + \epsilon B\delta = Bx\]
 
 Since $B\delta = 0$ the active constraints are still active. For the inactive constraints we have some slack before we leave the polyhedron (We can move around on the red line in figure \ref{Fig:extremeBfs}). If we choose $\epsilon$ small enough we're still within. It suffices to choose $\epsilon$ such that 
 
