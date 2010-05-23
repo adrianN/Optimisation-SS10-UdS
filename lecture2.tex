@@ -125,7 +125,7 @@ Example: In 2D we can always select the two adjacent corners of a point $x$ on t
 \begin{Def}[Active Constraint]\label{Def:ActiveConstraint} Let $P$ be a polyhedron that is defined by some linear inequalities $a_i$: $P=\{x|a_ix\geq b_i\}$. We'll say that the $i$-th constraint is \emph{active} at a point $x$ if we have equality there $a_ix = b_i$
 \end{Def}
 
-In the constraints define the edges of polyhedron. If a point is on an edge that constraint is active. Intuitively it must be a corner if it lies on the intersection of $m$ edges.
+In the constraints define the edges of polyhedron. If a point is on an edge that constraint is active. Intuitively it must be a corner if it lies on the intersection of $n$ edges.
 
 %TODO we don't have a definition of standard form yet but the following definition is only valid for polyhedra in standard form
 \begin{Def}[Basic Solution]\label{Def:BasicSolution}Let $P\in \R^n$ be a polyhedron in standard form and let $x^{*}\in \R^n$. The vector $x^{*}$ is a basic solution if all \emph{equality} constraints are active and out of the active constraints, there are $n$ of them that are linearly independent. See solution $A$ in figure \ref{Fig:bsfVSbs} for an example of a basic solution.
