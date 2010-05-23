@@ -1,4 +1,4 @@
-\documentclass[12pt,a4paper]{article}
+\documentclass[12pt,a4paper]{book}
 \usepackage[bottom=2.5cm,top=3.5cm]{geometry}
 %\usepackage{ngerman}
 \usepackage[utf8]{inputenc}
@@ -58,14 +58,17 @@
 \newcommand{\skal}[1]{\left\langle {#1} \right\langle}
 \newcommand{\ok}{{\large \checkmark}}
 \newcommand{\no}{{\large $\mathbb{\times}$}}
+\newcommand{\nz}{\text{nz}}
 \renewcommand{\bar}{\overline}
 \renewcommand{\arraystretch}{1.5}
 \newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}}
 
+\pdfcompresslevel9
+
 \newcommand{\trans}[1]{{#1}^\text{\upshape \sffamily T}}
 \newtheoremstyle{leplain} %name
-    {3pt} %above
-    {3pt} %below
+    {2em} %above
+    {2em} %below
     {} %body font
     {} %indent
     {\bfseries} %head font
@@ -135,4 +138,10 @@
 
 \marginpar{Lecture 10}
 \input{./lecture10}
+
+\marginpar{Lecture 11}
+\input{./lecture11}
+
+\marginpar{Lecture 12}
+\input{./lecture12}
 \end{document}

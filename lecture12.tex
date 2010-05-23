@@ -1,0 +1,67 @@
+\section{Implementation of the Simplex Method}
+
+There are already many sophisticated simplex solvers, both free and commercial. Feasible problem sizes are in the order of a million variables and a million contraints (but with sparse constraints). 
+
+Of course all implementations use floating point numbers and hence a subject to numerical instabilities. 
+
+We already know the tableau method, cf. section \label{sec:tableau}. The greatest drawback of this method is that the tableau matrix $A_B^{-1}A$ is usually a dense matrix (even when $A$ is sparse) so that the updates and the storage costs are very expensive.
+
+\subsection{Revised simplex}
+
+To carry out one iteration we only need the column that enters the basis, the inverse of the basis matrix $A_B^{-1}$ and the cost vector. In the normal tableau method we keep all the columns, now we recompute the column, when we need it.
+
+\begin{lstlisting}
+$x_B$ = $A_B^{-1}b$
+$\bar c = c-c_BA_B^{-1}A$
+select entering variable $j$ by looking at $\bar c$
+compute $(A_B^{-1}A)_j = A_B^{-1}A_j$
+select leaving variable $b_i$
+move to basis $B\backslash b_i \cup j$ (update $A_B^{-1}$)
+\end{lstlisting}
+
+In the section about the tableau method we already saw that updating the inverse is easy, i.e. takes only quadratic many steps, instead of cubic for a full inversion. %If we want to add $\left(f\atop g)$ to $A_B$ we first compute \[A_B^{-1} \left(f\atop g\right) = \left(\tilde f \tilde g\right)\]
+
+The other steps are easy too, so each step takes $O(m^2)$ and storage costs $O(m^2)$ for $A_B^{-1}$. The inverse of the basis matrix is still dense however.
+
+\subsection{Sparse revised simplex}
+
+We now improve the method to exploit sparse matrices. A sparse matrix has only "a few" nonzero entries in every row and column. The idea is to store only those instead of the whole matrix. For every row and column we store the nonzero elements and their respective index with the element. So every nonzero entry occurs in two linked lists. That reduced the storage costs of course, but makes random access on the matrix entries slower. Luckily we don't do random access during matrix multiplication, but we need the vector as an array. 
+
+By this method we can compute $Ab$ in time proportional to the number of nonzero elements $\nz(A)$ in the matrix.
+
+We also need the LU-decomposition. That means we factor a matrix $A$ into a lower diagonal matrix $L$ and a upper diagonal matrix $U$ such that $A=LU$. If we want it to be unique we force the diagonal of $L$ or the diagonal of $U$ to be 1. It can be computed by gaussian elimination, similar to the computation of the inverse. If you stop after half the steps you get the decomposition. The LU-decomposition of a sparse matrix frequently leads to sparse factors (in contrast to the inverse). However to get sparse $L,U$ some clever row or column permutation. We want to choose pivots that are not too small (for numerical reasons) and the product of the number of nonzero elements in the row and the column is small (Markowitz criterion).
+
+Having an $LU$ decomposition is as good as having an inverse. Instead of solving $Ax=b$ we can solve
+
+\[Ly=b\qquad Ux_B=y\]
+
+But since $L,U$ are lower/upper diagonal we can simply solve those equations by backwards/forwards substitution. Again we only pay for the number of nonzero entries. The same technique can be applied to the other steps in the algorithm.
+
+We have to think about how to update the $LU$ decomposition in each iteration.
+
+Observe that $Ae_j\trans e_j$ is the matrix which is all zero except for the $j$th column which is identical to $A_j$. So switching a column can be written as
+
+\[A_B-A_Be_{b_i}\trans e_{b_i} + A_j\trans e_j =A_B^{\text{new}} = A_B+(A_j-A_Be_{b_i})\trans e_j\]
+
+We can now multiply this equation by $L^{-1}$ from the let where $A_B=LU$
+
+\begin{align*}
+L^{-1}A_B^{\text{new}} &= L^{-1}A_B+(L^{-1}A_j - L^{-1}A_Be_{b_i})\trans e\\
+&= U+(\tilde A_j - Ue_{b_i})\trans e
+\end{align*}
+
+Which is $U$ with the $j$-th column replaced by $\tilde A_j$. We can compute a new $LU$ of the RHS\footnote{There is a lot of research how to do that cleverly.}, $\tilde L \tilde U$ the new $LU$ decomposition is then
+
+\[A_B^{\text{new}} = L\tilde L \tilde U\]
+
+But instead of computing $L\tilde L$ we keep the factorisation (which becomes more and more complicated) for a while until it is worthwhile to compute a fresh $LU$-decomposition directly from $A_B$.
+
+\subsection{Exact solving}
+
+In principle it's easy if the starting LP has rational coefficients. We just do rational arithmetic. It's awefully slow though. 
+
+So to improve the runtime we run a fast floating point solver first and use the basis it returns as optimal as a starting basis. Usually the optimal basis should be very good so that we usually only need very few iterations to get to the actual optimal solutions.
+
+Instead of switching to rational arithmetic immediately one can also increase the precision of the floating point arithmetic until that doesn't buy anything and then convert the solution to rational (with small denominators) by continued fraction expansion. Then do a few rational pivots if necessary.
+
+It's an interesting research problem to define a suitable distance function between bases such that the runtime is proportional to the "quality" of the starting basis. This already works if the "good" basis is primal or dual feasible, but we don't know what to do for infeasible bases.

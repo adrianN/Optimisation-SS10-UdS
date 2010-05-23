@@ -1,4 +1,4 @@
-\subsection{The simplex algorithm}
+\section{The simplex algorithm}
 
 In corollary \ref{Cor:always_extreme_points} we saw that we can always find an optimal solution for an LP by looking at all the extreme points. The simplex algorithm is a method that enumerates them in order of decreasing cost. 
 
@@ -117,7 +117,7 @@ When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s
 \begin{equation} Ad = 0 \label{equ:AdEquZero}\end{equation}
 \end{itemize}
 
-\subsubsection*{Calculating $b_i$ directly}
+\subsection{Calculating $b_i$ directly}
 By using these observations we can directly calculate the $b_i$ we need to remove.
 
 First we want to get the components $d_B$ that we don't know immediately from the above observations. We can decompose $Ad$ into the part we're looking for, $A_j d_j$ which is $A_j$ since $d_j:=1$ and $A_{\bar B} d_{\bar B}$ which is 0 since $d_{\bar B}:=0$.
@@ -158,7 +158,7 @@ The variable $x_{b_i}$ that attains the above minimum will be equal to zero in $
 
 Note that this was the step that assumed a bounded polyhedron. If $P$ would be unbounded and $d>0$ there could be some $x+\Theta d$ were we could move along as far as we want without leaving $P$. That would mean that $P$ contains a infinite line and is therefore not bounded (remember figure \ref{Fig:bounded_unbounded}).
 
-\subsubsection*{Calculating the costs of the new solution}
+\subsection{Calculating the costs of the new solution}
 Next we want to look at how the cost changes when going from $x$ to $y$. Again we do this by plugging in our observations into the line equation:
 
 \begin{align*}
@@ -189,7 +189,7 @@ until B hasn't changed
 \end{lstlisting}
 \end{center}
 
-\subsubsection*{Reduced cost vector}
+\subsection{Reduced cost vector}
 \begin{Def}[Reduced cost vector]
  Let $x$ be a basic solution, let $A_B$ be an associated basis matrix, and let $c_B$ be the vector of costs of the basic variables. For each $j$, we define the reduced costs $\bar c$ of the variable $x_j$ according to the formula 
 $\bar c_j = c_j + c_Bd_B = c_j - c_B A^{-1}_B A_j$

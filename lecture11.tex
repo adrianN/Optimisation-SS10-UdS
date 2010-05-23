@@ -1,0 +1,116 @@
+\section{Computational efficiency of Simplex}
+
+We will examine the worst case running time, which will turn out to be exponential. Then we'll proceed to look at the average case running time, which is much better.
+
+\subsection{Worst case}
+
+\begin{Def} Let $T(I)$ be the running time of Simplex on instance $I\in \mathcal{I}(n,m)$. The worst case running time is defined as
+
+\[\max_{I\in \mathcal{I}(n,m)} T(I)\]
+\end{Def}
+
+The running time per iteration is polynomial in $n,m$ (just matrix multiplications, something like O($n^3$)). The number of iterations is heavily dependend on the pivot-rule we choose (some pivot rules even have infinite running time in the worst case). However, for all know pivot rules there are examples for which the number of iterations is exponential.
+
+These examples usually are based on the \emph{Klee-Minty-Cube}, which is a slightly altered multidimensional cube. We start with a normal multidimensional cube. A cube can be represented by $2n$ constraints and has $2^n$ vertices. As the next lemma shows there is a path that visits every vertex once.
+
+\begin{lem} Every cube has a hamiltonian path, w.l.o.g. starting at $(0,\ldots,0)$\end{lem}
+
+\begin{pr} By induction. For n=1 it's trivial. For $n\rightarrow n+1$ fix the first dimension and walk the path for $n-1$ dimensions. Then flip the fixed dimension and walk on the other cube. 
+
+\[00\ldots0 \rightarrow 01\ldots0 \rightarrow 11\ldots 0 \rightarrow 10\ldots0\]
+\end{pr}
+
+To show that simplex actually is able to walk this path we need to find a corresponding cost vector. For example maximising $x_1$ would make simplex go directly to the destination, because that is the only edge that yields an improvement in the objective function. 
+
+To avoid this uniquely determined edge this we perturb the cube slightly by adjusting 
+
+\[0\leq x_1 \leq 1, \quad \epsilon x_{i-1} \leq x_1 \leq (1-\epsilon)x_{i-1}\]
+
+This way there is more than one path that improves the cost. However, depending on the pivot rule we could still take the "right" edge and finish in one step. It is an important open question if there is a pivot rule such that simplex always needs less than exponentially many steps.
+
+\subsection{Average Case}
+
+Since Simplex is very fast in practice it's interesting to look at the average case. Since there is no natural probability distribution on linear programs we choose one distribution $f$. Then the expected running time is
+
+\[\E_{I \stackrel{f}{\leftarrow}\mathcal{I}}[T(I)]\]
+
+$f$ can be chosen for example like this: Given vectors $c$, $a_1,\ldots, a_m\in \R^n$ and scalars $b_1,\ldots b_m$ we introduce constraints of the usual form, either $\trans a_i x \leq b_i$, $\trans a_ix\geq b_i$, deciding between the possibilities by a coinflip. This of course produces $2^m$ linear programs, some of them feasible. It can be show that for such instances, under a fancy pivot rule, "shadow vertex", we need only linearly many iterations.
+
+\begin{thm}[Haimich '83] Shadow vertex simplex requires at most $n/2$ iterations in expectation on a feasible input.\end{thm}
+
+\subsection{Smoothed Analysis}
+
+Another method for looking at the performance is a hybrid mix between worst-case and average-case analysis, the \emph{smoothed analysis}.
+
+Given $I\\in \mathcal{n,m}$ we add random noise:
+
+\[Ax\leq b \mapsto (A+\sigma G)x\leq b\]
+
+Where $G$ is a matrix of random variables, choosen according to some probability distribution. $\sigma$ is a smoothening parameter that defines the size of the neighbourhood around a particular input in which we can run the algorithm. We call that neighbourhood $N(I,\sigma)$, the set of smoothed instances obtained from $I$. The smoothed running time is then the expected running time on the worst possible neigbourhood.
+
+\[\max_{I\in \mathcal{n,m,}} \E_{J\stackrel{f}{\leftarrow} N(I,\sigma)} [T(J)]\]
+
+By adjusting $\sigma$ you can choose between the worst case ($\sigma=0$), the average case ($\sigma = |I|$) and something in between.
+
+You can show that the shadow vertex simplex algorithm has polynomial expected running time for $\sigma>0$ and $f$ a gaussian distribution.
+
+\begin{thm}[Spielmann '01] For $f$= gaussian distribution, shadow vertex simplex runs in expected polynomial time for any fixed $\sigma>0$
+\end{thm}
+
+\subsection{Diameter of polytopes}
+
+\begin{Def} The edge graph $G_p$ of a polytope is the graph made from the vertices of the polytopes. Edges are between adjacent vertices, i.e. two edges that are connected by a 1-dimensional face.
+\end{Def}
+
+\begin{Def} The distance between two vertices $x,y$, $d(x,y)$, is the length of the shortest path from $x$ to $y$ in $G_p$
+\end{Def}
+
+\begin{Def} The diameter of a graph is the maximum distance between two nodes\end{Def}
+
+\begin{Def} Let $\Delta(n,m)$ be the maximum diameter of a polytope of size $n,m$
+
+\[\Delta(n,m) = \max_{{P\in \R^n}\atop {m \text{ constraints}}} \text{diam}(P) \]
+\end{Def}
+
+$\Delta$ is a lower bound for the running time of simplex, as even the optimal way to switch bases needs to travel the whole diameter in the worst case. So if we want any chance of finding a polynomial pivoting rule we should first show that $\Delta(n,m)$ doesn't grow exponentially in $n,m$. 
+
+\begin{thm}[Hirsch conjecture] $\Delta(n,m)\leq m-n$\end{thm}
+\begin{thm}[Weak Hirsch conj] $\Delta(n,m)\leq \text{poly}(n,m)$\end{thm}
+
+For unbounded polytopes the Hirsch conjecture has been disproven by a counterexample, but we still don't know if $\Delta$ grows polynomially or not.
+
+It has however been show recently that 
+
+\[\Delta(n,m)<m^{1+\log n}\]
+
+It is not known whether the Hirsch conjecture is true in general, but we know some restricted polytope classes for which it holds, e.g. the assignment polytope from section \label{sec:maxAssignment} or any other perfect matching polytopes.
+
+\subsection{Perfect matchings}
+
+Perfect matching polytopes are defined as
+
+\[P(G) = \text{conv} \{x(M) |M \text{ is perfect matching in }G\}\]
+
+We can write that with constraints like this:
+
+\begin{align*}
+x_e \geq 0 &&\forall e\in E\\
+\sum_{e=(u,v)} x_e = 1 &&\forall v\in V\\
+\sum_{e\in E[S]} x_e \leq \frac{|S|-1}{2} &&S\subset V, |S| \text{ odd}
+\end{align*}
+
+\begin{thm} P defines the perfect matching polytope.\end{thm}
+\begin{thm} For bipartite graphs the first two inequalities are enough to define the perfect matching polytope\end{thm}
+
+Now we want to bound the diameter of perfect matching polytopes. Given perfect matchings $M,N$ let $x^M,x^N$ be the indicende vectors that define the vertices of the polytope
+
+\begin{lem} $x^M$ and $x^N$ are adjacent iff $M\Delta N$ (the symmetric difference) is a circuit.\end{lem}
+
+\begin{pr} $\Rightarrow$ $M\Delta N = \{C_1,\ldots, C_k\}$ circuits. If $k=1$ we're done. Otherwise we construct new perfect matchings $M'=M\Delta C_1$ and $N'=N\Delta C_1$. This does not affect the sum of the incidence vectors $x^M+x^N=x^{M'} +x^{N'}$. That means the convex combinations stay the same. But this is a contradiction to the assumption that $x^M$ and $x^N$ are adjacent vertices.
+
+$\Leftarrow$ Define a weight function like this
+
+\[w:\R \rightarrow \R \quad w_e=\begin{cases}0 & e\in M\cup N\\ 1 &\text{else}\end{cases}\]
+
+This weight function has exactly two matchings of minimum costs, which must be adjacent
+\end{pr}

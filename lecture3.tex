@@ -1,12 +1,12 @@
 To get a better intuition for the different definitions of a corner, we'll use them for some things that are not directly related to solving LPs.
 
-\subsection*{Convex Hulls}
+\subsection{Convex Hulls}
 
 \begin{Def}(Convex Hull) Let $x_1,\ldots,x_k$ be some vectors in $\R^n$. The convex hull of these vectors is
 \[\mbox{CH}(\{x_1,\ldots,x_k\}) = \left\{\sum _{i=1}^k \lambda_i x_i \left| \sum_{i=1}^k \lambda_i =1,\ \lambda_i\geq 0\right.\right\}\]
 \end{Def}
 
-Here we generalise the notion of convex combination to use more than two points. Intuitively if we have a bunch of points in 2D we get all the points that lie within the polygon that is spanned by the points on the CH, see figure \ref{Fig:convexHull}.
+Here we generalise the notion of convex combination to use more than two points. Intuitively if we have a bunch of points in 2D we get all the points that lie within the polygon that is spanned by the points on the CH, see figure \ref{Fig:convexHull}. Note that here not the points themselves define the $x_i$ but instead pairs of points define one vector.
 
 \begin{figure}[hbt]
 \begin{center}
@@ -22,7 +22,7 @@ This definition allows us to come up with a different definition of a polyhedron
 
 \[\forall x\in P,d\in \R^n, \exists \lambda > 0: x+\lambda d \not \in P\]
 
-For any line from a point inside the polyhedron we eventually leave the polyhedron
+Any line from a point inside the polyhedron will eventually leave the polyhedron
 \end{Def}
 
 \begin{figure}[hbt]
@@ -43,7 +43,7 @@ For any line from a point inside the polyhedron we eventually leave the polyhedr
 \item[$\text{CH(extreme points of P)} \subseteq \text{P}$] As polyhedra are convex sets, every convex combination of extreme points must be in $P$.
 \item[$\text{P} \subseteq \text{CH(extreme points of P)}$]:  From the definition we know that all convex combinations of two points are still in P. We generalise to the new kind of convex combination that includes several vectors. 
 
-Let $x\in P$. Since $P$ is a polyhedron $x$ is a solution of the system of inequations $Ax\geq b$ (def. \ref{Def:polyhedron}). As in the proof for theorem \ref{Thm:cornerEquiv} we separate $A$ into the matrix $B$ of active constraint and $D$ of inactive constraints, with $Bx=d$, $Dx>f$. If the rank of $B$ is $n$, $x$ is an extreme point by definition and we're done. 
+Let $x\in P$. Since $P$ is a polyhedron $x$ is a solution of the system of inequalities $Ax\geq b$ (def. \ref{Def:polyhedron}). As in the proof for theorem \ref{Thm:cornerEquiv} we separate $A$ into the matrix $B$ of active constraint and $D$ of inactive constraints, with $Bx=d$, $Dx>f$. If the rank of $B$ is $n$, $x$ is an extreme point by definition and we're done. 
 
 The other possibility is $\rank B=k$ and $k<n$. We use the same trick as in proof \ref{Thm:cornerEquiv} to find two new points. Since the matrix hasn't full rank, there has to be $\delta \neq 0$ such that $B\delta = 0$. As before we build two vectors $x_1 = x+ \epsilon_1 \delta$, $x_2=x-\epsilon_2 \delta$. 
 
@@ -57,14 +57,14 @@ Now we want to get from these points somehow to extreme points, as we want to pr
 \label{Fig:convCombExPoints}
 \end{figure}
 
-Such an $\epsilon$ has to exist, since the polyhedron is bounded and therefore every line eventually crosses a boundary.\footnote{The calculation we did in the lecture to find $\epsilon_{1,2}$ seems dubious to the authors. We'll investigate.} Choosing $\epsilon$ like this implies that some constraint $a_i$ in $D$ has to become active for $x_1$ and the same holds with a different $a_i$ for $x_2$. Moving in direction $\delta$ doesn't affect the constraints that already were active, since $\delta$ is in the kernel of $B$. So we increase the number of active constraints and can extend $B$ to 
+Such an $\epsilon$ has to exist, since the polyhedron is bounded and therefore every line eventually crosses a boundary.\footnote{The calculation we did in the lecture to find $\epsilon_{1,2}$ seems dubious to the authors. We'll investigate.} Choosing $\epsilon$ like this implies that some constraint $a_i$ in $D$ has to become active for $x_1$ and the same holds with a different $a_i$ for $x_2$. Moving in direction $\delta$ doesn't affect the constraints that already were active, since $\delta$ is in the kernel of $B$. So we increase the number of active constraints and can extend $B$ at least\footnote{we could be lucky and move to a corner of a feasible region} to 
 
 \[\begin{pmatrix}B\\ a_i\end{pmatrix}\] 
 
-The rank of the new $B$ has to be $k+1$ since $\delta$ was orthogonal to all the vectors in $B$, as $B\delta=0$ (and hence all vectors in $\text{span}(B)$), but it is not orthogonal to $a_i$, or we wouldn't have hit that constraint by moving in direction $\delta$.
+The rank of the new $B$ has to be at least $k+1$ since $\delta$ was orthogonal to all the vectors in $B$, as $B\delta=0$ (and hence all vectors in $\text{span}(B)$), but it is not orthogonal to $a_i$, or we wouldn't have hit that constraint by moving in direction $\delta$.
 
 We have now reduced the problem of finding extreme points to represent $x \in P$ to the problem of finding some for $x_1,x_2 \in P$. However we increased the number of active constraints for $x_1,x_2$ (in 2D: we moved them on an edge). This process can be repeated for $x_1$ and $x_2$ until the respective $B$ has full rank and we arrived at some extreme points. For figure \ref{Thm:CH_polyhedron} the process is repeated three times, for $x,x_1$ and $x_2$. 
-Since all the points from the beginning can be recursively written by a convex combination of the new points and we end up at an extreme point, the original $x$ can transitively be written by a convex combination of extreme points.
+Since all the points from the beginning can be recursively written by a convex combination of the new points and we end up at an extreme point, the original $x$ can transitively be written as a convex combination of extreme points.
 \end{description}
 
 % Ich hab noch drüber nachgedacht und die Rechnung da in der Tat komisch zu sein. Er (oder ich :D) scheint sich zwischendurch verrechnet zu haben. Wir haben nicht genug info das zu lösen:
@@ -95,23 +95,30 @@ Intuitively this is true, as given an optimal solution, which is not an extreme 
 
 \begin{pr}[Corollary \ref{Cor:always_extreme_points}] %(from the book 'Linear Optimization') 
 Start with some optimal solution $x^*$. Write it as a convex combination of extreme points 
-\[x^* = \sum_{i=1}^x \lambda_i y_i \qquad \text{s.t. } y_i \text{ is an extreme point}\]
-We want to prove that there is an extreme point $y_i$ such that the cost $v$ are the same as in $x^{*}$, that is:
+\[x^* = \sum_{i} \lambda_i y_i \qquad \text{s.t. } y_i \text{ is an extreme point}\]
+We want to prove that there is an extreme point $y_i$ such that the objective value $v$ is the same as in $x^{*}$, that is:
 
 \[v = cx^* = cy_i\]
 
 Obviously $cy_i\geq v$ since $x^*$ is an optimal solution. It can't be strictly greater for all $y_i$ or 
 \[c\sum_{i=1}^x \lambda_i y_i \gneq v\]
-since the $\lambda_i$ are greater than zero and $\sum_i \lambda_i =1$. This is because: $cx^* = c\sum_{i} \lambda_i y_i =\sum_i \lambda_i cy_i$ if we assume $cy_i\gneq cx^*$ we get the inequality $\sum_i \lambda_i cx^*> c^* $
+since the $\lambda_i$ are greater than zero and $\sum_i \lambda_i =1$. Otherwise we could bound the sum from below like this:
 
-This would be a contradiction since $x^*=\sum_{i=1}^x \lambda_i y_i$. So there has to be at least one extreme point $y_i$ for which $cy_i=v$.
+\begin{align*}
+c\sum_{i}\lambda_i y_i &\gneq c\sum \lambda_i x\\
+	&=\sum_i \lambda_i cx\\
+	&=v\sum_i \lambda_i\\
+	&=v
+\end{align*}
+
+This would be a contradiction to the assumption $cx^*=c\sum_i y_i$. So there has to be at least one extreme point $y_i$ for which $cy_i=v$.
 \end{pr}
 
 Corollary \ref{Cor:always_extreme_points} gives us the nice result that we can transform the problem of optimising an LP to a discrete problem with finitely (albeit exponentially) many candidate solutions. This will of course be very useful in designing an algorithm for solving them.
 
 \subsection{Fourier-Motzkin elimination}\label{Sec:FourierMotzkin}
 
-In this section we're interested in computing representations of projections of polyhedra. See figure \ref{Fig:polyhedron_proj} for an example.
+In this section we're interested in computing representations of projections of polyhedra. See figure \ref{Fig:polyhedron_proj} for an example. This can be used to check whether a polyhedron is empty or not and to find the optimal objective value for a LP.
 
 \begin{figure}[hbt]
 \begin{center}
@@ -128,26 +135,28 @@ Let $S\subseteq \R^n$ then the projection on the first $k$ components is
 \[\pi_k(S)=\{\pi_k{x}|x\in S\}\]
 \end{Def}
 
-Of course that definition is not particularly useful in actually constructing the projection. The Fourier-Motzkin elimination computes the projection for polyhedra. We start with our usual characterisation of a polyhedron $P=\{x|Ax\geq b_i\}$ and want to find a different matrix $A'$ s.t. we get $\pi_{n-1}(P)$. Generalizing to $\pi_k$ is then of course easy.
+Of course that definition is not particularly useful in actually constructing the projection as we don't have a set of points but a bunch of contraints instead. 
+
+The Fourier-Motzkin elimination computes the projection for polyhedra in contraint form. We start with our usual characterisation of a polyhedron $P=\{x|Ax\geq b_i\}$ and want to find a different matrix $A'$ s.t. we get $\pi_{n-1}(P)$. Generalizing to $\pi_k$ is then of course easy.
 
 Let's do an example to develop an intuition and then formalise the algorithm.
 
 \begin{Ex}
-Figure \ref{Fig:motzkinExample} shows an example of the Fourier-Motzkin elimination. The LP used for the example is:
+Figure \ref{Fig:motzkinExample} shows an example of the Fourier-Motzkin elimination. The constraint system used for the example is:
 \begin{eqnarray*}
-c_1 & -0,5x + y & \leq 3 \\
-c_2 & 2x + y & \leq 6 \\
-c_3 & x+3y & \geq 6 \\
-c_4 & x+y & \geq 2
+(c_1) & -0,5x + y & \leq 3 \\
+(c_2) & 2x + y & \leq 6 \\
+(c_3) & x+3y & \geq 6 \\
+(c_4) & x+y & \geq 2
 \end{eqnarray*}
 Those constraints can be rewritten to:
 \begin{eqnarray*}
-c_1 & \frac{1}{2}x + 3  & \geq y \\
-c_2 & -2x+6 & \geq y \\
-c_3 & y & \geq -\frac{1}{3}x+2 \\
-c_4 & y & \geq -x+2
+(c_1) & \frac{1}{2}x + 3  & \geq y \\
+(c_2) & -2x+6 & \geq y \\
+(c_3) & y & \geq -\frac{1}{3}x+2 \\
+(c_4) & y & \geq -x+2
 \end{eqnarray*}
-Writing them this way has the advantage of ordering them around $y$. With this information we can build a new LP, which constraints are only on the x-dimension. The constraints are all the ordered pairs of around $y$.
+Writing them this way has the advantage of ordering them around $y$. With this information we can build a new system, whose constraints are only on the $x$-dimension. The constraints are all the ordered pairs of around $y$.
 \begin{eqnarray*}
 c_1 \geq c_3: & \frac{1}{2}x + 3 & \geq -\frac{1}{3}x+2  \\
 c_2 \geq c_3: & -2x+6 &  \geq -\frac{1}{3}x+2 \\
@@ -200,13 +209,13 @@ Herein lies the problem of the algorithm. We introduce a new constraint for ever
 \begin{pr} To prove the correctness of the Fourier-Motzkin elimination we need to show that the result $Q$ of the algorithm is equal to $\pi_{n-1}(P)$. We do this by showing $\pi_{n-1}(P) \subset Q$ and $Q \subset \pi_{n-1}(P)$.
 \begin{enumerate}
 
-\item $\bar x \in \pi_{n-1}(P) \Rightarrow \bar x\in Q$. That means 
+\item $\bar x \in \pi_{n-1}(P) \Rightarrow \bar x\in Q$. That means we have a point $\bar x$ in $\pi_{n-1}(P)$ and we want to find a $\bar x$ in $Q$ that corresponds to it. In the original polyhedron $x$ had another component like this $x = \left[ \bar x \atop x_n \right]$. We don't know $x_n$ but we know that it had to satisfy the constraints. We constructed $Q$ by combining constraints. We know that $x_n\geq d_i + f_i\bar x$ for all $i\in T_1$ and $\leq$ for $i\in T_2$. We can then choose $x_n$ such that those constraints are satisfied and hence $\bar x$ must satisfy the new constraints.
 \[\exists x_n: \left[{\bar x}\atop{x_n}\right] \in P \Rightarrow {{\max_{i\in T_1} d_i +f_i \bar x \leq x_n} \atop {\min_{i\in T_2} d_i+fi\bar x \geq x_n}}\]
 Therefore the constraints \ref{For:Motz1}, \ref{For:Motz2} and \ref{For:Motz3} are satisfied. It follows that $\bar x \in Q$. 
 
 \item $\bar x \in Q \Rightarrow \bar x \in \pi_{n-1}(P)$. Choosing $x_n$ as 
 \[x_n \in [\max_{i\in T_1} d_i+f_i \bar x, \min_{i\in T_2} d_i+f_i \bar x]\]
-does the trick, as $(\bar x, x)$ then satisfies constrains \ref{For:Motz1}, \ref{For:Motz2} and \ref{For:Motz3} and therefore is in $P$.
+does the trick, as $(\bar x, x_n)$ then satisfies constraints \ref{For:Motz1}, \ref{For:Motz2} and \ref{For:Motz3} and therefore is in $P$.
 
 \end{enumerate}
 \end{pr}
@@ -218,7 +227,7 @@ There are a lot of interesting applications for these projections:
 is also a polyhedron.
 \end{thm}
 
-In 2D this is intuitively clear: applying linear transformations on polygons results in distorted, rotated etc. polygons. For higher dimensions it follows from the projections:
+In 2D this is intuitively clear: applying linear transformations (the Fourier Motzkin eleminination can be written as linear transformation) on polygons results in distorted, rotated etc. polygons. For higher dimensions it follows from the projections:
 
 \begin{pr}[Theorem \ref{Thm:linTransPoly}] For $P$ we have
 
@@ -232,9 +241,9 @@ is a polyhedron. Then $\pi_m(Q)$ is also a polyhedron.
 \paragraph*{Optimal value} We can use the projections to find the optimal value for an LP (not the optimal solution though). Suppose we're given a LP in the usual form, $\min cx$ s.t. $Ax\geq b$. We construct the following polyhedron P:
 
 \begin{align}  \notag
- & (x_0,\ldots,x_n)  \\ \notag
+P =  & (\nthings{x}) \\ \notag
 s.t.\quad & A\trans{(x_0,\ldots,x_n)} \geq b \\
-& c\trans{(x_0,\ldots,x_n)}  \leq z \label{Form:OptimalValueMotzkin}
+& c\trans{(x_0,\ldots,x_n)}  \leq z \label{Form:OptimalValueMotzkin} && z\ \text{minimal}
 \end{align}
 
 The idea behind formula \ref{Form:OptimalValueMotzkin} is that we minimize $z$ by giving it the smallest value which is still feasible under the constraints.
@@ -245,10 +254,10 @@ We now know a way to find the optimal value for an LP and thus check if its feas
 
 This can be accomplished by an application of Farkas' Lemma.
 
-\begin{thm}[Farkas' lemma] Let $A\in \R^{m\times n}$ and $b\in \R^m$. Then either 
+\begin{thm}[Farkas' lemma]\label{Thm:farkasI} Let $A\in \R^{m\times n}$ and $b\in \R^m$. Then either 
 \begin{itemize}
 \item $\exists x\in \R^n: Ax\geq b$ or
-\item $\exists y\in \R^m, y\geq 0, \trans y A=0: \trans y \cdot b>0$
+\item $\exists y\in \R^m, y\geq 0, \trans y A=0: \trans y b>0$
 \end{itemize}
 \end{thm} 
 
@@ -257,9 +266,8 @@ It cannot be that both happen at the same time:
 \begin{align*}
 Ax &\geq b\\
 \trans y Ax&\geq \trans y b\\
-0 &\geq \trans y b
+0 &\geq \trans y b && \text{contradiction to } \trans y b >0
 \end{align*}
-Since $\trans y b>0$ it is a contradiction.
 
 This theorem is very nice if we want to check if some system of inequalities is feasible. We just have to find the vector $y$. This lemma can be proven by our earlier results. 
 
@@ -268,17 +276,45 @@ You can repeat that process until you get a matrix $F$ such that $FA=0$. The sys
 
 An alternative (equivalent) definition for the Farkas lemma is:
 
-\begin{thm}[Farkas' lemma II] Let A be a $m\times n$ matrix and $b$ a vector. Then exactly one of the following is true:
+\begin{thm}[Farkas' lemma II]\label{Thm:farkasII} Let A be a $m\times n$ matrix and $b$ a vector. Then exactly one of the following is true:
 \begin{enumerate}
 \item $\exists x: x\geq 0, Ax = b$
-\item $\exists y: \trans y A \leq 0 \wedge \trans y b>0$
+\item $\exists y: \trans y A \geq 0 \wedge \trans y b<0$
 \end{enumerate}
 \end{thm}
 
-This say either $x$ is in the cone of the columns of $A$ defined like this:
+This says either $x$ is in the cone of the columns of $A$ defined like this:
 
 \begin{Def}[Cone] Let $A=\{\kthings{a}{k}\}$ be a set of vectors in $\R^n$
 \[C(A)=\left\{x\left|x=\sum^m \lambda_i a_i;\ \lambda_i \geq 0\right.\right\}\]
 \end{Def}
 
-or there is a direction $y$ in $A$ that splits the space between the cone of $A$ and $b$. Note that $\trans y A\leq 0$ means that all columns of $A$ have a negative dot product with $y$. So all positive linear combinations of the columns (i.e. all points in the cone) are on the opposite side from $b$ of the hyperplane defined by $y$.
+or there is a direction $y$ in $A$ that splits the space between the cone of $A$ and $b$. Note that $\trans y A\geq 0$ means that all columns of $A$ have a positive dot product with $y$. So all positive linear combinations of the columns (i.e. all points in the cone) are on the opposite side from $b$ of the hyperplane defined by $y$.
+
+To prove that this version implies the one from theorem \ref{Thm:farkasI}\footnote{this was an exercise on problem set 3} we want to take a statement from I (theorem \ref{Thm:farkasI}) and transfer it into a version II (theorem \ref{Thm:farkasII}) and then show that those two things imply each other.
+
+Consider a system $Ax\geq b$. We convert it to standard form by first introducing slack variables $A(x+z) =b$. This is not yet the right form of the problem, as we need $x\geq 0$. So do the trick with two variables $x=x_1-x_2$. This gives us an equivalent problem with a new matrix and a new vector $\hat A= [A|-A|-I], \hat x=[x_1|x_2|z]$ such that $x_1,x_2,z\geq 0$.  Let $\hat x_0=(x_1^*,x_2^*,z^*)$ be a feasible solution for the system $\hat A \hat x = b$ then we get a feasible solution for the original system by $x_0=x_1^*-x_2^*$. 
+
+\begin{align*}
+\hat A \hat x_0 =b &\Rightarrow A(x_1^*-x_2^*)-z^*=b\\
+	&\Rightarrow A(x_1^*-x_2^*) = b+z\\
+	&\Rightarrow Ax_0 \geq b
+\end{align*}
+
+Hence we have a way to get an instance for \ref{Thm:farkasII} from an instance for \ref{Thm:farkasI}.
+
+That proves the first condition. For the other condition suppose than $\hat A \hat x=b, \hat x\geq 0$ is not feasible. From theorem \ref{Thm:farkasI} we get a $y\geq 0\in \R^m$ such that $\trans y \hat A = 0$ and $\trans y b>0$.
+
+We construct a certificate for theorem \ref{Thm:farkasII}. By opening up $\hat A$ we get
+
+\[\trans y[A|-A|-I] \geq 0 \qquad \trans y >0\]
+
+We need $\trans y A \geq 0$ and $\trans y -A\geq 0$. Of course that implies $\trans y A = \trans y -A =0$. From $\trans y -I \geq 0$ we get $y\leq 0$. Obviously we can take $y'=-y$ as a certificate for theorem \ref{Thm:farkasI} as we then have 
+
+\[\trans {y'}A =0\quad \trans{y'} b<0\]
+
+For the other condition we want to prove that not the second condition is \ref{Thm:farkasII} implies not the second condition in \ref{Thm:farkasI} en 
+
+\[A'x' = b \Rightarrow \neg (\exists y, y'A'\geq 0 \wedge \trans yb <0)\]
+
+It's easy to show that exactly one of the cases of \ref{Thm:farkasI} is true when one case of \ref{Thm:farkasII} are true. Assume there are two vectors $x_0,y_0$ such that $Ax_0\geq b$ and $\trans y_0A=0,\ \trans y_0b>0$. We can then just multiply $Ax_0\geq b$ by $\trans y$ from the left and get a contradiction.

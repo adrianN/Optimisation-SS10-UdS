@@ -21,7 +21,7 @@ Assume we have a dual feasible basis $B$. Our tableau looks like this:
 \begin{center}
 \begin{tabular}{c|c}
 $-c_Bx_B$ & $\bar c = c-c_BA_B^{-1}A$\\\hline
-$x_B$ & $A_B^{-1}A$
+$x_B=A_B^{-1}b$ & $A_B^{-1}A$ 
 \end{tabular}
 \end{center}
 
@@ -55,6 +55,8 @@ until $x_B = A_B^{-1}b \geq 0$
 	B = $B\backslash b_i \cup j$
 return B
 \end{lstlisting}
+
+As with primal simplex this algorithm can start to cycle for degenerate problems. To avoid cycling always choose the lexicographically smallest row and among lexicographically equal rows the one with the smallest index.
 
 This algorithm can also be used to find an initial solution for the regular simplex algorithm. We can replace the cost vector by $0$ such that every feasible solution is optimal. We can then build the dual
 

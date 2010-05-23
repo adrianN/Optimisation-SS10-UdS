@@ -1,18 +1,32 @@
-\section{Applications of Linear Programs and Duality}
-\subsection{Two player zero-sum games}
+\subsection{Applications of Linear Programs and Duality}
+\subsubsection{Two player zero-sum games}
 
 You might also want to about this in this book\footnote{(user:agt1user, pass:camb2agt) \url{http://www.cambridge.org/journals/nisan/}}. Section 1.4. describes the concepts presented in this lecture fairly well.
 
-An example for a two player zero sum game is Rock-Paper-Scissors. We have two players, both of which can choose between one of the strategies \{rock, paper, scissors\}. If a player wins he gets some kind of payoff, e.g. 1 unit of the credit of your choice. We can encode the game in a matrix $D$:
+An example for a two player zero sum game is Rock-Paper-Scissors-Lizard-Spock. We have two players, both of which can choose between one of the strategies \{rock, paper, scissors, lizard, spock\}.\footnote{More about this and related games online \url{http://www.worldrps.com/}}If a player wins he gets some kind of payoff, e.g. 1 unit of the credit of your choice. We can encode the game in a matrix $D$:
 
+
+\begin{figure}[hbt]
+\begin{minipage}[hbt]{0.4\linewidth}
+\href{http://en.wikipedia.org/wiki/File:Pierre_ciseaux_feuille_l\%C3\%A9zard_spock.svg}{\includegraphics[width=\linewidth]{./images/rpsclsp.pdf}}
+\end{minipage}
+\hfill
+\begin{minipage}[hbt]{0.4\linewidth}
 \begin{center}
-\begin{tabular}{cccc}
- & R & P & S\\
-R & 0 & -1 & 1\\
-P & 1 & 0 & -1\\
-S & -1 & 1 & 0\\
+\begin{tabular}{c|ccccc}
+ & R & P & Sc & L & Sp \\\hline
+R & 0 & -1 & 1 & 1 & -1\\
+P & 1 & 0 & -1 & -1 & 1\\
+Sc & -1 & 1 & 0 & 1 & -1\\
+L & -1 & 1 & -1 & 0 & 1\\
+S & 1 & -1 & 1 & -1 & 0\\
 \end{tabular}
 \end{center}
+\end{minipage}
+\caption{Rock, Paper, Scissors, Lizard, Spock}
+\label{Fig:rpsclsp}
+\end{figure}
+
 
 For each strategy there is a winning counter strategy. The players want to maximise, in case of the rowplayer, or minimise, in case of the columnplayer, the outcome. We have two terms that describe the strategies of both players
 
@@ -60,7 +74,7 @@ We can rewrite the expectations like this
 Now we show that with mixed strategies the inequality is actually an equality
 
 \begin{thm}[Minimax theorem] Von Neumann discovered
-\[\max_x\min \trans xDy = \min_y\max_x \trans x Dy\]
+\[\max_x\min_y \trans xDy = \min_y\max_x \trans x Dy\]
 \end{thm}
 
 \begin{pr} We will prove this by giving two primal-dual LPs and invoking theorem \ref{thm:strongDuality}. Let
@@ -103,7 +117,7 @@ s.t.\quad & t = \max_i \sum^m_{j=1} y_j D_{ij} & \forall i=1\ldots n\\
 Which gives us the optimal mixed strategy of the second player. Because of theorem \ref{thm:strongDuality} (Strong duality) it follows that $z^{*}=t^{*}$. This implies that the optimal strategy yields a return of $0$ for both playes, as it is a zero-sum game.
 \end{pr}
 
-\subsection{Lower Bounds for Randomised Algorithms}
+\subsubsection{Lower Bounds for Randomised Algorithms}
 
 \paragraph{Problem} Given a matrix $D\in \B^{n\times n}$. We want to check whether that matrix has an all 0 column. 
 
