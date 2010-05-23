@@ -15,7 +15,7 @@ We can easily see than the optimal solution of the LP has to be greater than 10,
 
 Since the sum of the two constraints has to be satisfied and is still smaller than the objective function, we know that the optimal value has to be greater than 16. Similarly we can first scale one of the rows to calculate tigther lower bounds. 
 
-Systematically we look for $y_1,y_2$ such that $y_1,y_2\geq 0$ and
+Systematically we look for $y_1,y_2$ (column-wise) such that $y_1,y_2\geq 0$ and
 
 \[y_1 \cdot \text{1st constraint} + y_2 \cdot \text{2nd constraint} < \text{objective}\]
 
@@ -170,7 +170,7 @@ b &= Ax\\
  For LPs which are not in standard form we first transform the primal into normal form. Some similar transformation is done on the dual. Then you prove that the transformed LPs have the same optimal value.
 \end{pr}
 
-This proof gives a way to get a dual solution from a primal solution. It's $c_BA_B^-1$
+This proof gives a way to get a dual solution from a primal solution. It's $c_BA_B^{-1}$
 
 A nice consequence of this theorem is an easy way to show that primal and dual solutions are optimal.
 

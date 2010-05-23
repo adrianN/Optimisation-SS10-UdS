@@ -143,14 +143,14 @@ So that means if $d>0$ we are ok, however if $d_{B(i)} <0$ for some $i \in {1,..
 
 \begin{center}
 \begin{align*}
-x_{b_i} +\Theta d_{b_i} & \stackrel{!}{\geq} 0 &&\forall i %is ! because we want to choose theta s.t. it holds
+x_{b_i} +\Theta d_{b_i} & \stackrel{!}{\geq} 0 &&\forall i \\%is ! because we want to choose theta s.t. it holds. I think so. From a mathematical point of view it appears sound
 \Theta &\stackrel{!}{\leq} \frac{-x_{b_i}}{d_{b_i}} && \text{note: }d_{b_i}<0
 \end{align*}
 \end{center}
 
 By choosing $\Theta$ sufficiently small we can avoid negativity. 
 
-However we'd like to move as far as possible along the line $y=x+\Theta d$ without leaving the polyhedron to we end up at a vertex. So we choose it like this
+However we'd like to move as far as possible along the line $y=x+\Theta d$ without leaving the polyhedron, so that we end up at a vertex. So we choose it like this
 
 \[\Theta = \min_{{b_i\in B}\atop {d_{b_i} <0}} \left| \frac{x_{b_i}}{d_{b_i}}\right |\]
 
