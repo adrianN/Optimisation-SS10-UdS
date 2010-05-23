@@ -24,14 +24,14 @@ In other words (the book):
 \begin{enumerate} 
  \item Choose m linearly independent columns $A_{B(1)},...,A_{B(m)}$
  \item Let $x_i=0$ for all $i \neq B(1),...,B(m)$
- \item Solve the system of $m$ equations $Ax=b$ for the unknowns $x_{B(1)},...x_{B(m)})$
+ \item Solve the system of $m$ equations $Ax=b$ for the unknowns $x_{B(1)},...x_{B(m)}$
 \end{enumerate}
 The basic solution is given by the results of step three.
 
 \paragraph*{Degeneracy}
-Certain basic solution are degenerate. 
+Certain basic solutions are degenerate. 
 \begin{Def}[Degeneracy]
- A basic solution $x\in \R^n$ is said to be degenerated if more than $n$ of the constraints are active at $x$ 
+ A basic solution $x\in \R^n$ is said to be degenerate if more than $n$ of the constraints are active at $x$ 
 \end{Def}
 In 2D this means that more than two lines intersect at one point.
 
@@ -111,7 +111,7 @@ When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s
 
 \begin{equation} d_k=0 \label{equ:dkEquZero} \end{equation}
 
-\item $d_j>0$ let $j$ be the column added to the basis, because we made the formerly non-basic variable $x_j$ basic. That is assigning it some value $>0$. By choosing $\Theta$ accordingly we can scale this to be $d_j=1$ and make further calculations easier. Therefore we assume from now one $d_j=1$
+\item $d_j>0$, where $j$ be the column added to the basis, because we make the formerly non-basic variable $x_j$ basic, i.e. we assign it some value $>0$. By choosing $\Theta$ accordingly we can scale this to be $d_j=1$ and make further calculations easier. Therefore we assume from now on $d_j=1$
 
 \item Both $x$ and $y$ are bfs, i.e. both satisfy all equations. By multiplying the line equation with $A$ and solving for $Ad$: $Ad = (Ay-Ax)/\Theta = (b-b)/\Theta = 0$ we get
 \begin{equation} Ad = 0 \label{equ:AdEquZero}\end{equation}
@@ -120,9 +120,9 @@ When we move from solution $x$ to solution $y$ we do so along some vector $d$ (s
 \subsection{Calculating $b_i$ directly}
 By using these observations we can directly calculate the $b_i$ we need to remove.
 
-First we want to get the components $d_B$ that we don't know immediately from the above observations. We can decompose $Ad$ into the part we're looking for, $A_j d_j$ which is $A_j$ since $d_j:=1$ and $A_{\bar B} d_{\bar B}$ which is 0 since $d_{\bar B}:=0$.
+First we want to get the components $d_B$ that we don't know immediately from the above observations. We can decompose $Ad$ into three parts, $Ad_B$ which we don't know yet, $A_j d_j$ which is $A_j$ since $d_j:=1$ and $A_{\bar B} d_{\bar B}$ which is 0 since $d_{\bar B}:=0$.
 
-\[0= Ad \sum_{i=1}^{n}A_i d_i  = \sum_{i=1}^{m}{A_{B(i)} d_{B(i)}} + A_j = A_B d_B + A_j\]
+\[0= Ad = \sum_{i=1}^{n}A_i d_i  = A_Bd_B + A_{\bar B}d_{\bar B} +  A_jd_j = A_B d_B + A_j\]
 
 $B$ is a basis, so $A_B$ is invertible and we can compute $d_B$.
 
@@ -130,31 +130,31 @@ $B$ is a basis, so $A_B$ is invertible and we can compute $d_B$.
 d_B = -A^{-1}_B A_j \label{equ:valueDb}
 \end{equation}
 
-The new extreme point $y$ should be a feasible solution so we also want $y\geq 0$. By plugging the calculation for $d_B$ into the equation for the line between $x$ and $y$ we get
+The new extreme point $y$ should be a feasible solution so we also want $y\geq 0$ because of the nonnegativity constraints. By plugging the calculation for $d_B$ into the equation for the line between $x$ and $y$ we get
 
 \begin{align*}
 y_B &= x_B + \Theta d_B\\
- &= x_B - \Theta A_B^{-1} A_j \geq 0
+ &= x_B - \Theta A_B^{-1} A_j \stackrel{!}{\geq} 0
 \end{align*}
 
-We also need to ensure the nonnegativity constraints. For $x_j$ this isn't a problem as we only increase it. All nonbasic variables $x_{\bar B}$ stay at zero. So we only need to worry about the basic variables. \\ 
+For $x_j$ this isn't a problem as we only increase it. All nonbasic variables $x_{\bar B}$ stay at zero. So we only need to worry about the basic variables. \\ 
 Remember that the basic variables in $x_B$ are all greater than 0. 
 So that means if $d>0$ we are ok, however if $d_{B(i)} <0$ for some $i \in {1,...,m}$ then it can happen that we get a negative component if we choose $\Theta$ too large. We need 
 
 \begin{center}
 \begin{align*}
-x_{b_i} +\Theta d_{b_i} & \geq 0\\ %was \stackrel{!}{\geq} why was it so?
-\Theta &\leq \frac{-x_{b_i}}{d_{b_i}} \text{\ note: }d_{b_i}<0
+x_{b_i} +\Theta d_{b_i} & \stackrel{!}{\geq} 0 &&\forall i %is ! because we want to choose theta s.t. it holds
+\Theta &\stackrel{!}{\leq} \frac{-x_{b_i}}{d_{b_i}} && \text{note: }d_{b_i}<0
 \end{align*}
 \end{center}
 
 By choosing $\Theta$ sufficiently small we can avoid negativity. 
 
-However we'd like to move as far as possible along the line $y=x+\Theta d$ without leaving the polyhedron. So we choose it like this
+However we'd like to move as far as possible along the line $y=x+\Theta d$ without leaving the polyhedron to we end up at a vertex. So we choose it like this
 
 \[\Theta = \min_{{b_i\in B}\atop {d_{b_i} <0}} \left| \frac{x_{b_i}}{d_{b_i}}\right |\]
 
-The variable $x_{b_i}$ that attains the above minimum will be equal to zero in $y$, i.e. in becomes non-basic and will have to be taken out of $B$. Because we assumed that the system is non degenerate there will be only one element actually attaining it or we would have a basic feasible solution with a basic variable that is 0 (and hence $>n$ constraints would be active at that solution). Also $\Theta \gneq 0$ or one of the basic variables would have been zero ($\Rightarrow x\neq y$).
+The variable $x_{b_i}$ that attains the above minimum will be equal to zero in $y$, i.e. it becomes non-basic and will have to be taken out of $B$. Because we assumed that the system is non degenerate there will be only one element actually attaining it or we would have a basic feasible solution with a basic variable that is 0 (and hence $>n$ constraints would be active at that solution). Also $\Theta \gneq 0$ or one of the basic variables would have been zero ($\Rightarrow x\neq y$).
 
 Note that this was the step that assumed a bounded polyhedron. If $P$ would be unbounded and $d>0$ there could be some $x+\Theta d$ were we could move along as far as we want without leaving $P$. That would mean that $P$ contains a infinite line and is therefore not bounded (remember figure \ref{Fig:bounded_unbounded}).
 
@@ -190,6 +190,8 @@ until B hasn't changed
 \end{center}
 
 \subsection{Reduced cost vector}
+During the algorithm we're looking for the change in cost when we move in a particular direction. We calculate it as $c_j+c_Bd_B$ and check for $j$ that give us a negative cost change. The reduced cost vector, in contrast to the normal cost vector, just contains the changes in cost.
+
 \begin{Def}[Reduced cost vector]
  Let $x$ be a basic solution, let $A_B$ be an associated basis matrix, and let $c_B$ be the vector of costs of the basic variables. For each $j$, we define the reduced costs $\bar c$ of the variable $x_j$ according to the formula 
 $\bar c_j = c_j + c_Bd_B = c_j - c_B A^{-1}_B A_j$
@@ -222,7 +224,7 @@ Let's focus on a single iteration and recapture why it works. If we start with a
 \begin{enumerate}
 \item $Ay=b$, since 
 \[Ay=A(x+\Theta d) = Ax + \Theta Ad = b+\Theta(A_j+A_Bd_B) = b+\Theta(A_j - A_BA_B^{-1}A_j) = b\]
-Note that $A_BA_b^{-1}$ equals the identity matrix
+Note that $A_BA_B^{-1}$ equals the identity matrix
 \item $y\geq 0$. There are three cases
 
 \begin{itemize}
@@ -232,8 +234,8 @@ Note that $A_BA_b^{-1}$ equals the identity matrix
 Since $d_k=0$ as $k \not \in B$ (see formula \ref{equ:dkEquZero}) for the same reason $x_k=0$ (it isn't a basic variable therefore we set it to zero). 
 
 \item $y_k, k=j$
-\[ y_k = x_j + \Theta d_j = 0 + \Theta d_j \Rightarrow  \Theta d_k \geq 0\]
-By definition of $\Theta$ %TODO which is in this case?
+\[ y_k = x_j + \Theta d_j = 0 + \Theta d_j\gneq 0\]
+Since $\Theta>0, d_j>0$. 
 
 \item $y_k,k\in B$
 \[y_k=x_k+\Theta d_k\]
@@ -241,15 +243,22 @@ This is only interesting if $d_k<0$. In that case we defined $\Theta$ to be $\mi
 
 \end{itemize}
 
-\item $D$ is a basis. Assume otherwise. Then the new vector must break the linear independence
+\item $D$ is a basis. Assume otherwise. Then the new vector must break the linear independence and we can write it as a linear combination of the vectors that we kept in the basis, i.e. all except $A_{b_i}$.
 
 \[A_j= \sum_{b_k\in B\backslash b_i} \lambda_k A_{b_k}\]
 
 Since we have $d_B=-A_B^{-1}A_j$ we get
 
-\[d_B = -\sum \lambda_k A_B^{-1} A_{b_k} \qquad \Rightarrow d_{b_i} = 0\] %TODO check this. My notes don't show the -
+\begin{align*}
+-A_Bd_B &= \sum_{b_k\in B\backslash b_i} \lambda_k A_{b_k}\\
+ d_B&=-A_B^{-1}\sum_{b_k\in B\backslash b_i} \lambda_k A_{b_k}\\
+\intertext{Since $A_B^{-1}A_{b_k}=e_{b_k}$ we get}
+ d_B&=-A_B^{-1}\sum_{b_k\in B\backslash b_i} \lambda e_{b_k}\\
+\intertext{So we have some linear combination of unit vectors, except for $e_{b_i}$ which we excluded from the sum. That means $d_{b_i}$ is zero}
+ & \Rightarrow d_{b_i} = 0
+\end{align*}
 
-Which is a contradiction %ausführen
+Which is a contradiction because we only choose $b_i$ if $d_{b_i}\lneq 0$
 \end{enumerate}
 
 For all these things we don't use the assumption that the system is nondegenerate. We'll use that later, when we remove that constraint. However we need that if we want to show that we always improve the objective value.
@@ -263,12 +272,12 @@ If the assumptions hold, simplex always terminates, since there are only finitel
 \begin{pr}[Theorem \ref{Pr:simplexIIIopt}] Let $x$ be the basic feasible solution induced by $B$, $y$ be any other feasible solution. We want to argue that the cost of $x$ is smaller than the cost of $y$. %Let $d=y-x$ then 
 Consider the direction $d=x-y$. From the feasibility of $x$ and $y$ it follows by using the formula \ref{equ:AdEquZero} that
 
-\[0=Ad=A_b d_b + \sum_{k \not \in B } {A_k d_k} \Rightarrow d_b = - \sum_{k \not \in B}{A_{B}^{-1}A_k d_k}\]
+\[0=Ad=A_B d_B + \sum_{k \not \in B } {A_k d_k} \Rightarrow d_B = - \sum_{k \not \in B}{A_{B}^{-1}A_k d_k}\]
 
 Now the difference in cost between $y$ and $x$ is 
-\[cd=c_{B} d_b + \sum_{k \not \in B} {d_k c_k}= \sum_{k \not \in B} {\underbrace{d_k}_{y_k-x_k\geq 0} \underbrace{(c_k-c_BA_{B}^{-1} A_k)}_{\bar c_k\geq 0}}=\sum_{k \in B} {d_k \bar c_k}\]
+\[cd=c_{B} d_B + \sum_{k \not \in B} {d_k c_k}= \sum_{k \not \in B} {\underbrace{d_k}_{y_k-x_k\geq 0} \underbrace{(c_k-c_BA_{B}^{-1} A_k)}_{\bar c_k\geq 0}}=\sum_{k \in B} {d_k \bar c_k}\]
 
-Notice that for all $k \in B$ we have $x_k=0$ and $y_k \geq 0$ and therefore $d_k \geq 0$. By our assumption, all reduced costs are non-negative. Thus, $c y - c x = c d \geq 0$. Sine this holds for all feasible $y$, it follows that $x$ is indeed optimal.
+Notice that for all $k \in B$ we have $x_k=0$ and $y_k \geq 0$ and therefore $d_k \geq 0$. By our assumption, all reduced costs are non-negative. Thus, $c y - c x = c d \geq 0$. Since this holds for all feasible $y$, it follows that $x$ is indeed optimal.
 \end{pr}
 
 \begin{cor}
