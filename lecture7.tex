@@ -22,9 +22,9 @@ Systematically we look for $y_1,y_2$ (column-wise) such that $y_1,y_2\geq 0$ and
 That means for the above constraints
 
 \begin{align*}
-y_1+5y_2 \leq 7\\
--y_1 +2y_2 \leq 1\\
-3y_1 - y_2 \leq 5
+y_1+5y_2 \leq 7 &&\text{for }x_1\\
+-y_1 +2y_2 \leq 1 &&\text{for }x_2\\
+3y_1 - y_2 \leq 5 &&\text{for }x_3
 \end{align*}
 
 Then we get LP $\geq 10y_1 + 6y_2$. If we want to find the optimal values for $y_1$ and $y_2$ we suddenly get a new LP:
@@ -106,14 +106,14 @@ Primal & min & max & Dual\\\hline
 
 \begin{pr} We have
 
-\[y_i(\trans a_ix-b_i) \geq 0 \qquad \forall i\in M_{1,2,3}\]
+\[y_i(a_ix-b_i) \geq 0 \qquad \forall i\in M_{1,2,3}\]
 
 %explain why
 
 So the sum of those is also positive.
 
 \begin{align*}
-\sum_i y_i(\trans a_ix-b_i) &\geq 0\\
+\sum_i y_i(a_ix-b_i) &\geq 0\\
 (\sum_{i,j}y_ia_{ij}x_j)-\trans yb &\geq 0
 \end{align*}
 
@@ -157,7 +157,7 @@ c \geq \underbrace{c_BA_B^{-1}}_{:=\trans y}A
 
 From that we see that $\trans y$ is a feasible dual solution. We need to show that the cost for this solution is at least as good as the cost of the primal solution. Then by theorem \ref{thm:weakDuality} the optimal costs for both LPs must be the same.
 
-So let's look at the cost of the dual solution $\trans y b$. Because $B$ is a feasible basis, it introduces a bfs $x$. We have
+So let's look at the cost of the dual solution $\trans y b$. Because $B$ is a feasible basis, it induces a bfs $x$. We have
 
 \begin{align*}
 b &= Ax\\
@@ -176,7 +176,7 @@ A nice consequence of this theorem is an easy way to show that primal and dual s
 
 \begin{thm}[Complementary Slackness] Let $x$ and $y$ be a pair of feasible primal-dual solutions. Then $x$ \emph{and} $y$ are optimal iff
 \begin{align*}
-y_i(\trans A_ix-b_i) = 0 && \forall i\\ 
+y_i(a_ix-b_i) = 0 && \forall i\\ 
 (c_j - \trans yA_j)x_j =0 && \forall j
 \end{align*}
 \end{thm}

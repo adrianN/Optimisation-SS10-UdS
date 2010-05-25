@@ -12,13 +12,13 @@ $A^{-1}_B b$ & $A_B^{-1}A$
 \end{tabular}
 \end{center}
 
-In the lower right cell we can get the vector $u$. By dividing the components of $u$ by the number in the column we selected to be introduced into the basis we can find the basic index we need to kick out. It will turn out that computing the new inverse matrices it easy, as they change only in one column from iteration to iteration.
+In the lower right cell we can get the vector $A_B^{-1}A_j=-d$ which we'll call $u$ from now on, to save some typing. By dividing the components of $u$ by the number in the column we selected to be introduced into the basis we can find the basic index we need to kick out. It will turn out that computing the new inverse matrices it easy, as they change only in one column from iteration to iteration.
 
 Suppose we have $A_B^{-1}$ and want to find $A_D^{-1}$, where $D=B\cup j \backslash b_i$. Suppose we already had the correct solution with $A_B^{-1}$ 
 
 \[A_B^{-1}A_D = \left[ A_B^{-1}A_{b_i}\ldots A_B^{-1}A_j\ldots A_B^{-1}A_m\right] = \left[ e_1,e_2, \ldots, e_{i-1}, \underbrace{A_B^{-1}A_j}_{=u}, e_{i+1},\ldots, e_m\right]\]
 
-So it's not the correct inverse, but the difference is very small. So we want to find a correction matrix $R$ that gives us the right answer. It is the identity matrix, except for the column that is wrong.
+So it's not the correct inverse, but the difference is very small. We want to find a correction matrix $R$ that gives us the right answer. It is the identity matrix, except for the column that is wrong.
 
 \[R= \begin{pmatrix} 
 1 & \ldots & -u_1/u_i & \ldots \\

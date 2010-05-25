@@ -269,15 +269,22 @@ If the assumptions hold, simplex always terminates, since there are only finitel
 
 \begin{thm}\label{Pr:simplexIIIopt} Let B be a basis. If $x_B=A^{-1}_Bb\geq 0$ and $\bar c=c- c_B A_B^{-1}A_j \geq 0$ then the basic feasible solution induced by $B$ is optimal.\end{thm}
 
-\begin{pr}[Theorem \ref{Pr:simplexIIIopt}] Let $x$ be the basic feasible solution induced by $B$, $y$ be any other feasible solution. We want to argue that the cost of $x$ is smaller than the cost of $y$. %Let $d=y-x$ then 
-Consider the direction $d=x-y$. From the feasibility of $x$ and $y$ it follows by using the formula \ref{equ:AdEquZero} that
+\begin{pr}[Theorem \ref{Pr:simplexIIIopt}] Let $x$ be the basic feasible solution induced by $B$, $y$ be any other feasible solution. We want to argue that the cost of $x$ is smaller than the cost of $y$. 
+Consider the direction $d$ from $x$ to $y$: $d=y-x$. We know from our observations about $d$ that 
 
-\[0=Ad=A_B d_B + \sum_{k \not \in B } {A_k d_k} \Rightarrow d_B = - \sum_{k \not \in B}{A_{B}^{-1}A_k d_k}\]
+\[d_B = -A_{B}^{-1}A_j\]
 
 Now the difference in cost between $y$ and $x$ is 
-\[cd=c_{B} d_B + \sum_{k \not \in B} {d_k c_k}= \sum_{k \not \in B} {\underbrace{d_k}_{y_k-x_k\geq 0} \underbrace{(c_k-c_BA_{B}^{-1} A_k)}_{\bar c_k\geq 0}}=\sum_{k \in B} {d_k \bar c_k}\]
+\begin{align*}
+cd &= c_Bd_B + c_{\bar b}\\
+	&= -c_BA_B^{-1}A_{j}d_{\bar B} + c_{\bar B}d_{\bar B}\\
+	&= \underbrace{(c_{\bar B} - c_B A_B^{-1} A_j)}_{\text{reduced cost vector}}d_{\bar B}
+\end{align*}
+By our assumption the reduced cost vector is positive. Further we have for all $k\not \in B$: $x_k=0$ and $y_k\geq 0$. So $d_{\bar B}$ must be $\geq 0$ too. Hence the product of the two is also positive  and we get the result that either the costs sta the same or they increase. That means that $x$ is optimal.
 
-Notice that for all $k \in B$ we have $x_k=0$ and $y_k \geq 0$ and therefore $d_k \geq 0$. By our assumption, all reduced costs are non-negative. Thus, $c y - c x = c d \geq 0$. Since this holds for all feasible $y$, it follows that $x$ is indeed optimal.
+%\[cd=c_{B} d_B + \sum_{k \not \in B} {d_k c_k}= \sum_{k \not \in B} {\underbrace{d_k}_{y_k-x_k\geq 0} \underbrace{(c_k-c_BA_{B}^{-1} A_k)}_{\bar c_k\geq 0}}=\sum_{k \in B} {d_k \bar c_k}\]
+
+%Notice that for all $k \not \in B$ we have $x_k=0$ and $y_k \geq 0$ and therefore $d_k \geq 0$. By our assumption, all reduced costs are non-negative. Thus, $c y - c x = c d \geq 0$. Since this holds for all feasible $y$, it follows that $x$ is indeed optimal.
 \end{pr}
 
 \begin{cor}

@@ -9,11 +9,11 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="383.80862"
-   height="322.58929"
+   width="472.9375"
+   height="370.5625"
    id="svg2"
    version="1.1"
-   inkscape:version="0.47pre4 r22446"
+   inkscape:version="0.47+devel r9327"
    sodipodi:docname="movingToSolutions.svg">
   <defs
      id="defs4">
@@ -28,7 +28,8 @@
          id="path3628"
          d="M 0,0 5,-5 -12.5,0 5,5 0,0 z"
          style="fill-rule:evenodd;stroke:#000000;stroke-width:1pt;marker-start:none"
-         transform="matrix(-0.4,0,0,-0.4,-4,0)" />
+         transform="matrix(-0.4,0,0,-0.4,-4,0)"
+         inkscape:connector-curvature="0" />
     </marker>
     <inkscape:perspective
        sodipodi:type="inkscape:persp3d"
@@ -54,32 +55,35 @@
      inkscape:pageshadow="2"
      inkscape:zoom="1.4"
      inkscape:cx="281.3302"
-     inkscape:cy="162.48606"
+     inkscape:cy="267.60212"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      showguides="true"
      inkscape:guide-bbox="true"
-     inkscape:window-width="1280"
-     inkscape:window-height="726"
-     inkscape:window-x="0"
-     inkscape:window-y="25"
-     inkscape:window-maximized="1">
+     inkscape:window-width="1676"
+     inkscape:window-height="1006"
+     inkscape:window-x="4"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:snap-grids="true"
+     inkscape:snap-to-guides="false"
+     inkscape:snap-global="true">
     <sodipodi:guide
        orientation="1,0"
-       position="35.237167,41.428574"
+       position="35.237164,89.40178"
        id="guide4248" />
     <sodipodi:guide
        orientation="1,0"
-       position="372.38003,140.71428"
+       position="372.38003,188.68749"
        id="guide4250" />
     <sodipodi:guide
        orientation="0,1"
-       position="98.094307,11.428574"
+       position="98.094304,59.40178"
        id="guide4252" />
     <sodipodi:guide
        orientation="0,1"
-       position="393.8086,284.99999"
+       position="393.8086,332.9732"
        id="guide4254" />
   </sodipodi:namedview>
   <metadata
@@ -90,7 +94,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -121,11 +125,13 @@
     <path
        style="fill:none;stroke:#000000;stroke-width:1;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:12, 12;stroke-dashoffset:0"
        d="M 537.14286,398.07647 200,671.64789"
-       id="path4256" />
+       id="path4256"
+       inkscape:connector-curvature="0" />
     <path
        style="fill:#00ff00;stroke:#000000;stroke-width:2.40571952;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;marker-end:url(#Arrow1Mend)"
        d="m 537.02444,398.19489 -81.80176,66.37726"
-       id="path4279" />
+       id="path4279"
+       inkscape:connector-curvature="0" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;font-family:Bitstream Vera Sans"
@@ -156,5 +162,17 @@
          id="tspan4475"
          x="163.57143"
          y="649.50507">y</tspan></text>
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 35.237167,311.16072 50,370.44644"
+       id="path2932"
+       inkscape:connector-curvature="0"
+       transform="translate(164.76283,360.48718)" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 372.85714,36.875009 100,-15"
+       id="path2934"
+       inkscape:connector-curvature="0"
+       transform="translate(164.76283,360.48718)" />
   </g>
 </svg>

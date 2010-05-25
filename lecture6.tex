@@ -101,10 +101,14 @@ For an LP with $Ax=b$ and $x\geq 0$ the initial solution is not so obvious. To f
 \begin{align*}
 \min \quad & \sum_{i=1}^m y_i\\
 &Ax+y=b\\
-&x,y\geq 0
+&x\geq 0
 \end{align*}
 
-Here the initial basis is obvious: Let $x=0$ and $y=b$. Again we get the identity matrix as initial basis matrix and can easily apply the tableau method.
+%TODO for y>=0 the initial basis is just as hard to find as before. We should have a look at the book here.
+
+Note that this LP is not in standard form if some $b_i<0$. In that case $s$ has to be replaced by two vectors, at least in the components that had to be negative. This makes everything more complicated, but it's still straightforward so we'll just assume that $y\geq$ is feasible if $x=0$.
+
+Then the initial basis is obvious: Let $x=0$ and $y=b$. Again we get the identity matrix as initial basis matrix and can easily apply the tableau method.
 
 We observe the following things:
 
@@ -122,7 +126,7 @@ It is not at all obvious how to find the columns of $A$ that we can safely add t
 
 To find a column of $A$ that we can add to our basis first we find a column of $F$ that contains an artificial variable, say $y_l$. Then look at the corresponding row $l$ in the tableau and find a column of $A$, say $A_j$, with a nonzero entry in that row. Using the normal row operations we introduce $x_j$ into the basis and kick out $y_l$. It's ok if the pivot element $(l,j)$ is negative in this step.
 
-So why is this correct? In the tableau we have $F^{-1}\bar A$ (where $\bar A$ is the extended matrix that also contains entries for the artificial variables). So in all the $k$ $A_{b_i}$ that we already have in our basis we have the $i$th unit vector. Since w.l.o.g. $k<l$ the $l$th entry in these vectors is $0$. That must also be true in any linear combination of the columns $F^{-1}A_{b_1},\ldots, F^{-1}A_{b_k}$. By looking for a column that has a nonzero entry at position $l$ we find a vector $F^{-1}A_j$ that must be linearly independent from all $F^{-1}A_{b_i}$. But since $F^{-1}$ is invertible this must also hold for $A_{b_i}$ and $A_j$.
+So why is this correct? In the tableau we have $F^{-1}\bar A$ (where $\bar A$ is the extended matrix that also contains entries for the artificial variables). So in all the $k$ $A_{b_i}$ that we already have in our basis we have the $i$th unit vector. Since  $k<l$ w.l.o.g. the $l$th entry in these vectors is $0$. That must also be true in any linear combination of the columns $F^{-1}A_{b_1},\ldots, F^{-1}A_{b_k}$. By looking for a column that has a nonzero entry at position $l$ we find a vector $F^{-1}A_j$ that must be linearly independent from all $F^{-1}A_{b_i}$. But since $F^{-1}$ is invertible it must also be independent from $A_{b_i}$ and $A_j$.
 
 It could of course happen that we don't find any entry in the $l$th row that is nonzero. Then the rows of $A$ must linearly depedent since $(F^{-1}A)_l=\trans f_l A=0$. Because the problem is feasible we must also have $\trans f_l b = 0$ and the constraint $\trans f_l A x = \trans f b$ is redundant and can be eliminated by deleting the $l$th row of the tableau. 
 
