@@ -269,7 +269,7 @@ Ax &\geq b\\
 0 &\geq \trans y b && \text{contradiction to } \trans y b >0
 \end{align*}
 
-This theorem is very nice if we want to check if some system of inequalities is feasible. We just have to find the vector $y$. This lemma can be proven by our earlier results. 
+This theorem is very nice if we want to check if some system of inequalities is infeasible. We just have to find the vector $y$. This lemma can be proven by our earlier results. 
 
 (Sketch:) The idea is to project the polyhedron down until we're left with one dimension. Checking a one dimensional polyhedron for emptyness is trivial. We start with the polygon $P$ and use a projection to get rid of the last dimension of $P$. By that we get another constraint matrix $B$ and another vector $d$. We get the new inequalities by combining those from the original polyhedron. Instead of actually doing the projection to a lower dimension we can replace the last element by 0. The operations of the Fourier Motzkin elimination can be realised by a linear transformation (similar to the matrices used in gaussian elimination). So we just find the corresponding matrix $D$. Then we get $[B0]=DA$. Because of the operations we do in the elimination none of the entries in $D$ are negative.
 You can repeat that process until you get a matrix $F$ such that $FA=0$. The system is infeasible if you end up with a negative rhs for a constraint, since all lhs will be 0.
