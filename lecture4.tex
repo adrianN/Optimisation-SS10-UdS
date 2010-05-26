@@ -204,7 +204,7 @@ SIMPLEX-TAKE-III (A,b,c)
 
 B = some feasible solution
 repeat
-    $\bar c$ = $c_j$ - $c_BA_B^{-1}A$ //reduced cost vector
+    $\bar c$ = $c$ - $c_BA_B^{-1}A$ //reduced cost vector
     if $\exists j:{\bar c}_j<0$ 
         u = $A^{-1}_B A_j$ 
         if(no component of $u$ is positive)
