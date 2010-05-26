@@ -90,7 +90,7 @@ s.t.\quad & z \leq \sum_{i=1}^n x_i D_{ij} & \forall j=1\ldots m\\
 &x\geq 0
 \end{align*}
 
-This works because once the other players strategy $j$ is fixed we can just select the pure strategy that maximises our payoff. Note that the $m$ constraints of the form $z \leq \sum_{i=1}^n x_i D_{ij}, \forall j=1 \ldots m$ can be written as $z=\min_{j=1\ldots m} \sum_{i=1}^n x_i D_{ij}$.
+This works because once the other player's strategy $j$ is fixed we can just select the pure strategy that maximises our payoff. Note that the $m$ constraints of the form $z \leq \sum_{i=1}^n x_i D_{ij}, \forall j=1 \ldots m$ can be written as $z=\min_{j=1\ldots m} \sum_{i=1}^n x_i D_{ij}$.
 
 The dual of this program is
 
@@ -154,7 +154,7 @@ Since this is a randomised algorithm we want to study the expected runtime.
 \end{Def}
 
 We try to build some intuition for the structure of the worst-case instance. For this we take the view of the adversary.
-It doesn't make sense to have a null column, as this would give the algorithm the chance to finish before it tried at least on element from all columns. Adding ones also makes the algorithm quit faster. Therefore let $O$ then be the set of $n\times n$ matrices with a single one value per column.
+It doesn't make sense to have a null column, as this would give the algorithm the chance to finish before it tried at least one element from all columns. Adding ones also makes the algorithm quit faster. Therefore let $O$ then be the set of $n\times n$ matrices with a single one value per column.
 
 Then we have
 
@@ -165,17 +165,17 @@ Then we have
 	&=\frac{n(n+1)}{2}
 \end{align*}
 
-So randomisation doesn't buy us anything. But is there a smarter algorithm than {\sc Rand-Check}? We'll prove that any randomised algorithm needs $O(n^2)$ lookups. We'll see an randomised algorithms as a probability distributions over deterministic algorithms (once we fix a sequence of random choices any randomised algorithm becomes deterministic).
+So randomisation doesn't buy us anything. But is there a smarter algorithm than {\sc Rand-Check}? We'll prove that any randomised algorithm needs $O(n^2)$ lookups. We'll see a randomised algorithm as a probability distribution over deterministic algorithms (once we fix a sequence of random choices any randomised algorithm becomes deterministic).
 
 We can redefine the expected runtime using this view:
 
-\begin{Def} The worst-case expeted complexity of a probability distribution $y$ over A is
+\begin{Def} The worst-case expected complexity of a probability distribution $y$ over A is
 \[\max_{i\in I} \E_{a\sim y}[D(i,a)] = \max_{i\in I} \sum_{a\in A} y_a D(i,a)\]
 \end{Def}
 
 Note the similarity to mixed strategies in games. To find a bound for the runtime of the most efficient randomised algorithm we want to bound 
 
-\[\min_y \max_i \E_{a\sim y}[D(i,a)] \geq \max_x\min_{a\in A} \E_{i\sim x}[D(i,a)]\]
+\[\min_y \max_i \E_{a\sim y}[D(i,a)] \stackrel{\text{lem. \ref{2pzsLemma1}}}{\geq} \max_x\min_{a\in A} \E_{i\sim x}[D(i,a)]\]
 
 That formula means that the worst case complexity of any algorithm can't be smaller than the performance of the best deterministic algorithm over the worst distribution of instances. So we need to find a distribution that is bad for any deterministic algorithm. This is different from the first case where we had a fixed algorithm and could build a tailor-made matrix to make its life hard.
 
