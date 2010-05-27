@@ -89,7 +89,7 @@ It is not known whether the Hirsch conjecture is true in general, but we know so
 
 Perfect matching polytopes are defined as
 
-\[P(G) = \text{conv} \{x(M) |M \text{ is perfect matching in }G\}\]
+\[P(G) = \text{conv} \{\chi^M |M \text{ is perfect matching in }G\}\]
 
 We can write that with constraints like this:
 
@@ -102,11 +102,18 @@ x_e \geq 0 &&\forall e\in E\\
 \begin{thm} P defines the perfect matching polytope.\end{thm}
 \begin{thm} For bipartite graphs the first two inequalities are enough to define the perfect matching polytope\end{thm}
 
-Now we want to bound the diameter of perfect matching polytopes. Given perfect matchings $M,N$ let $x^M,x^N$ be the indicende vectors that define the vertices of the polytope
+Now we want to bound the diameter of perfect matching polytopes. Given perfect matchings $M,N$ let $\chi^M,\chi^N$ be the indicende vectors that define the vertices of the polytope
 
-\begin{lem} $x^M$ and $x^N$ are adjacent iff $M\Delta N$ (the symmetric difference) is a circuit.\end{lem}
+\begin{lem} For any two perfect matchings the symmetric difference is a familiy of circuits \end{lem}
 
-\begin{pr} $\Rightarrow$ $M\Delta N = \{C_1,\ldots, C_k\}$ circuits. If $k=1$ we're done. Otherwise we construct new perfect matchings $M'=M\Delta C_1$ and $N'=N\Delta C_1$. This does not affect the sum of the incidence vectors $x^M+x^N=x^{M'} +x^{N'}$. That means the convex combinations stay the same. But this is a contradiction to the assumption that $x^M$ and $x^N$ are adjacent vertices.
+\begin{pr} Suppose you take two perfect matchings and you look at the symmetric differenc. The only possible degrees of the vertices are $0$ or $2$, because in the matchings the nodes all have degree 1. Either the edges from both matchings are at a node ($\Rightarrow$ degree 2), or they shared that edge and it gets removed from the symmetric difference. 
+
+You can only match the edges up if you form circuits.
+\end{pr}
+
+\begin{lem} $\chi^M$ and $\chi^N$ are adjacent iff $M\Delta N$ (the symmetric difference) is a circuit.\end{lem}
+
+\begin{pr} $\Rightarrow$ $M\Delta N = \{C_1,\ldots, C_k\}$ circuits. If $k=1$ we're done. Otherwise we construct new perfect matchings $M'=M\Delta C_1$ and $N'=N\Delta C_1$. This does not affect the sum of the incidence vectors $\chi^M+\chi^N=\chi^{M'} +\chi^{N'}$. That means the convex combinations stay the same. But this is a contradiction to the assumption that $\chi^M$ and $\chi^N$ are adjacent vertices.
 
 $\Leftarrow$ Define a weight function like this
 
@@ -114,3 +121,15 @@ $\Leftarrow$ Define a weight function like this
 
 This weight function has exactly two matchings of minimum costs, which must be adjacent
 \end{pr}
+
+The assignment polytope that we saw in \ref{sec:maxAssignment} is a special case of the perfect matching polytope, as it is the a perfect matching over a complete bipartite graph.
+
+\begin{lem} The diameter of the assignment polytope is at most 2. \end{lem}
+
+\begin{pr} Let $P,Q$ be the prefect matchings. Consider $P\Delta Q$. We know that it is a family of circuits. We want to costruct another prefect matching $L$ that is a distance $1$ from both $P$ and $Q$, i.e. the symmetric difference with both is a circuit.
+
+In the family of circuits $P\Delta Q$ we can connect two circuits to form only one by deleting one edge in both and cross-connecting them. We use this to construct $L$. Let the connected graph be $C'$ then $L=P\Delta C'$. $L$ is a perfect matching and $P\Delta L=C'$ by definition of the symmetric difference. $Q\Delta L$ is the symmetric difference between $Q$ and $P$ except for the changes we made, which again form a circuit.
+
+So the diameter can be at most 2, since we can construct a perfect matching for any two matchings that is at distance 1 to both of them.
+\end{pr}
+
