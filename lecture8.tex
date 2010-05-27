@@ -35,7 +35,7 @@ For each strategy there is a winning counter strategy. The players want to maxim
 The first term is -1, the second 1. Note that in this example it is assumed that one player makes a choice and the other player makes his move after beeing informed about this choice. This observation carries over to all games:
 
 \begin{lem}\label{2pzsLemma1} For all game matrices $D\in R^{n\times m}$
-\[\max_{i\in \{R,P,S\}} \min_{j\in \{R,P,S\}} D(i,j) \leq \min_{j\in \{R,P,S\}}\max_{i\in \{R,P,S\}} D(i,j)\]
+\[\max_{i} \min_{j} D(i,j) \leq \min_{j}\max_{i} D(i,j)\]
 \end{lem}
 
 More interesting than the case of a deterministic choice of exactly one strategy is the case where randomised strategies are allowed, e.g. each player assigns a probability distribution to his available strategies.

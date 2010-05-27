@@ -180,7 +180,7 @@ SIMPLEX-TAKE-II (A,b,c)
 B = some feasible basis
 repeat 
     for $j\in \{1,\ldots,n\}\backslash B$ // $b_i$ is determined
-        $d_B$ = $A^{-1}_B A_j$
+        $d_B$ = $-A^{-1}_B A_j$
         if $c_j + c_Bd_B < 0$
             $b_i$ = index  s.t. $d_{b_i} <0$, 
                     minimizing $\left| \frac{x_{b_i}}{d_{b_i}}\right|$
