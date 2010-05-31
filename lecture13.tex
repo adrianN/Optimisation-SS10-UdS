@@ -1,0 +1,133 @@
+\chapter{Polynomial Methods for Linear Program Solving}
+
+\section{The Ellipsoid Method}
+
+Discovered by Kachyan (or so) in 1979 it was the first method to show that Linear Programs can be solved in polynomial time. It is unique because it doesn't look at constraints it doesn't need and makes it possible to solve some LPs with an exponential number of constraints in polynomial time. In practice it isn't used though, because it is very slow.
+
+We'll only show how to solve feasibility, but it is easy to optimise once you can decide feasibility.
+
+\[\{x|Ax\leq b\} = \emptyset?\]
+
+Since the ellpsoid method works with volumes we'll have to make the assumption that either there is no feasible point at all or the set of feasible points has nonzero volume. More precisely we need that the set of feasible points in the ball with radius $4^{nL}$, centered at the origin, has volume at least $2^{-(n+1)L}$. $L$ is defined as 
+
+\[L=n(1+\log C+\log n)\]
+
+and the entries of $A,b$ are bound from above by $C$. This is basically the amount of bits you need to write down the problem description.
+
+It is possible to transform LPs with just a feasible point such that we get this nonempty volume without making infeasible problems feasible.
+
+Let $S$ be the set of feasible points inside the ball of radius $4^{nL}$ centered at the origin. The ellipsoid method maintains an ellipsoid $E$ that contains $S$. We check if the center of the ellipsoid is contained in the feasible region, if yes we're done, else there has to be some constraint that is violated there. We move the constraint to the center and construct a new ellipsoid that contains the half ellipsoid that is "more feasible". The central result will be that the volumes of the ellipsoids decreases exponentially.
+
+\begin{lstlisting}
+E = ball of radius $4^{nL}$ centered at origin
+while vol(E) $\geq 2^{-(n+1)L}$
+	z = center of E
+	if z is feasible return "feasible"
+	let $\trans a_ix\leq b_i$ be a violated inequality
+	//$\forall x\in S: \trans a_ix\leq b_i \leq \trans a_i z$
+	let $1/2E = E\cap \{x|\trans a_i x \leq \trans a_iz\}$
+	replace E by the smallest ellipsoid containing $1/2E$
+return "infeasible"
+\end{lstlisting}
+
+How to find the ellipsoid that contains $1/2E$. 
+
+\begin{Def}[Ellipsoid] An ellipsoid with center $z$ is defined as
+
+\[E=\{x|\trans{(x-z)}Q(x-z)\leq 1\}\]
+
+where $Q$ is a positive definite matrix, i.e. $\trans y Q y>0$ except for $y=0$.
+
+In 2D this simplifies to
+
+%todo
+\end{Def}
+
+A simpler special case occurs right at the start where the initial ellipsoid is the unit ball if the violated constraint is parallel to a coordinate axis.
+
+%pic
+
+\begin{lem} Let $E$ be the unit ball, i.e. $E=\{x|\sum x_i^2\leq 1\}$. Then
+
+\begin{enumerate}
+\item 
+\begin{align*}
+\frac{1}{2}E=E\cap \{x|x_1\leq 0\} &\subset E\\
+	&= \{x|\left(\frac{n+1}{n}\right)^2\left(x_1+\frac{1}{n+1}\right)^2+\left(\frac{n^2-1}{n^2}\right) \sum_{i=2}^n x_i^2 \leq 1\}
+\end{align*}
+\item \[\frac{vol(E')}{vol(E)}\leq f = e^{-1/2n}<1\]
+\end{enumerate}
+\end{lem}
+
+\begin{pr} Let $x$ be such that $\sum x_i^2\leq 1, x_1\leq 0$. We show $x\in E'$
+
+\begin{align*}
+\frac{1}{n^2} \left( \underbrace{(n+1)^2}_{n^2+2n+1=n^2-1+2n+2} (x_1^2 + \frac{2}{n+1} x_1 + \frac{1}{(n+1)^2}) + (n^2-1)\sum_{i=2}^n x_i^2 \right)&= \frac{1}{n^2} \left((2n+2)x_1^2 + (2n+2)x_1+1+(n^2-1)\underbrace{\sum_{i=1}^n x_i^2}_{\leq 1} \right)\\
+&\leq 1+\frac{1}{n^2}(2n+2)\underbrace{x_1}_{-1\leq x_i\leq 0}(1+\underbrace{x_1}_{\geq -1})\\
+&\leq 1
+\end{align*}
+
+To prove the part about the volume we first need to recall that the volume of an ellipsiod is proportional to the length if its axes. $E$ has $n$ axes of length $1$, $E'$ has one axis of length $n/n+1$ and $n-1$ axes of length $\sqrt(n^2/n^2-1)$. So it decreases in one dimension, but grows in all the other dimensions. It is nontrivial to show that it shrinks in volume.
+
+\begin{align*}\frac{vol(E')}{vol(E)}&=\frac{n}{n+1}\cdot \left(\frac{n^2}{n^2-1}\right)^{(n-1)/2}\\
+&= \frac{n}{n+1}\cdot \sqrt{\frac{n^2-1}{n^2}} \cdot \left(\frac{n^2}{n^2-1}\right)^{n/2}\\
+&=\sqrt{\frac{n^2-1}{(n+1)^2}} \left(\frac{n^2}{n^2-1}\right)^{n/2}\\
+&=\sqrt{\frac{(n-1)(n+1)}{(n+1)^2}} \left(\frac{n^2-1+1}{n^2-1}\right)^{n/2}\\
+&= \sqrt{\frac{n-1}{n+1}} \cdot \exp\left(\frac{n}{2} \ln (1+\frac{1}{n^2-1})\right)\\
+&\leq \sqrt{\frac{n-1}{n+1}} \cdot \exp\left(\frac{n}{2} \cdot \frac{1}{n^2-1}\right)\\
+&\leq \sqrt{\frac{n-1}{n+1}} \cdot \exp\left(\frac{1}{2(n-1)}\right)\\
+&=\sqrt{1-\frac{2}{n+1}}\cdot \exp\left(\frac{1}{2(n-1)}\right)\\
+&= \exp \left(\ln\left(\sqrt{1-\frac{2}{n+1}}+\frac{1}{2(n-1)}\right)\right)\\
+&=\exp \left(\frac{1}{2}\ln (1-\frac{2}{n+1}) +\frac{1}{2(n+1)}\right)\\
+&\leq \exp \left(\frac{1}{2} \cdot \frac{-2}{n+1} + \frac{1}{2(n-1)}\right)\\
+&= \exp \left(-\frac{1}{n+1}+\frac{1}{2(n-1)}\right)\\
+&\approx \exp \left(-\frac{1}{2n}\right)
+\end{align*}
+
+So we get
+
+\[f \approx \exp \left(-\frac{1}{2n}\right)\]
+
+\end{pr}
+
+So in the special case for the unit ball we know that the volume decreases as we want.
+
+In the General Case we intersect with a half space $H$ that contains the center $z$ of $E$ in its boundary. We will reduce it to the special case we just proved by
+
+\begin{enumerate}
+\item move $z$ to the origin
+\item rotate space such that axes of $E$ align with a coordinate axis
+\item scale the coordinates such that $E$ becomes the unit ball
+\item rotate it again such that $H$ becomes parallel to a coordinate axis
+\item compute $E'$
+\item reverse back to the original space
+\end{enumerate}
+
+These steps change the volume of $E$ but they also scale the new ellipsoid $E'$ so that the relative volume of the two doesn't change.
+
+So we proved that the volume of the ellipsoid shrinks by a factor in every step. After $k$ iterations $vol(E)$ is less than $f^k$ times the volume of the initial ball. The initial ball is contained in a cube with side length $2\cdot 4^{nL}$
+
+\[vol(\text{cube}) = (2 \cdot 4^{nL})^n \leq 8^{n^2L}\]
+
+If the $k$th iteration was not the last, i.e. we enter the loop body once more. Then $vol(E)$ must be
+
+\begin{align*}
+&2^{-(n+1)L} \leq vol(E) \leq f^k 8^{n^2L} \\
+\Leftrightarrow & -(n+1)L  \leq k\log f + 3n^2 L && \log f \approx -\frac{1}{2n}\\
+\Leftrightarrow & \frac{k}{2n} \leq (n+1)L+3n^2L \
+\&Rightarrow k = O(n^3L)
+\end{align*}
+
+It could be that the real arithmetic we assumed could be exponentially expensive, but since $f$ is fairly far away from $1$ we can round a bit and turn the algorithm to a floating point version.
+
+\begin{Ex}[Travelling Salesman Problem] We're going to formulate the problem as a ILP. For every edge $e$ we have a variable $x_e\in \{0,1\}$. An $x_e$ is $1$ if the corresponding edge is in the tour, $0$ else.
+
+\begin{align*}
+\min \quad & \sum_{e\in E} c_e x_e\\
+s.t. & \sum_{e\in \delta(v)} x_e = 2 && \forall v\in V\\
+	& \sum_{e\in S} \geq 2 && \forall S\neq V, S\neq \emptyset
+\end{align*}
+\[\delta(v) = \text{set of incident edges to $v$} \qquad \delta(S) = \text{edges with exactly one endpoint in $S$}, S\subseteq V\]
+
+We can relax the problem to $0\leq x_1 \leq 1$ but there still are too many constraints to write the LP down. Using the ellipsoid method however we don't need to have all constraints given at any time. We just have to check whether some constraint is violated and if yes which one. We can check that by solving a mincut problem.
+\end{Ex}
