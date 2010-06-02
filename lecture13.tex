@@ -16,7 +16,17 @@ and the entries of $A,b$ are bound from above by $C$. This is basically the amou
 
 It is possible to transform LPs with just a feasible point such that we get this nonempty volume without making infeasible problems feasible.
 
-Let $S$ be the set of feasible points inside the ball of radius $4^{nL}$ centered at the origin. The ellipsoid method maintains an ellipsoid $E$ that contains $S$. We check if the center of the ellipsoid is contained in the feasible region, if yes we're done, else there has to be some constraint that is violated there. We move the constraint to the center and construct a new ellipsoid that contains the half ellipsoid that is "more feasible". The central result will be that the volumes of the ellipsoids decreases exponentially.
+Let $S$ be the set of feasible points inside the ball of radius $4^{nL}$ centered at the origin. The ellipsoid method maintains an ellipsoid $E$ that contains $S$. We check if the center of the ellipsoid is contained in the feasible region, if yes we're done, else there has to be some constraint that is violated there. We move the constraint to the center and construct a new ellipsoid that contains the half ellipsoid that is "more feasible". See figure \ref{Fig:ellipsoidMovement}.
+
+The central result will be that the volumes of the ellipsoids decreases exponentially.
+
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics{./images/ellipsoid}
+\end{center}
+\caption{The final step of the ellipsoid method}
+\label{Fig:ellipsoidMovement}
+\end{figure}
 
 \begin{lstlisting}
 E = ball of radius $4^{nL}$ centered at origin
@@ -43,9 +53,15 @@ In 2D this simplifies to
 %todo
 \end{Def}
 
-A simpler special case occurs right at the start where the initial ellipsoid is the unit ball if the violated constraint is parallel to a coordinate axis.
+A simpler special case occurs right at the start where the initial ellipsoid is the unit ball if the violated constraint is parallel to a coordinate axis. See figure \ref{Fig:ellipsoidStart}
 
-%pic
+\begin{figure}[hbt]
+\begin{center}
+\includegraphics{./images/ellipsoidStart}
+\end{center}
+\caption{A simpler special case}
+\label{Fig:ellipsoidStart}
+\end{figure}
 
 \begin{lem} Let $E$ be the unit ball, i.e. $E=\{x|\sum x_i^2\leq 1\}$. Then
 
@@ -53,22 +69,24 @@ A simpler special case occurs right at the start where the initial ellipsoid is 
 \item 
 \begin{align*}
 \frac{1}{2}E=E\cap \{x|x_1\leq 0\} &\subset E\\
-	&= \{x|\left(\frac{n+1}{n}\right)^2\left(x_1+\frac{1}{n+1}\right)^2+\left(\frac{n^2-1}{n^2}\right) \sum_{i=2}^n x_i^2 \leq 1\}
+	&= \left\{x\left|\left(\frac{n+1}{n}\right)^2\left(x_1+\frac{1}{n+1}\right)^2+\left(\frac{n^2-1}{n^2}\right) \sum_{i=2}^n x_i^2 \leq 1\right.\right\}
 \end{align*}
 \item \[\frac{vol(E')}{vol(E)}\leq f = e^{-1/2n}<1\]
 \end{enumerate}
 \end{lem}
 
 \begin{pr} Let $x$ be such that $\sum x_i^2\leq 1, x_1\leq 0$. We show $x\in E'$
+\[\frac{1}{n^2} \left( \underbrace{(n+1)^2}_{n^2+2n+1=n^2-1+2n+2} (x_1^2 + \frac{2}{n+1} x_1 + \frac{1}{(n+1)^2}) + (n^2-1)\sum_{i=2}^n x_i^2 \right)\]
 
 \begin{align*}
-\frac{1}{n^2} \left( \underbrace{(n+1)^2}_{n^2+2n+1=n^2-1+2n+2} (x_1^2 + \frac{2}{n+1} x_1 + \frac{1}{(n+1)^2}) + (n^2-1)\sum_{i=2}^n x_i^2 \right)&= \frac{1}{n^2} \left((2n+2)x_1^2 + (2n+2)x_1+1+(n^2-1)\underbrace{\sum_{i=1}^n x_i^2}_{\leq 1} \right)\\
-&\leq 1+\frac{1}{n^2}(2n+2)\underbrace{x_1}_{-1\leq x_i\leq 0}(1+\underbrace{x_1}_{\geq -1})\\
-&\leq 1
+\quad &= \frac{1}{n^2} \left((2n+2)x_1^2 + (2n+2)x_1+1+(n^2-1)\underbrace{\sum_{i=1}^n x_i^2}_{\leq 1} \right)\\
+\quad &\leq 1+\frac{1}{n^2}(2n+2)\underbrace{x_1}_{-1\leq x_i\leq 0}(1+\underbrace{x_1}_{\geq -1})\\
+\quad &\leq 1
 \end{align*}
 
 To prove the part about the volume we first need to recall that the volume of an ellipsiod is proportional to the length if its axes. $E$ has $n$ axes of length $1$, $E'$ has one axis of length $n/n+1$ and $n-1$ axes of length $\sqrt(n^2/n^2-1)$. So it decreases in one dimension, but grows in all the other dimensions. It is nontrivial to show that it shrinks in volume.
 
+%TODO more comments, break in smaller parts
 \begin{align*}\frac{vol(E')}{vol(E)}&=\frac{n}{n+1}\cdot \left(\frac{n^2}{n^2-1}\right)^{(n-1)/2}\\
 &= \frac{n}{n+1}\cdot \sqrt{\frac{n^2-1}{n^2}} \cdot \left(\frac{n^2}{n^2-1}\right)^{n/2}\\
 &=\sqrt{\frac{n^2-1}{(n+1)^2}} \left(\frac{n^2}{n^2-1}\right)^{n/2}\\
