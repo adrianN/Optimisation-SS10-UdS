@@ -1,0 +1,69 @@
+\begin{thm} For each rational polyhedron, there exists a TDI system $Ax\leq b$ with an integral matrix $A$. {\small (no proof)}
+\end{thm}
+
+In particular that means if $b\in \Z$ then the whole polyhedron is integral. Unfortunately it is very difficult in general to find the TDI description.
+
+\section{Totally unimodular matrices}
+
+TDIness is a little weird and hard to check. A much easier recognizable property that also implies integrality of the polyhedron is total unimodularity.
+
+\begin{Def} A matrix $A$ is totally unimodular (TU) if each subdeterminant (the determinant of a square submatrix), i.e. each \href{http://en.wikipedia.org/wiki/Minor\_\%28linear\_algebra\%29}{minor}, of $A$ is $\in \{-1,0,1\}$
+\end{Def}
+
+That means in particular that also all entries are $\in \{-1,0,1\}$.
+
+\begin{thm}[Hoffman, Kruskal '56] $A\in \Z^{m\times m}$ is TU iff $P=\{x|Ax\leq b\}$ is integral for any integral $b$
+\end{thm}
+
+\begin{pr} $\Rightarrow$ Let $A$ be TU, $b\in \Z^m$ and let $x$ be a vertex of the induced polyhedron $P$. $x$ is a solution of $A'x=b'$ with $A'x\leq b'$ being a subsystem of 
+
+\[\left(A|-I\right) x \leq \left(b\atop 0\right)\]
+
+with $A'$ being a non-singular submatrix. Since $A$ is TU we have $\det A'\in \{-1,1\}$. This already implies that the polyhedron is integral, because we can compute the inverse $A'^{-1}$ using Cramer's rule. %TODO
+
+
+The following isn't completely correct yet:
+
+$\Leftarrow$ Suppose all vertices of $P$ are integral vectors $\forall b\in \Z^m$. We want to show that every nonsingular square submatrix has a determinant of $\{1,-1\}$. By switching rows and columns around we can assume that the submatrix lies in the topleft corner of $A$ (that only changes the sign of the determinant). 
+
+We expands $A$ by the identity matrix, $(A|I)$. Then we can construct a new matrix $B\in \Z^{m\times m}$ such that $\det (A') = \det (B)$ by taking 
+
+
+\[B = \left({A' \atop *} {0\atop I}\right)\]
+
+To prove $|\det (B)| =1$ it suffices we show $B^{-1}$ is integral because
+
+\[\det(B)*\det(B^{-1}) = 1\]
+
+and our knowledge that $\det (B)$ is integral (since $B$ is integral). If $B^{-1}$ is also integral we multiply two integrals. We can only get $1$ if both are either $1$ or $-1$.
+
+To prove $B^{-1}$ is integral we choose $i\in \{1,\ldots, m\}$ and show that $B^{-1}e_i\in \Z^m$. Take some $y\in \Z^m$ s.t. $z:= y + B^{-1}e_1\geq 0$. $z$ will later become the vertex of our polyhedron. 
+
+By multiplying both sides with $B$ we get $b:= Bz=By+e_i$. $b$ is integral because $B$,$y$ and $e_i$ are integral. We can add $n$ zeros to the middle of $z$ such that the new $z'$ fulfills $(A|I)z'=b$. The first $n$ entries of $z'$, call them $z''$ is in $P$ since
+
+\[Az''\leq b\]
+
+In particular the constraints from $A'$ are fulfilled with equality. For some reason $z''$ is also a vertex. That means $z''$ is integral. That implies that $z'$ is also integral, since $b$ is integral and the lower components are produced by the identity matrix. Then of course $z$ is also integral.
+
+Then we have from the definitions above
+
+\[z-y=B^{-1}e_i\]
+
+But since $z$ and $y$ are integral $B^{-1}e_i$ must also be integral.
+
+\end{pr}
+
+\begin{thm} Let $A\in \Z^{m\times m}$. The following are equivalent
+\begin{enumerate}
+\item $A$ is TU
+\item $\forall b \in \Z^m, c\in \Z^m$:
+\[\max \{cx|Ax\leq b, x\geq 0\} = \min \{\trans y b|\trans A \geq c, y\geq 0\}\]
+and they have integral optimal solutions or are unbounded
+\item $Ax\leq b, x\geq 0$ is TDI for all $b\in \Z^m$
+\item $\forall \text{rows} R\subset \{1,\ldots, m\} \exists \text{partition} R = R_1 \dot \cup R_2$ such that
+
+\[\sum_{i\in R_1} a_{ij} - \sum_{i\in R_2} a_{ij} \in \{-1,0,1\}, \qquad \forall j\in \{1,\ldots, n\}\]
+\end{enumerate}
+\end{thm}
+
+The last part tells us something about edge incidence matrices of graphs and total unimodularity: for all undirected graphs is totally unimodular iff the graph is bipartite. We can then partition the matrix like requested by using the two partitions of the graph. Then the difference must always be zero.
