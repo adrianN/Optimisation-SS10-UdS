@@ -2,7 +2,7 @@
 
 \section{The Ellipsoid Method}
 
-Discovered by Kachyan (or so) in 1979 it was the first method to show that Linear Programs can be solved in polynomial time. It is unique because it doesn't look at constraints it doesn't need and makes it possible to solve some LPs with an exponential number of constraints in polynomial time. In practice it isn't used though, because it is very slow.
+Discovered by \href{http://en.wikipedia.org/wiki/Leonid\_Khachiyan}{Khachiyan} in 1979 it was the first method to show that Linear Programs can be solved in polynomial time. It is unique because it doesn't look at unnecessary constraints and makes it possible to solve some LPs with an exponential number of constraints in polynomial time. In practice it isn't used though, because it is very slow compared to the simplex method.
 
 We'll only show how to solve feasibility, but it is easy to optimise once you can decide feasibility.
 
@@ -12,11 +12,11 @@ Since the ellpsoid method works with volumes we'll have to make the assumption t
 
 \[L=n(1+\log C+\log n)\]
 
-and the entries of $A,b$ are bound from above by $C$. This is basically the amount of bits you need to write down the problem description.
+and the entries of $A,b$ are bound from above by $C$. This is basically the amount of bits you need to write down the problem description. These numbers may seem a bit magic, but they are needed to prove the polynomial runtime of the method.
 
-It is possible to transform LPs with just a feasible point such that we get this nonempty volume without making infeasible problems feasible.
+It is possible to transform LPs with just a feasible point such that we get this nonempty volume without making infeasible problems feasible, by wiggling the constraints a bit.
 
-Let $S$ be the set of feasible points inside the ball of radius $4^{nL}$ centered at the origin. The ellipsoid method maintains an ellipsoid $E$ that contains $S$. We check if the center of the ellipsoid is contained in the feasible region, if yes we're done, else there has to be some constraint that is violated there. We move the constraint to the center and construct a new ellipsoid that contains the half ellipsoid that is "more feasible". See figure \ref{Fig:ellipsoidMovement}.
+Let $S$ be the set of feasible points inside the $n$-dimensional ball of radius $4^{nL}$ centered at the origin. The ellipsoid method maintains an ellipsoid $E$ that contains $S$. We check if the center of the ellipsoid is contained in the feasible region, if yes we're done, else there has to be some constraint that is violated there. We move the constraint to the center and construct a new ellipsoid that contains the half ellipsoid that is "more feasible". See figure \ref{Fig:ellipsoidMovement}.
 
 The central result will be that the volumes of the ellipsoids decreases exponentially.
 
@@ -27,6 +27,8 @@ The central result will be that the volumes of the ellipsoids decreases exponent
 \caption{The final step of the ellipsoid method}
 \label{Fig:ellipsoidMovement}
 \end{figure}
+
+In pseudocode the algorithm like as follows:
 
 \begin{lstlisting}
 E = ball of radius $4^{nL}$ centered at origin
@@ -40,20 +42,16 @@ while vol(E) $\geq 2^{-(n+1)L}$
 return "infeasible"
 \end{lstlisting}
 
-How to find the ellipsoid that contains $1/2E$. 
+$1/2E$ is the gray area in figure \ref{Fig:ellipsoidMovement}. The problem is how to find the ellipsoid that contains $1/2E$. 
 
 \begin{Def}[Ellipsoid] An ellipsoid with center $z$ is defined as
 
 \[E=\{x|\trans{(x-z)}Q(x-z)\leq 1\}\]
 
 where $Q$ is a positive definite matrix, i.e. $\trans y Q y>0$ except for $y=0$.
-
-In 2D this simplifies to
-
-%todo
 \end{Def}
 
-A simpler special case occurs right at the start where the initial ellipsoid is the unit ball if the violated constraint is parallel to a coordinate axis. See figure \ref{Fig:ellipsoidStart}
+A simpler special case occurs if the initial ellipsoid is the unit ball and the violated constraint is parallel to a coordinate axis. See figure \ref{Fig:ellipsoidStart}
 
 \begin{figure}[hbt]
 \begin{center}
@@ -63,20 +61,32 @@ A simpler special case occurs right at the start where the initial ellipsoid is 
 \label{Fig:ellipsoidStart}
 \end{figure}
 
-\begin{lem} Let $E$ be the unit ball, i.e. $E=\{x|\sum x_i^2\leq 1\}$. Then
+\begin{lem} Let $E$ be the unit ball, i.e. $E=\{x|\sum x_i^2\leq 1\}$. Then the smallest ellipsoid that contains $1/2E$, call it $\tilde E$ is
 
 \begin{enumerate}
-\item 
-\begin{align*}
-\frac{1}{2}E=E\cap \{x|x_1\leq 0\} &\subset E\\
-	&= \left\{x\left|\left(\frac{n+1}{n}\right)^2\left(x_1+\frac{1}{n+1}\right)^2+\left(\frac{n^2-1}{n^2}\right) \sum_{i=2}^n x_i^2 \leq 1\right.\right\}
-\end{align*}
-\item \[\frac{vol(E')}{vol(E)}\leq f = e^{-1/2n}<1\]
+\item  We want to contain the halfball in an ellipsoid
+\[\frac{1}{2}E=E\cap \{x|x_1\leq 0\} \subset \tilde E\]
+
+Where $\tilde E$ can be computed like this
+\[\tilde E = \left\{x\left|\left(\frac{n+1}{n}\right)^2\left(x_1+\frac{1}{n+1}\right)^2+\left(\frac{n^2-1}{n^2}\right) \sum_{i=2}^n x_i^2 \leq 1\right.\right\}\]
+\item Also the volume of the new ellipsoid decreases.
+
+\[\frac{vol(E')}{vol(E)}\leq f = e^{-1/2n}<1\]
 \end{enumerate}
 \end{lem}
 
-\begin{pr} Let $x$ be such that $\sum x_i^2\leq 1, x_1\leq 0$. We show $x\in E'$
-\[\frac{1}{n^2} \left( \underbrace{(n+1)^2}_{n^2+2n+1=n^2-1+2n+2} (x_1^2 + \frac{2}{n+1} x_1 + \frac{1}{(n+1)^2}) + (n^2-1)\sum_{i=2}^n x_i^2 \right)\]
+\begin{pr} The funny terms in the definition of $\tilde E$ come from the case distinction: (1) $x_1=0$ and $\sum_i x_i=1$ (the intersection with the $y$-axis in figure \ref{Fig:ellipsoidStart}) and (2) $x_1=-1$, $x_i=0$. In both cases we want the inequality to be tight. It is easy to verify
+
+\[\left(\frac{n+1}{n}\right)^2\left(0+\frac{1}{n+1}\right)^2+\left(\frac{n^2-1}{n^2}\right) = 1\]
+
+and
+
+\[\left(\frac{n+1}{n}\right)^2\left(-1+\frac{1}{n+1}\right)^2 = 1\]
+
+In the general case the calculation gets more complicated.
+
+Let $x$ be such that $\sum x_i^2\leq 1, -1\leq x_1\leq 0$. We show $x\in E'$
+\[\frac{1}{n^2} \left( \underbrace{(n+1)^2}_{n^2+2n+1=n^2-1+2n+2} \left(x_1^2 + \frac{2}{n+1} x_1 + \frac{1}{(n+1)^2}\right) + (n^2-1)\sum_{i=2}^n x_i^2 \right)\]
 
 \begin{align*}
 \quad &= \frac{1}{n^2} \left((2n+2)x_1^2 + (2n+2)x_1+1+(n^2-1)\underbrace{\sum_{i=1}^n x_i^2}_{\leq 1} \right)\\

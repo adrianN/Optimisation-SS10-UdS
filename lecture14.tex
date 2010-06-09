@@ -100,7 +100,7 @@ Since we assumed that $cy$ is integral and our modification didn't change didn't
 
 Now we want to recognise integral polyhedra by looking at the constraint matrix. 
 
-\subsection{Total dual integrality}
+\section{Total dual integrality}
 
 Strong duality as for linear programs does not hold for ILPs. But we have something similar
 
@@ -109,6 +109,8 @@ Strong duality as for linear programs does not hold for ILPs. But we have someth
 \[\max \{cx |Ax\leq b\} = \min \{\trans y b | \trans y A = \trans c, y\geq 0, y\in \Z^m\}\]
 
 Note that $x$ doesn't have to be integral here.
+
+The same works for $Ax\leq b, x\geq 0$ and $Ax=b, x\geq 0$
 \end{Def}
 
 Notable here is that TDI is not a property of the polyhedron but instead of the system that defines it. Very much like with degeneracy we may find another system that describes the same polyhedron but is in fact TDI.
@@ -133,7 +135,7 @@ We want to show that the polyhedron $Q$ that is defined be the above constraints
 
 \begin{align*}
 \max \quad & \sum_{p\in P} x_p\\
-s.t. & \sum_{p,e\in P} x_p \leq c(e) && \forall e\in E
+s.t. & \sum_{p,e\in P} x_p \leq c(e) && \forall e\in E\\
  & x_p \geq 0 && p\in P
 \end{align*}
 
