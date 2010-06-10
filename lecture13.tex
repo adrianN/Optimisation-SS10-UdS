@@ -101,12 +101,18 @@ To prove the part about the volume we first need to recall that the volume of an
 &= \frac{n}{n+1}\cdot \sqrt{\frac{n^2-1}{n^2}} \cdot \left(\frac{n^2}{n^2-1}\right)^{n/2}\\
 &=\sqrt{\frac{n^2-1}{(n+1)^2}} \left(\frac{n^2}{n^2-1}\right)^{n/2}\\
 &=\sqrt{\frac{(n-1)(n+1)}{(n+1)^2}} \left(\frac{n^2-1+1}{n^2-1}\right)^{n/2}\\
+\intertext{It is often helpful to rewrite things as exponentials, because we can bound logarithms more easily:}
 &= \sqrt{\frac{n-1}{n+1}} \cdot \exp\left(\frac{n}{2} \ln (1+\frac{1}{n^2-1})\right)\\
+\intertext{Now we use the fact that $\ln (1+x)\leq x$ for all $x>0$}
 &\leq \sqrt{\frac{n-1}{n+1}} \cdot \exp\left(\frac{n}{2} \cdot \frac{1}{n^2-1}\right)\\
+\intertext{We bound $1/(2n-1/n)$ by $1/(2n-1/2)$}
 &\leq \sqrt{\frac{n-1}{n+1}} \cdot \exp\left(\frac{1}{2(n-1)}\right)\\
+\intertext{Rewrite $n-1$ as $(n+1)-2$}
 &=\sqrt{1-\frac{2}{n+1}}\cdot \exp\left(\frac{1}{2(n-1)}\right)\\
-&= \exp \left(\ln\left(\sqrt{1-\frac{2}{n+1}}+\frac{1}{2(n-1)}\right)\right)\\
-&=\exp \left(\frac{1}{2}\ln (1-\frac{2}{n+1}) +\frac{1}{2(n+1)}\right)\\
+\intertext{Write everything as exponentials again to get rid of the squareroot}
+&= \exp \left(\ln\left(\sqrt{1-\frac{2}{n+1}}\right)+\frac{1}{2(n-1)}\right)\\
+&=\exp \left(\frac{1}{2}\ln \left(1-\frac{2}{n+1}\right) +\frac{1}{2(n+1)}\right)\\
+\intertext{Use the trick for the logarithms from above}
 &\leq \exp \left(\frac{1}{2} \cdot \frac{-2}{n+1} + \frac{1}{2(n-1)}\right)\\
 &= \exp \left(-\frac{1}{n+1}+\frac{1}{2(n-1)}\right)\\
 &\approx \exp \left(-\frac{1}{2n}\right)
@@ -124,11 +130,16 @@ In the General Case we intersect with a half space $H$ that contains the center 
 
 \begin{enumerate}
 \item move $z$ to the origin
-\item rotate space such that axes of $E$ align with a coordinate axis
-\item scale the coordinates such that $E$ becomes the unit ball
+\[\trans{(x-z)}Q(x-z) \rightsquigarrow \trans xQx\]
+\item rotate space such that axes of $E$ align with a coordinate axis. 
+
+For this you need to find the eigenvectors of $Q$, as they are the axes of the ellipsoid. Then you can find their angle with the coordinate axes and use the appropriate \href{http://en.wikipedia.org/wiki/Rotation\_matrix}{rotation matrix}
+\item scale the coordinates such that $E$ becomes the unit ball.
+
+Since you already have the eigenvectors at hand from the previous step, calculate their length and scale everything accordingly using a \href{http://en.wikipedia.org/wiki/Scaling\_matrix}{scaling matrix}. This is easy because the axes are parallel to the coordinate axes after the rotation.
 \item rotate it again such that $H$ becomes parallel to a coordinate axis
 \item compute $E'$
-\item reverse back to the original space
+\item reverse back to the original space by doing the transformations backwards.
 \end{enumerate}
 
 These steps change the volume of $E$ but they also scale the new ellipsoid $E'$ so that the relative volume of the two doesn't change.
