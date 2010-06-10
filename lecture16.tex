@@ -16,7 +16,7 @@ Contrary to the simplex method we don't start at a vertex and walk around the bo
 
 It works by turning constraints into penalties in the objective function (cf duals). 
 
-\[t\in \R^+:\qquad g_t(x)=cx+\frac 1t \sum_{i=1}^m \ln (b_i-\trans a_i x)\]
+\[t\in \R^+:\qquad g_t(x)=cx+\frac 1t \sum_{i=1}^m\ln (b_i-\trans a_i x)\]
 
 $g_t$ although it looks complicated is geometrically simple, as it is a stricly concave function. Finding maxima of concave functions is simple, $x^*(t)$, the maximiser of $g_t$ is easy to find and also unique. To find the unique maximum of $g_t$ we look at the partial derivative.
 
@@ -68,7 +68,7 @@ We prove the claim that $\Phi(x)$ is strictly concave. For two $x_0,x_1\in L_C$ 
 we have $\Phi(x)\geq C$ with equality only for $\alpha=0, \alpha=1$.
 
 \begin{align*}
-\Phi(x) &= \sum_{i=1}^m\ln (b_i - \trans a_i (\lapha x_0+(1-\alpha)x_1)\\
+\Phi(x) &= \sum_{i=1}^m\ln (b_i - \trans a_i (\alpha x_0+(1-\alpha)x_1)\\
 	&= \sum_{i=1}^m\ln (\alpha\underbrace{(b_i-\trans a_i x_0)}_r +(1-\alpha) \underbrace{(b_i-\trans a_i x_1)}_s)\\
 	&\geq \alpha \sum_{i=1}^m \ln (b_i-\trans a_i x_0) + (1-\alpha)\sum_{i=1}^m \ln (b_i-\trans a_i x_1)\\
 	&=\alpha C +(1-\alpha)C = C

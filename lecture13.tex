@@ -153,8 +153,8 @@ If the $k$th iteration was not the last, i.e. we enter the loop body once more. 
 \begin{align*}
 &2^{-(n+1)L} \leq vol(E) \leq f^k 8^{n^2L} \\
 \Leftrightarrow & -(n+1)L  \leq k\log f + 3n^2 L && \log f \approx -\frac{1}{2n}\\
-\Leftrightarrow & \frac{k}{2n} \leq (n+1)L+3n^2L \
-\&Rightarrow k = O(n^3L)
+\Leftrightarrow & \frac{k}{2n} \leq (n+1)L+3n^2L \\
+\Rightarrow &k = O(n^3L)
 \end{align*}
 
 It could be that the real arithmetic we assumed could be exponentially expensive, but since $f$ is fairly far away from $1$ we can round a bit and turn the algorithm to a floating point version.
