@@ -1,0 +1,134 @@
+\section{The Interior Point Method}
+
+This method was invented by Karmakar in 1984 and is a polynomial time method that is also fast in practice.
+
+We're dealing with maximisation problems. Introduce some notation:
+
+\[f_0(x) = cx,\quad f_i(x)=b-\trans a_i x\]
+
+where $\trans a_i$ is the i-th row of A. Then we can write the feasible region like this
+
+\[P=\{x|Ax\leq b\}=\{x|f_i(x)\geq 0 \forall i\}\]
+
+Let $x^*$ be the optimal feasible solution and $p^*=cx^*$ the optimal objective value. 
+
+Contrary to the simplex method we don't start at a vertex and walk around the boundary of the polyhedron, the interior points method starts in the interior and walks around the interior.
+
+It works by turning constraints into penalties in the objective function (cf duals). 
+
+\[t\in \R^+:\qquad g_t(x)=cx+\frac 1t \sum_{i=1}^m \ln (b_i-\trans a_i x)\]
+
+$g_t$ although it looks complicated is geometrically simple, as it is a stricly concave function. Finding maxima of concave functions is simple, $x^*(t)$, the maximiser of $g_t$ is easy to find and also unique. To find the unique maximum of $g_t$ we look at the partial derivative.
+
+We will determine $x^*(t)$ for increasingly larger values of $t$ by using something very similar to the Newton method. From an approximate solution $x_0$ we take the first and second derivative at that point and getting the exact maximiser for that second order approximation of $g_t$. In two dimensions it would look like this:
+
+\[q(h) = g_t(x_0) + h \cdot g_t'(x_0) + h^2 g_t''(x_0)/2\]
+
+Maximising $q(h)$ is easy:
+
+\[h_0 = - \frac{g_t'(x_0)}{g_t''(x_0)} \]
+
+In more dimensions we get the gradient vector and the hessian matrix. To ensure that we can find the maximiser we need to prove that the hessian looks nice. We'll do that later.
+
+By iterating that process we can improve our solutions.
+
+For $t\rightarrow \infty$ $x^*(t)$ converges to $x^*$. In fact we will prove:
+
+\[cx^* -m/t \leq cx^*(t) \leq cx^*\]
+
+where $m$ is the number of constraints. Also we have that a good approximation $x^*(t)$ is also reasonably good for $x^*(\mu t)$, for small $\mu$.
+
+The value $(b_i-\trans a_i x)$ is positive for points in the interior of the polyhedron. The closer to the boundary we get the more negative $\ln (b_i-\trans a_i x)$ gets. So the sum gets very negative at the boundary. The $1/t$ factor dampens this influence so that we can get closer to the optimal solution (that has to lie on a boundary).
+
+Let $\Phi(x)$
+
+\[\Phi(x) = \sum_{i=1}^m \ln (b_i-\trans a_ix) = \ln \prod_{i=1}^m (b_i-\trans a_i x)\]
+
+$\Phi$ is called a logarithmic barrier function in the literature. Let's look at the level function of this barrier function, i.e. all the points where the value of the barrier function is constant
+
+\[L_C=\{x|\Phi(x)=C\}\]
+
+%pic
+
+$L_C$ is a convex surface that is contained in the interior of $P$. Inside the curve $\Phi(x)>C$ outside it gets smaller. $L_C$ converges against the boundary of $P$ for $C\rightarrow -\infty$. %claim 4
+
+So in conclusion the algorithm looks like this
+
+\begin{lstlisting}
+find $x^*(1)$ // by magic
+while $t/m>\epsilon$ do
+	$t = t\mu$
+	find $x^*(t)$ from $x^*(t/m)$ by Newton
+\end{lstlisting}
+
+We prove the claim that $\Phi(x)$ is strictly concave. For two $x_0,x_1\in L_C$ and
+
+\[x=\alpha x_0+(1-\alpha)x_1S\]
+
+we have $\Phi(x)\geq C$ with equality only for $\alpha=0, \alpha=1$.
+
+\begin{align*}
+\Phi(x) &= \sum_{i=1}^m\ln (b_i - \trans a_i (\lapha x_0+(1-\alpha)x_1)\\
+	&= \sum_{i=1}^m\ln (\alpha\underbrace{(b_i-\trans a_i x_0)}_r +(1-\alpha) \underbrace{(b_i-\trans a_i x_1)}_s)\\
+	&\geq \alpha \sum_{i=1}^m \ln (b_i-\trans a_i x_0) + (1-\alpha)\sum_{i=1}^m \ln (b_i-\trans a_i x_1)\\
+	&=\alpha C +(1-\alpha)C = C
+\end{align*}
+
+The $\geq$ holds because $\ln$ is concave and we have
+
+\[\ln (\alpha s+(1-\alpha)r) \geq \alpha \ln s + (1-\alpha) \ln r\]
+
+Since $cx$ is concave the sum of the two is also strictly concave. So $g_t$ has indeed a unique maximum. The maximiser $x^*(t)$ is a zero of the gradient (i.e. the vector of partial derivatives).
+
+When $g_t$ is
+
+\[g_t(x) = \sum_{i=1}^n c_i x_i + \frac{1}{t}\sum_{i=1}^m\ln (b_i-\sum_{j=1}^n a_{ij} x_j)\]
+
+then the partial derivative with respect to $x_j$ is 
+
+\[\frac{\partial g_t}{\partial x_j} = c_j+\sum_{i=1}^m \frac{-a_{ij}}{b_i-\trans a_i x}\]
+
+So we can write the vector of partial derivatives as 
+
+\[\frac{\partial g_t}{\partial x} = c-\frac{1}{t} \sum_{i=1}^m \frac{a_i}{b_i-\trans a_i x}\]
+
+At $x^*(t)$ that vector is $0$. So at that point $c$ is a linear combination of the columns of the matrix (cf. duality).
+
+Next we prove the claim that $c x^*(t) \geq p^*-m/t$. Look at the function
+
+\begin{align*}
+L(X) &= cx+\frac 1t\sum_{i=1}^m \frac{b_i-\trans a_i x}{b_i-\trans a_i x^*(t)}\\
+\intertext{This function is not only linear in $x$, it is even constant}
+ &= \frac 1t \sum_{i=1}^m \frac{b_i}{b_i- \trans a_i x^*(t) }+ \left(c + \frac 1t \sum_{i=1}^m \frac{\trans -a_i}{b_i - \trans a_i x^*(t)}\right)x
+\end{align*}
+
+Since the second term is the gradient of $g_t$ at $x^*(t)$ it is $0$ and $L(X)$ is constant.
+
+We want to argue that the objective value at $x^*$ is less than $L(X)$
+
+\begin{align*}
+c x^* & \leq c x^* + \frac 1t \sum_{i=1}^m \frac{b_i-\trans a_i x^*}{b_i - \trans a_i x^*(t)}
+\intertext{The fraction is $\geq 0$ since $x^*$ and $x^*(t)$ are feasible}
+ &= L(x^*) && \text{by def.}\\
+ &= L(x^*(t)) && \text{constant function}\\
+ &= c x^*(t) + \frac 1t \sum_{i=1}^m \frac{b_i - \trans a_i x^*(t)}{b_i-\trans a_i x^*(t)}\\
+ &=cx^*(t) + \frac mt
+\end{align*}
+
+We still have to argue that the hessian of $g_t$ looks good. The gradient was
+
+\[\frac{\partial g_t}{\partial x} = c-\frac{1}{t} \sum_{i=1}^m \frac{a_i}{b_i-\trans a_i x}\]
+
+Then the second derivative looks like this
+
+\[\nabla g_t = \frac 1t  \sum_{i=1}^m \frac{a_{ij} - a_{ik} }{(b_i - \trans a_i x)^2}\]
+
+So all the entries in the matrix are negative. It is formed by
+
+\[-\frac{1}{t} \sum_{i=1}^m \frac{a_i}{b_i-\trans a_i x} \frac{\trans a_i}{b_i-\trans a_i x}\]
+
+Hence we have 
+
+\[\trans h H h = -\frac{1}{t} \sum_{i=1}^m\frac{\trans h a_i \trans a_i h}{(b_i - \trans a_i x)^2} \leq 0\]
+
+and the hessian indeed describes a paraboloid.
