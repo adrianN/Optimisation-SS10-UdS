@@ -1,0 +1,96 @@
+\begin{thm} Let $A\in \{0,1,-1\}^{m\times m}$, where each column has at most one $-1$ an at most one $1$ entry. Then $A$ is totally unimodular.
+\end{thm}
+
+\begin{pr} Let $N$ be a $k\times k$ submatrix of $A$. We do induction on $k$. For $k=1$ it's trivial.
+
+Remember, determinants can be computed like this
+
+\[\det A = \sum_{i=1}^n a_{ij} \cdot (-1)^{i+j} \det A_{ij} = \sum_{j=1}^n a_{ij} \cdot (-1)^{i+j} \det A_{ij}\]
+
+There are two cases
+
+\begin{itemize}
+\item If $N$ has a column with at most one non-zero entry. We can just expand on that column to reduce the determinant of $N$ to the determinant of one $k-1\times k-1$ submatrix $N'$.
+
+\item If all columns of $N$ have 2 non-zero entries (more are impossible by definition of $A$), the sum of all rows is $0$ so $N$ is singular and the determinant is $0$
+\end{itemize}
+\end{pr}
+
+A nice corollary from this theorem is the fact that the node-edge incidence matrix (rows=vertices, columns=edges, $1$ if edge is at vertex) of any digraph is TU.
+
+\chapter{Solving Integer Programs}
+\section{Cutting Planes and Cutting Plane Algorithms}
+In most cases the ployhedron we describe with our integer linear program is not nicely integral.
+
+A cutting plane algorithm tries to cut off parts of the polyhedron that are not in the integer hull of the polyhedron.
+
+To find the right cutting planes we first solve the linear program relaxation to get some $x^*$. The we find some hyperplane that cuts off $x^*$ without touching the integer hull, i.e. it is valid for $P_I$, and add it to our LP.
+
+\begin{lstlisting}
+repeat
+	$x^*$ = Solve LP $\max \{cx|x\in P\}$
+	if $x^*$ is integral return $x^*$
+	$H$ = halfspace that separates $x^*$ from $P_I$
+	$P=P\cap H$
+\end{lstlisting}
+
+Of course we don't know how to find the cutting plane, or even how to check if a given inequality is valid for $P_I$. It's also not clear if this algorithm always terminates and if it terminates how long it takes.
+
+\subsection{Cutting plane proofs}
+
+We want to prove that some inequality $\trans cx\leq \delta$ is valid for all integral solutions of $Ax\leq b$
+
+\begin{Ex}
+Let the system be
+
+\[\begin{pmatrix}
+2 & 3\\
+2 & -2 \\
+-6 & -2\\
+-2 & -6\\
+-6 & 8
+\end{pmatrix}\cdot x \leq \begin{pmatrix} 27\\7\\-9\\-11\\21\end{pmatrix}\]
+
+We look at linear combinations of the rows. For example we see by scaling rows 5:
+
+\[-3x_1+4_x2 \leq \frac{21}{2}\]
+
+This means we can round down $21/2$ to $10$ because $x_1,x_2$ are integral. From adding two times that new inequality to three times the first one we get
+
+\[17x_2 \leq 101 \quad \Rightarrow \quad x_2 \leq \left\lfloor \frac{101}{17}\right\rfloor = 5\]
+\end{Ex}
+
+In general we want to find inequalities of the form
+
+\[\trans y A x \leq \left\lfloor \trans y b \right \rfloor,\quad y\geq 0, \trans y A \text{ integral}\]
+
+These inequalities are called Gomory-Chvatal cutting planes.
+
+\begin{Def} Let $Ax\leq b$ system of $m$ linear inequations and $\trans cx\leq \delta$ an inequality. A sequence of linear inequalities $c_1x\leq \delta_1, c_2x\leq \delta_2,\ldots, c_mx\leq \delta_m$ is called a \emph{cuting plane proof} of $\trans c x\leq \delta$ from $Ax\leq b$ if
+\begin{itemize}
+\item $c_1,\ldots c_m$ are integral
+\item $c_m=c$ and $\delta_m=\delta$
+\item $\forall i\in [1,m]: c_ix\leq \delta_i'$ is a nonnegative linear combination of inequalities from the system
+
+\[Ax\leq b, c_1x\leq \delta_1,\ldots,c_{i-1}x\leq \delta_{i-1}\]
+
+and $\delta_i=\lfloor \delta_i'\rfloor$.
+\end{itemize}
+\end{Def}
+
+\begin{thm}[Existence] Let $P=\{x\in \R^n | Ax\leq b\}$ be bounded and non-empty
+
+\begin{enumerate}
+\item if $P_I\neq \emptyset$ and some inequality $\trans c x\leq \delta$ with integral $c$ is valid, then there is a cutting plane proof
+\item if $P_I=\emptyset$ then there is a cutting plane proof of 
+\[0x\leq -1\]
+\end{enumerate}
+\end{thm}
+
+\begin{thm}[Finite Length] Let $Ax\leq s$ be a rational system of linear inequalities with at least one integral solution If $\trans cx\leq \delta$ is valid for integral $c$, then $\trans cx\leq \delta$ has a cutting plane proof of finite length.
+\end{thm}
+
+\begin{Def} Let $P=\{x|Ax\leq b\}$ be a rational polyhedron. Adding all Gomory-Chvatal cuts $\trans yAx\leq \lfloor \trans y b\rfloor$ for $y\geq 0$ and $\trans y A$ integral, yield the \emph{Chvatal Closure}
+\end{Def}
+
+\begin{thm} The Chvatal Closure is a polyhedron\end{thm}
