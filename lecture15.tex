@@ -24,10 +24,9 @@ with $A'$ being a non-singular submatrix. Since $A$ is TU we have $\det A'\in \{
 
 The following isn't completely correct yet:
 
-$\Leftarrow$ Suppose all vertices of $P$ are integral vectors $\forall b\in \Z^m$. We want to show that every nonsingular square submatrix has a determinant of $\{1,-1\}$. By switching rows and columns around we can assume that the submatrix lies in the topleft corner of $A$ (that only changes the sign of the determinant). 
+$\Leftarrow$ Suppose all vertices of $P$ are integral vectors $\forall b\in \Z^m$. We want to show that every nonsingular square submatrix has a determinant of $\{1,-1\}$. By switching rows and columns around we can assume that the submatrix $A'$ lies in the topleft corner of $A$ (that only changes the sign of the determinant). 
 
-We expands $A$ by the identity matrix, $(A|I)$. Then we can construct a new matrix $B\in \Z^{m\times m}$ such that $\det (A') = \det (B)$ by taking 
-
+We expand $A$ by the identity matrix, $(A|I)$. Then we can construct a new matrix $B\in \Z^{m\times m}$ such that $\det (A') = \det (B)$ by taking 
 
 \[B = \left({A' \atop *} {0\atop I}\right)\]
 
@@ -43,7 +42,16 @@ By multiplying both sides with $B$ we get $b:= Bz=By+e_i$. $b$ is integral becau
 
 \[Az''\leq b\]
 
-In particular the constraints from $A'$ are fulfilled with equality. For some reason $z''$ is also a vertex. That means $z''$ is integral. That implies that $z'$ is also integral, since $b$ is integral and the lower components are produced by the identity matrix. Then of course $z$ is also integral.
+In particular the $k$ constraints from $A'$ are fulfilled with equality because we know $(A|I)z'=b$. It also fulfils $m-k$ non-negativity constraints, so it's a vertex:
+
+\[\begin{pmatrix}
+A' & *\\
+* & *\\
+-I_k & 0 \\
+0 & I_{m-k}
+\end{pmatrix} \cdot z'' \leq \left(b \atop 0\right)\]
+
+That means $z''$ is integral, because the polyhedron is integral. That implies that $z'$ is also integral, since $b$ is integral and the lower components are produced by the identity matrix. Then of course $z$ is also integral.
 
 Then we have from the definitions above
 
@@ -53,14 +61,14 @@ But since $z$ and $y$ are integral $B^{-1}e_i$ must also be integral.
 
 \end{pr}
 
-\begin{thm} Let $A\in \Z^{m\times m}$. The following are equivalent
+\begin{thm} Let $A\in \Z^{m\times m}$. The following statements are equivalent
 \begin{enumerate}
 \item $A$ is TU
 \item $\forall b \in \Z^m, c\in \Z^m$:
 \[\max \{cx|Ax\leq b, x\geq 0\} = \min \{\trans y b|\trans A \geq c, y\geq 0\}\]
 and they have integral optimal solutions or are unbounded
 \item $Ax\leq b, x\geq 0$ is TDI for all $b\in \Z^m$
-\item $\forall \text{rows} R\subset \{1,\ldots, m\} \exists \text{partition} R = R_1 \dot \cup R_2$ such that
+\item $\forall\ \text{rows}\ R\subset \{1,\ldots, m\} \exists\ \text{partition}\ R = R_1 \dot \cup R_2$ such that
 
 \[\sum_{i\in R_1} a_{ij} - \sum_{i\in R_2} a_{ij} \in \{-1,0,1\}, \qquad \forall j\in \{1,\ldots, n\}\]
 \end{enumerate}

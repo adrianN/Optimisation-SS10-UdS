@@ -8,7 +8,7 @@ We're dealing with maximisation problems. Introduce some notation:
 
 where $\trans a_i$ is the i-th row of A. Then we can write the feasible region like this
 
-\[P=\{x|Ax\leq b\}=\{x|f_i(x)\geq 0 \forall i\}\]
+\[P=\{x|Ax\leq b\}=\{x|\forall i:f_i(x)\geq 0\}\]
 
 Let $x^*$ be the optimal feasible solution and $p^*=cx^*$ the optimal objective value. 
 
@@ -18,21 +18,21 @@ It works by turning constraints into penalties in the objective function (cf dua
 
 \[t\in \R^+:\qquad g_t(x)=cx+\frac 1t \sum_{i=1}^m\ln (b_i-\trans a_i x)\]
 
-$g_t$ although it looks complicated is geometrically simple, as it is a stricly concave function. Finding maxima of concave functions is simple, $x^*(t)$, the maximiser of $g_t$ is easy to find and also unique. To find the unique maximum of $g_t$ we look at the partial derivative.
+The function $g_t$, although it looks complicated, is geometrically simple, as it is a stricly concave function. Finding maxima of concave functions is simple, $x^*(t)$, the maximiser of $g_t$ is easy to find and also unique. To find the unique maximum of $g_t$ we look at the partial derivative.
 
-We will determine $x^*(t)$ for increasingly larger values of $t$ by using something very similar to the Newton method. From an approximate solution $x_0$ we take the first and second derivative at that point and getting the exact maximiser for that second order approximation of $g_t$. In two dimensions it would look like this:
+We will determine $x^*(t)$ for increasingly large values of $t$ by using the Newton method. From an approximate solution $x_0$ we take the first and second derivative at that point and compute the exact maximiser for the second order \href{http://en.wikipedia.org/wiki/Taylor\_expansion}{taylor approximation} of $g_t$. In two dimensions it would look like this:
 
-\[q(h) = g_t(x_0) + h \cdot g_t'(x_0) + h^2 g_t''(x_0)/2\]
+\[q(x_0+h) = g_t(x_0) + h \cdot g_t'(x_0) + h^2 g_t''(x_0)/2\]
 
-Maximising $q(h)$ is easy:
+Maximising is easy, just write down the derivative and solve for h:
 
-\[h_0 = - \frac{g_t'(x_0)}{g_t''(x_0)} \]
+\[h = - \frac{g_t'(x_0)}{g_t''(x_0)} \]
 
-In more dimensions we get the gradient vector and the hessian matrix. To ensure that we can find the maximiser we need to prove that the hessian looks nice. We'll do that later.
+In more dimensions we get the gradient vector of partial derivatives and the \href{http://en.wikipedia.org/wiki/Hessian\_matrix}{hessian matrix}. To ensure that we can find the maximiser we need to prove that the hessian looks nice. We'll do that later.
 
 By iterating that process we can improve our solutions.
 
-For $t\rightarrow \infty$ $x^*(t)$ converges to $x^*$. In fact we will prove:
+For $t\rightarrow \infty$, $x^*(t)$ converges to $x^*$. In fact we will prove:
 
 \[cx^* -m/t \leq cx^*(t) \leq cx^*\]
 
@@ -40,7 +40,7 @@ where $m$ is the number of constraints. Also we have that a good approximation $
 
 The value $(b_i-\trans a_i x)$ is positive for points in the interior of the polyhedron. The closer to the boundary we get the more negative $\ln (b_i-\trans a_i x)$ gets. So the sum gets very negative at the boundary. The $1/t$ factor dampens this influence so that we can get closer to the optimal solution (that has to lie on a boundary).
 
-Let $\Phi(x)$
+Let $\Phi(x)$ be defined as
 
 \[\Phi(x) = \sum_{i=1}^m \ln (b_i-\trans a_ix) = \ln \prod_{i=1}^m (b_i-\trans a_i x)\]
 
@@ -86,7 +86,7 @@ When $g_t$ is
 
 then the partial derivative with respect to $x_j$ is 
 
-\[\frac{\partial g_t}{\partial x_j} = c_j+\sum_{i=1}^m \frac{-a_{ij}}{b_i-\trans a_i x}\]
+\[\frac{\partial g_t}{\partial x_j} = c_j+\frac 1t\sum_{i=1}^m \frac{-a_{ij}}{b_i-\trans a_i x}\]
 
 So we can write the vector of partial derivatives as 
 
