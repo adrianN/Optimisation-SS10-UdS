@@ -1,0 +1,72 @@
+For TDI systems the cuts to form a Chvatal closure are easy to characterise
+
+\begin{thm} Let $P=\{x|Ax\leq b\}$ be a polyhedron with $Ax\leq b$ is TDI and $A$ integral. 
+
+The Chvatal closure is $P'=\{x|Ax\leq \lfloor b\rfloor\}$
+\end{thm}
+
+\begin{pr} For the case $P\neq \empty$. Let the Chvatal closure be $C$
+
+$C\subset \{x|Ax\leq \lfloor b\rfloor\}$. It is clear that rounding down the right sides constitutes a Gomory-Chvatal cut. The closure may have some more, so it's smaller.
+
+$\{x|Ax\leq \lfloor b\rfloor\} \subset C$. Let $y\geq 0$ such that $\trans y A$ is integral. We need to show 
+
+\[\forall x: Ax\leq \lfloor b \rfloor: \trans y A \leq \lfloor \trans y b\rfloor\]
+
+That means rounding down gives us the same solutions as we get by applying the definition of Chvatal closure. To use TDIness we look at
+
+\[\trans yb \stackrel{Ax\leq b}{\geq} \max \{\trans y Ax | Ax\leq b\} = \min \{\trans v b|v\geq 0, \trans v A = \trans y A\}\]
+
+Since $\trans y A$ is integral and $Ax\leq b$ is TDI we know there is some integral optimal vector $v^*$ for the dual. We then get
+
+\[\trans y A x =\trans {v^*} A x \stackrel{Ax\leq \lfloor b\rfloor}{\leq} \trans{v^*} \lfloor b\rfloor \leq \lfloor \trans{v^*} b\rfloor \leq \lfloor \trans y b\rfloor\]
+
+Which proves the claim.
+\end{pr}
+
+We know that every rational polyhedron (and every bounded polyhedron) has a minimal TDI system that defines it. We can then find the Chvatal closure easily and get a new polyhedron, for which we can then again find a TDI description and repeat the procedure.
+
+Unfortunately finding TDI descriptions is hard and the number of iterations can be arbitrarily large. The number of iterations of adding the Chvatal closure until we get the integer hull is called the \emph{Chvatal rank}.
+
+\subsection{Gomory's cutting plane algorithm}
+
+The idea is to run simplex and the look at the final tableau. Find some row with fractional result and round everything down. Add that as a new constraint and repeat. It is unclear why it is ok to round down the whole row, not only the $b_i$.
+
+The new constraint cuts off at least the optimal solution simplex found. This has the nice property that we don't add cuts in regions that aren't interesting to us.
+
+\begin{Ex} Let the ILP we want to solve be
+\begin{align*}
+\min \quad& x_1-2x_2\\
+s.t. \quad& -4x_1 +6x_2 \leq 9\\
+& x_1+x_2 \leq 4
+&x_1,x_2 \in \N
+\end{align*}
+
+The first solution we get with simplex is $x=(15/10,25/10)$. The interesting row in the tableau is
+
+\[x_2+1/10 x_3 + 1/10x_4 = 25/10\]
+
+We add the cut
+
+\[x_2 \leq 2\]
+
+With that constraint we get the solution $x=(3/4,2)$ with the following row in the tableau
+
+\[x_1-1/4x_3 +6/4 x_5 = 3/4\]
+
+We add the cut
+
+\[x_1-x_3+x_5\leq 0\]
+
+Because $x_3$ and $x_5$ are slack variables ($x_5$ is for the first cut), we can replace them 
+
+\[x_5 = 2-x_2\qquad x_3=9+4x_1-6x_2\]
+
+With these constraints we get an integral solution.
+\end{Ex}
+
+\section{Branch and Bound}
+
+With cutting plane algorithms we don't have any feasible solutions during the run of the algorithm, because we're solving relaxations all the time.
+
+Branch and bound techniques actually work with feasible solutions that get improved iteratively. The approach is similar to divide-and conquer. We recursively partition the feasible region into sets and take the maximum (or the minimum) on it. That gives us a search tree of subproblems we need to solve. We use simplex or some other heuristic to find bounds on the optimal values such that we can cut off search paths that are not interesting.
