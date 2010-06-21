@@ -1,9 +1,9 @@
 \chapter{Integer Linear Programming}
 \section{Introduction}
 
-The setting is very similar to the linear programs we already know. We just restrict the problems and the possible solutions a bit. As the name suggests we want integer solutions to our programs. That means we should have an integer constraint matrix too. 
+The setting is very similar to the linear programs we already know. We just restrict the problems and the possible solutions a bit. As the name suggests we want integer solutions to our programs. In general it is hard to tell whether some constraint system naturally describes a polyhedron where all optimal solutions are integral, so we need to actively restrict the solution space. 
 
-\begin{Def}[Integere Linear Program] Given $A\in \Z^{m\times n}$, $b\in \Z^m$, $c\in \Z^{1\times n}$ find a $x\in \Z^n$ such that $Ax\leq b$ and $cx$ is maximal (or minimal)
+\begin{Def}[Integer Linear Program] Given\footnote{In my oppinion $\R$ would be okay too} $A\in \Z^{m\times n}$, $b\in \Z^m$, $c\in \Z^{1\times n}$ find a $x\in \Z^n$ such that $Ax\leq b$ and $cx$ is maximal (or minimal)
 
 \begin{align*}
 \max \quad & cx \\
@@ -12,7 +12,7 @@ s.t. \quad & Ax \leq b\\
 \end{align*}
 \end{Def}
 
-If we just restrict some variables to be integral we have a mixed integer linear program.
+If we just restrict some variables to be integral and allow abitrary values for the others we have a mixed integer linear program.
 
 Integer linear programs allow us to model some new interesting problems that we couldn't before. The most prominent examples are 
 
@@ -43,7 +43,7 @@ s.t. &\sum_{j\in J^+_i} z_j + \sum_{j\in J^-_i} (1-z_j) \geq 1 && \forall i\\
 
 The constraints make sure that in every clause at least one positive variable is 1 or one negative variable is 0. If the feasible region of the LP is nonempty then the formula is satisfiable. The formal proof is omitted as it is rather obvious.
 
-To show NP completeness we need to show that ILP is in NP. In the 0-1 case it is rather obvious that we can use any feasible solution as a polynomial witness. In the general case we would need to show that the entries in the solution vector are polynomially bounded. This is quite complicated but follows from the ellipsoid method. We will omit that proof here.
+To show NP completeness we need to show that ILP is in NP. In the 0-1 case it is rather obvious that we can use any feasible solution as a polynomial witness. In the general case we would need to show that the entries in the solution vector are polynomially bounded. This is quite complicated but follows from the polynomial running time of the ellipsoid method. We will omit that proof here.
 \end{pr}
 
 NP-completeness is a worst-case statement. Some ILPs can be solved efficiently. We'll talk about conditions for that.
@@ -68,7 +68,7 @@ We make the following propositions:
 \item If $P$ is unbounded and $A,b$ arbitrary real then $P_I$ is not necessarily a polyhedron.
 \end{enumerate}
 
-Obviously if $P=P_I$ then the solution for an ILP with feasible region $P_I$ is the same as the solution for the relaxed problem with feasible region $P$.
+Obviously if $P=P_I$ then the solution for an ILP with feasible region $P_I$ is the same as the solution for the relaxed problem with feasible region $P$. This is the nice case where we can solve the ILP optimally in polynomial time using the methods we already know.
 
 \begin{Def} A polyhedron $P$ is called integral if $P=P_I$\end{Def}
 
@@ -87,20 +87,21 @@ For the other direction suppose $\max \{cx | x\in P\}\in \Z\quad \forall c\in \Z
 
 By multiplying $c$ be an arbitrary integer we can make the gap between the unique optimal solution $y$ and any other solution $x$ as large as we want, in particular large enough to make that inequality true.
 
-We can change the cost function a bit without making $y$ nonoptimal. Let $\bar c = (c_1+1,c_{2,\ldots,n})$. 
+We can change the cost function a bit without making $y$ nonoptimal. Let $\bar c = (c_1+1,c_{2,\ldots,n})$. We claim:
 
 \[\bar c y > \bar c x\qquad \forall x\neq y\]
 
-We want to compute by how much the cost did change. Since we increased the first component of $c$ we get
+We want to compute by how much the cost changed. Since we increased the first component of $c$ we get
 
 \[\bar c y = cy+y_1\]
 
-Since we assumed that $cy$ is integral and our modification didn't change didn't change that integrality that equality forces $y_1$ to be integral too. We can do that for all components so they must all be integral. Since this must hold for all cost vectors it holds for all vertices and our polyhedron must be integral.
+Since we assumed that $cy$ is integral and our modification didn't impact integrality that equality forces $y_1$ to be integral too. We can do that for all components so they must all be integral. Since this must hold for all cost vectors it holds for all vertices and our polyhedron must be integral.
 \end{pr}
 
-Now we want to recognise integral polyhedra by looking at the constraint matrix. 
 
 \section{Total dual integrality}
+
+As we said the case that $P=P_I$ is the nice case we can easily solve. In general it is hard to tell whether this is true, but for some constraint matrices we can prove that they always define integral polyhedra.
 
 Strong duality as for linear programs does not hold for ILPs. But we have something similar
 

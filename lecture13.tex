@@ -157,14 +157,14 @@ If the $k$th iteration was not the last, i.e. we enter the loop body once more. 
 \Rightarrow &k = O(n^3L)
 \end{align*}
 
-It could be that the real arithmetic we assumed could be exponentially expensive, but since $f$ is fairly far away from $1$ we can round a bit and turn the algorithm to a floating point version.
+It could be that the real arithmetic we assumed could be exponentially expensive, but since $f$ is fairly far away from $1$ we can round a bit and turn the algorithm to a floating point version without losing correctness.
 
 \begin{Ex}[Travelling Salesman Problem] We're going to formulate the problem as a ILP. For every edge $e$ we have a variable $x_e\in \{0,1\}$. An $x_e$ is $1$ if the corresponding edge is in the tour, $0$ else.
 
 \begin{align*}
 \min \quad & \sum_{e\in E} c_e x_e\\
 s.t. & \sum_{e\in \delta(v)} x_e = 2 && \forall v\in V\\
-	& \sum_{e\in S} \geq 2 && \forall S\neq V, S\neq \emptyset
+	& \sum_{e\in S} \geq 2 && \forall S\subsetneq V, S\neq \emptyset
 \end{align*}
 \[\delta(v) = \text{set of incident edges to $v$} \qquad \delta(S) = \text{edges with exactly one endpoint in $S$}, S\subseteq V\]
 
