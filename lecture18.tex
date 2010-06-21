@@ -5,7 +5,7 @@ For TDI systems the cuts to form a Chvatal closure are easy to characterise
 The Chvatal closure is $P'=\{x|Ax\leq \lfloor b\rfloor\}$
 \end{thm}
 
-\begin{pr} For the case $P\neq \empty$. Let the Chvatal closure be $C$
+\begin{pr}[]For the case $P\neq \emptyset$. Let the Chvatal closure be $C$
 
 $C\subset \{x|Ax\leq \lfloor b\rfloor\}$. It is clear that rounding down the right sides constitutes a Gomory-Chvatal cut. The closure may have some more, so it's smaller.
 
@@ -30,7 +30,13 @@ Unfortunately finding TDI descriptions is hard and the number of iterations can 
 
 \subsection{Gomory's cutting plane algorithm}
 
-The idea is to run simplex and the look at the final tableau. Find some row with fractional result and round everything down. Add that as a new constraint and repeat. It is unclear why it is ok to round down the whole row, not only the $b_i$.
+The idea is to run simplex and the look at the final tableau. Find some row with fractional result and round everything down. 
+
+\[x_i + \sum_{j\in N} \bar a_{ij} x_j = \bar a_{i0} \quad \Rightarrow \quad x_i + \sum_{j\in N} \lfloor\bar a_{ij}\rfloor x_j = \lfloor\bar a_{i0}\rfloor\]
+
+Add that as a new constraint and repeat. 
+
+It is ok to round down the $\bar{a_{ij}}$ because $x\geq 0$ and rounding down makes everything smaller, so the inequality is still satisfied. Rounding down the $\bar a_{i0}$ is ok because that's just the Chvatal cut.
 
 The new constraint cuts off at least the optimal solution simplex found. This has the nice property that we don't add cuts in regions that aren't interesting to us.
 
@@ -65,8 +71,116 @@ Because $x_3$ and $x_5$ are slack variables ($x_5$ is for the first cut), we can
 With these constraints we get an integral solution.
 \end{Ex}
 
+\begin{thm} Gomory's Algorithm terminates after a finite number of iterations, when it is using the lexicographic dual simplex.
+\end{thm}
+
+\marginpar{Lecture 19}
+\subsection{Cuts for TSP}
+
+Gomory's algorithm is a general method that works for any ILP. Creating the cuts doesn't assume anything about the combinatorial structure of the problem and hence often isn't optimal.
+
+Here we want to show how to exploit the structure of a problem, the Travelling Salesman Problem, to find some cuts for the polyhedron.
+
+We're given a graph $G=(V,E)$ and want to find a minimum cost tour. 
+
+In the standard formulation that we've already seen we have a variable for each edge, indicating if the edge is in the tour.
+
+\begin{align*}
+\min \quad & \sum_{e\in E} x_e c_e\\
+s.t.\quad & \sum_{e\in \delta(v)} x_e = 2 && \forall v\in V \quad \text{all nodes used}\\
+	& \sum_{e\in E(S)} x_e \leq |S|-1 && \forall S\subset V, 2\leq |S| \leq |V-1| \quad \text{only one cycle}\\
+	& x_e \in \{0,1\}
+\end{align*}
+
+As we already said this uses an exponential number of constraints, but we don't bother with that right now.
+
+The cuts we will add use \emph{combs}
+
+\begin{Def}[Comb] %pic
+A comb with handle $H$ and teeth $T_1,\ldots T_k$ consists of node sets $H$ and $T_i$ such that $T_i \cap T_j = \emptyset$, $H\cap T_i\geq 1$ and $|T_i\backslash H |\geq 1$ and $k$ is $\geq 3$ and odd.
+\end{Def}
+
+%If we have a comb in the graph no tour can exist in the graph.
+
+\begin{thm} Let $c$ be a comb with handle $H$ and teeth $T_1,\ldots, T_k$. Then any tour satisfies the following inequality
+
+\[\sum_{e\in E(H)} x_e +\sum_{i=1}^k\sum_{e\in E(T_i)} x_e \leq |H|+\sum_{i=1}^k(|T_i|-1)-\frac{k+1}{2}\]
+\end{thm}
+
+\begin{pr} To get the constraint from the theorem we take a linear combination of the constraints of the program and invoke the Chvatal cut theorem.
+
+Use
+
+\begin{itemize}
+\item Add the first constraint for all $v\in H$
+\item Subtract the third inequality for (relaxed to $-x_e\leq 0$) for all $e\in \delta(H)\backslash X$ where $X$ are the edges that belong to a tooth
+\item add the second constraint for all $T_i$
+\item add the second constraint for all $T_i\backslash H$
+\item add the second constraint for all $T_i \cap H$
+\end{itemize}
+
+The gets us the following equations
+
+\begin{align*}
+\sum_{v\in H}\sum_{e\in \delta(v)} x_e&=2|H|\\
+-\sum_{v\in H} \sum_{e\in \delta(v) \backslash E(T_i)} x_e & \leq 0\\
++\sum_{i=1}^k \sum_{e\in E(T_i)} x_e &\leq \sum_{i=1}^k(|T_i|-1)\\
++\sum_{i=1}^k \sum_{e\in E(T_i\backslash H)} x_e &\leq \sum_{i=1}^k(|T_i\backslash H|-1)\\
++\sum_{i=1}^k \sum_{e\in E(T_i\cap H)} x_e &\leq \sum_{i=1}^k(|T_i\cap H|-1)\\
+\end{align*}
+
+Adding up the first two equations counts all the edges in the handle twice
+
+\[2\sum_{e\in E(H)} x_e \leq 2|H|\]
+
+The last two equations sum up to
+
+\[\sum_{i=1}^k \sum_{e\in E(T_i)} x_e \leq \sum_{j=1}^k (|T_i|-1) -k\]
+
+Summing up everything we get
+
+\begin{align*}
+2\sum_{e\in E(H)} x_e + 2\sum_{i=1}^k \sum_{e\in E(T_i)} x_e &\leq 2|H| + 2\sum_{j=1}^k (|T_i|-1) -k\\
+\Leftrightarrow \sum_{e\in E(H)} x_e + \sum_{i=1}^k \sum_{e\in E(T_i)} x_e &\leq 2|H| + \sum_{j=1}^k (|T_i|-1) -\frac{k+1}{2}
+\end{align*}
+
+We replace $-k/2$ by $-(k+1)/2$ because $k$ is odd and we round everything down.
+\end{pr}
+
+Unfortunately there are exponentially many comb cuts, and there is no polynomial algorithm to find one that is violated s.t. we might add it. There are however exponential time algorithms that find them and there are heuristic methods that sometimes find them.
+
+So we can solve TSP by relaxing the LP. Usually we also drop the second constraint and allow more than one circle. We then try to find violated constraints. If we have more than one circle it's easy to find a violated constraint, else we have to find comb constraints either by the heuristic method or the exponential one. Should we be unable to find violated constraints although we don't have an integral solution yet, we need to use some other method like for example branch and bound.
+
 \section{Branch and Bound}
 
 With cutting plane algorithms we don't have any feasible solutions during the run of the algorithm, because we're solving relaxations all the time.
 
 Branch and bound techniques actually work with feasible solutions that get improved iteratively. The approach is similar to divide-and conquer. We recursively partition the feasible region into sets and take the maximum (or the minimum) on it. That gives us a search tree of subproblems we need to solve. We use simplex or some other heuristic to find bounds on the optimal values such that we can cut off search paths that are not interesting.
+
+There are some design choices we can make
+
+\begin{itemize}
+\item In what order to look at subproblems: DFS, BFS, Best-First, \ldots
+\item How to compute bounds: LP relaxation, Langragian relaxation (later), cutting planes
+\end{itemize}
+
+For general ILPs we can for example do the following: 
+
+Use the LP relaxation for bounding. Branch by fixing components of the solution. For an optimal solution $x^*$ fix fractional values by adding constraints
+
+\[x_i\leq  \lfloor x_i^*\rfloor \qquad x_i \geq \lceil x_i^* \rceil\]
+
+\begin{Ex}[TSP] For the following relaxed formulation of the TSP
+
+\begin{align*}
+\min \quad & \sum_{i,j} c_{ij}x_{ij}\\
+s.t. \quad & \sum_{j} x_{ij} = 1\\
+	& \sum_{i} x_{ij} = 1\\
+	& \sum_{ij\in S} x_{ij} \leq |S|-1 && S \subseteq \{1,\ldots,n\}, |S|\geq 2, |S| \leq |V|-1\\
+	& x_{ij} \geq  0
+\end{align*}
+
+If we remove the constraint that forbids more than one circle we get the assignment problem (perfect matchings), which we can solve in polynomial time. We can use that as a bound for the TSP.
+
+We branch by forbidding certain edges in the solution, i.e. we get some set of cycles from the relaxation, choose the shortest and create subproblems in which one of the edges on the cycle is fixed to 0.
+\end{Ex}
