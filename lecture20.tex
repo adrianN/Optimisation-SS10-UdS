@@ -1,0 +1,167 @@
+\section{Langrangean Relaxation}
+
+For an ILP we typically can separate the constraints in two classes, the hard constraints $A$ and the easy constraints $D$. What hard and easy mean depends on the problem, but usually the problem would be solvable in polynomial time if it were not for the hard constraints.
+
+The idea of langrangean relaxation is not to enforce the hard constraints exactly, but instead add a penalty into the objective function for every violated constraint
+
+For some $\lambda>0$
+
+\begin{align*}
+\max \quad & c x + \trans{\lambda}(b-Ax)\\
+s.t. \quad & Dx \leq d
+	& x\in \Z
+\end{align*}
+
+This is called the langrangean relaxation of the problem, the $\lambda_i$ are the Langrange multipliers.
+
+This we said that the constraints in $D$ are "easy" we assume that we can solve this problem in polynomial time.
+
+\begin{thm} Let $\lambda \geq 0$ and $z^*,z(\lambda)$ be optimal values of the ILP, LP$_\lambda$ respectively.
+
+\begin{enumerate}
+\item the feasible region of the ILP is smaller than the feasible region of LP$_\lambda$
+\item $z(\lambda)\geq z^*$
+\end{enumerate}
+\end{thm}
+
+\begin{pr} The first part is rather obvious, since we remove constraints the feasible region can only get larger.
+
+For the second statement let $x^*$ be an optimal solution to the ILP. Since it's optimal it must also be feasible
+
+\[Ax^*\leq b\]
+
+Then we have
+
+\[z(\lambda) \geq cx^* + \trans{\lambda}\underbrace{(b-Ax^*)}_{\geq 0} \geq cx^*=z^*\]
+\end{pr}
+
+So this is a relaxation for every $\lambda$. But since we want to find upper bounds that are as tight as possible, we look for a $\lambda$ that minimises $z(\lambda)-z^*$. This is called the Langrangean Dual
+
+\[z_{LD} = \min_{\lambda\geq 0} \{z(\lambda)\} = \min_{\lambda\geq 0} \max_{{x\in \Z}\atop {Dx\leq d}} cx+\trans{\lambda}(b-Ax) \]
+
+\subsection{Quality of the Langrangean}
+
+We want to investigate how good the bounds are that we get out of the langrangean relaxation.
+
+\begin{thm}\label{thm:relaxedOptimal} Let $\lambda \geq 0 $ 
+
+\begin{enumerate}
+\item $x_\lambda$ is the optimal solution of the relaxed $LP_\lambda$
+\item $Ax_\lambda \leq b$
+\item $\trans{\lambda}(b-Ax_\lambda) = 0$
+\end{enumerate}
+
+then $x_\lambda$ is also an optimal solution for the ILP.
+\end{thm}
+
+\begin{pr} Let $x^*$ be an optimal solution to the ILP. By the second condition $z^*\geq c x_\lambda$. Since by the third condition $\trans{\lambda}(b-Ax_\lambda) = 0$, we can just add that to the cost function and get the cost function of the lagrangean dual.
+\end{pr}
+
+So in some special cases the value of the langrangean relaxation can be optimal.
+
+Next we compare the quality of the langrangean relaxation with the easier linear programming relaxation.
+
+\begin{thm} In general
+
+\[z_{LD} \leq z_{LP}\]
+
+Equality holds if the "easy" constraints describe an integral polyhedron.
+\end{thm}
+
+\begin{pr} By definition we have
+
+\[z_{LD} = \min_{\lambda \geq 0} z(\lambda) = \min_{\lambda\geq 0} \max_{{x\in \Z}\atop {Dx\leq d}} z(\lambda,x)\]
+
+If the polyhedron $Dx\leq d$ is integral we can just drop the integrality constraint on $x$, otherwise the solution might get better.
+
+\[\min_{\lambda\geq 0} \max_{{x\in \Z}\atop {Dx\leq d}} z(\lambda,x) \geq \min_{\lambda\geq 0} \max_{Dx\leq d} z(\lambda,x)\]
+
+With equality only in the case of integrality.
+
+So we have
+
+\begin{align*}
+z_{LD} &\geq \min_{\lambda\geq 0} \max_{Dx\leq d} cx+ \trans{\lambda}(b-Ax)\\
+	& = \min_{\lambda \geq 0} (\trans{\lambda}b+\max_{Dx\leq d}(c-\trans{\lambda}A)x)\\
+\intertext{Now we dualise the last part. By strong duality the value does not change.}
+	& = \min_{\lambda \geq 0} (\trans{\lambda} b+\min_{y\atop {\trans yD=c-\trans{\lambda}A}} \trans y d)\\
+	&= \min_{{{\lambda \geq 0}\atop {y\geq 0}}\atop {\trans yD=c-\trans{\lambda}A}} \trans{\lambda} b+ \trans y d\\
+	&=\max_{{Ax\leq b}\atop {Dx\leq d}} cx = z_{LP}
+\end{align*}
+\end{pr}
+
+\subsection{TSP --- Held-Karp-Bound}
+
+We had the following ILP to solve the TSP.
+
+\begin{align*}
+\min \quad & \sum_{e\in E} c_{e}x_{e}\\
+s.t. \quad & \sum_{e\in \delta(v)} x_{e} = 2 && \forall v\in V\\
+	& \sum_{e\in E(S)} x_{e} \leq |S|-1 && S \subseteq \{1,\ldots,n\}, |S|\geq 2, |S| \leq |V|-1\\
+	& x_{e} \geq  0
+\end{align*}
+
+We can add some redundant constraints without changing the solution
+
+\begin{align*}
+\min \quad & \sum_{e\in E} c_{e}x_{e}\\
+s.t. \quad & \sum_{e\in E} x_e = n\\
+	&\sum_{e\in \delta(v)} x_e=2 && \forall v=\{2,\ldots,n\}\\
+	&\sum_{e\in \delta(1)} x_e=2\\
+	&\sum_{e\in E(S)} x_e \leq |S|-1 && \forall S \subseteq V, 2\leq |S|\leq |V|-1,1\not i\in S\\
+	& x_{e} \geq  0
+\end{align*}
+
+The second constraint in this program is the difficult one (as we'll see when we analyse the relaxed problem). We can form the lagrangean relaxation by takeing it into the cost function.
+
+For any $\lambda$\footnote{for some reason it's ok to take negative $\lambda$ too\ldots}
+
+\begin{align*}
+\min \quad & \sum_{e\in E} c_e x_e + \sum_{v\in \{2,\ldots,n\}} \lambda_v(2-\sum_{e\in \delta(v)} x_e)\\
+s.t. \quad & \sum_{e\in E} x_e = n\\
+	&\sum_{e\in \delta(1)} x_e=2\\
+	&\sum_{e\in E(S)} x_e \leq |S|-1 && \forall S \subseteq V, 2\leq |S|\leq |V|-1,
+	& x_{e} \geq  0
+\end{align*}
+
+Let's look at the combinatorial structure of any feasible solution for this program.
+
+We claim that any solution for the relaxation is a 1-tree.
+
+\begin{Def} A 1-tree of $G$ is a subgraph $T$ of $G$, s.t.
+\begin{enumerate}
+\item The degree of node 1 is 2.
+\item The subgraph of $T$ on nodes $\{2,\ldots,n\}$ is a tree.
+\end{enumerate}
+\end{Def}
+
+The second constraint makes sure that node 1 has degree 2. The other constraints make sure that the other part of the solution forms a tree. The last constraint makes sure that there are no cycles and the first and third constraint make sure we have enough edges to form a tree.
+
+We can reformulate the cost function like this, by replacing $\lambda_v$ by $-\lambda_v$
+
+\[z(\lambda,x) = \sum_{e\in E} x_ec_e + \sum_{v\in \{2,\ldots,n\}} \lambda_v (\sum_{e\in \delta(v)} x_e-2)\]
+
+Set $\lambda_1=0$ then
+
+\begin{align*}
+z(\lambda,x) &= \sum_{e\in E} x_ec_e + \sum_{v\in V} \lambda_v (\sum_{e\in \delta(v)} x_e-2\sum_{v\in V} \lambda_v)\\
+	&=\sum_{e\in E, e=(v,u)} (c_e + \lambda_v + \lambda_u)x_e - 2 \sum_{v\in V}\lambda_v
+\end{align*}
+
+Since for a given $\lambda$ the last term is constant, it doesn't matter in our optimisation problem, so we can remove it.
+
+Thus $LP_\lambda$ is the problem of finding a 1-tree of minimal cost with cost function $c_e' = c_{(u,v)} + \lambda_v + \lambda_u$. We can solve this by using some MST algorithm to build the tree on $G=(V\backslash {1},E\backslash \delta(1))$ and adding node 1 back, connecting it with the cheapest edges.
+
+We need to find some good $\lambda$. The algorithm is as follows
+
+\begin{lstlisting}
+Let $\lambda=0$, $\omega = 1$
+repeat
+	H = 1-tree for $c_e' = c_{(u,v)} + \lambda_v + \lambda_u$
+	if (H is a tour)
+		return $\lambda$
+	$\lambda_v = \lambda_v + \omega(\text{deg}(v)-2)$
+until $H$ is "good enough"
+\end{lstlisting}
+
+if $H$ is a tour we're done by theorem \ref{thm:relaxedOptimal}.

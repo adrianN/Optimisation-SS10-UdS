@@ -66,20 +66,30 @@ We make the following propositions:
 \item If $P$ is bounded then so is $P_I$
 \item If $A$ contains only rational numbers, $P$ is rational. For rational $P$ the integer hull is also a polyhedron.
 \item If $P$ is unbounded and $A,b$ arbitrary real then $P_I$ is not necessarily a polyhedron.
+
+For example the polyhedron
+
+\[P=\{(x,y)|y\leq \sqrt{2} x\}\]
+
+Does not have an integer hull. The integral points that are closest to the line defined by $y=\sqrt 2 x$ are $\{(x,\lfloor \sqrt 2 x\rfloor)|x\in \Z\}$, in particular $(0,0)$ is exactly on the line. Their ratio approximates $\sqrt 2$ from below. So for increasing $x$, $(x,\lfloor \sqrt 2 x \rfloor)$ defines a line with $(0,0)$ that has a steeper slope than all lines $(0,0)$ to $(x',\lfloor \sqrt 2 x' \rfloor), x'<x$. So only $(0,0)$ and $(x,\lfloor \sqrt 2 x \rfloor)$, for $x\rightarrow \infty$, are on the convex hull.
+
+That means it is not possible to find a line with rational slope that defines the convex hull, as for every slope $p/q$ there is some $x$ such that $\sqrt 2 - (\lfloor \sqrt 2 x \rfloor/x) < \sqrt 2 - p/q$. Hence the integer hull is not a polyhedron.
 \end{enumerate}
 
 Obviously if $P=P_I$ then the solution for an ILP with feasible region $P_I$ is the same as the solution for the relaxed problem with feasible region $P$. This is the nice case where we can solve the ILP optimally in polynomial time using the methods we already know.
 
 \begin{Def} A polyhedron $P$ is called integral if $P=P_I$\end{Def}
 
-\begin{thm}\label{Thm:polyIntegrality} A rational polyhedron $P$ is integral iff
+\begin{thm}\label{Thm:polyIntegrality} A rational polyhedron $P$ is integral iff for any integral cost vector there is a integral point in the polyhedron that is maximal (or minimal).
 
-\[\max \{cx | x\in P\}\in \Z\quad \forall c\in \Z^{1\times n}\]
+\[\exists x\in P:\ x\in \Z^{n\times 1} \wedge \forall c\in Z^{1\times n}, y \in P:\ cx\geq cy\]
 
-and the maximum is finite.
+and the maximum is finite. 
 \end{thm}
 
-\begin{pr} If the polyhedron is integral any optimal solution will also be integral, so that direction is easy.
+If the cost vector $c$ is integral and the optimal solution $x$ is also integral, obviously $cx\in \Z$.
+
+\begin{pr} If the polyhedron is integral all vertices are integral. Since optimal values are always attained at vertices, the optimal solution will also be integral, so that direction is easy.
 
 For the other direction suppose $\max \{cx | x\in P\}\in \Z\quad \forall c\in \Z^{1\times n}$. Let $y\in P$ be a unique optimal solution for $c$. We have 
 
@@ -103,9 +113,9 @@ Since we assumed that $cy$ is integral and our modification didn't impact integr
 
 As we said the case that $P=P_I$ is the nice case we can easily solve. In general it is hard to tell whether this is true, but for some constraint matrices we can prove that they always define integral polyhedra.
 
-Strong duality as for linear programs does not hold for ILPs. But we have something similar
+Strong duality as for linear programs does not hold for ILPs. But we have something similar for a special class of constraint matrices.
 
-\begin{Def} A system $Ax\leq b$ is called totally dual integral (TDI) if for each integral $c$ with bounded maximum we have
+\begin{Def} A system $Ax\leq b$ is called totally dual integral (TDI) iff for each integral $c$ with bounded maximum we have
 
 \[\max \{cx |Ax\leq b\} = \min \{\trans y b | \trans y A = \trans c, y\geq 0, y\in \Z^m\}\]
 
@@ -116,15 +126,30 @@ The same works for $Ax\leq b, x\geq 0$ and $Ax=b, x\geq 0$
 
 Notable here is that TDI is not a property of the polyhedron but instead of the system that defines it. Very much like with degeneracy we may find another system that describes the same polyhedron but is in fact TDI.
 
+\begin{thm} For each rational polyhedron, there exists a TDI system $Ax\leq b$ with an integral matrix $A$. {\small (no proof)}
+\end{thm}
+
+Of course since finding feasible solutions for ILPs is NP-complete and the proof didn't make use of a nonrational constraint matrix it must be hard to find a TDI system for the polyhedron (or the TDI system is exponentially larger than the original system).
+
 This together with theorem \ref{Thm:polyIntegrality} has the following corollary: Let $A\in \Q^{n\times m}$, $b\in \Z^n$ and $Ax\leq b$ is TDI then $\{x|Ax\leq b\}$ is integral.
 
-This condition is checkable, but we don't really know how to use it yet.
+The most important aspect of TDIness is the following theorem
 
-\begin{Ex} Given a directed graph $G=(V,E)$, two vertices $s,t\in V$ and the set of pathes between $s,t$. We're also given a cost function $c$ on the edges. The task is to assign positive weights $y_e$ to the edges s.t. each path has accumulated cost at least 1. While doing so we want to minimize
+\begin{thm} If $Ax\leq b$ is TDI and $b$ is integral, then $P=\{x|Ax\leq b\}$ is integral.
+\end{thm}
+
+\begin{pr} The proof is by contradiction. Assume $P$ is not integral and take a fractional vertex $x$ of $P$. Construct an integral cost vector $c$ such that $x$ is optimal, by taking a rational one and scaling.
+
+In particular that means if $b\in \Z$ then the whole polyhedron is integral.
+\end{pr}
+
+TDIness is easier to check\footnote{At least that was said in the lecture. I don't know of a general way to do that}, but we don't really know how to use it yet.
+
+\begin{Ex} Given a directed graph $G=(V,E)$, two vertices $s,t\in V$ and the set of paths $P$ between $s,t$. We're also given a cost function $c$ on the edges. The task is to assign positive weights $y_e$ to the edges s.t. each path has accumulated cost at least 1. While doing so we want to minimize
 
 \[\sum_{e\in E} c(e), y_e\]
 
-Formulated as a LP that is 
+One maybe recognise this as a Min-Cut problem. Formulated as a LP that is 
 
 \begin{align*}
 \min \quad & \sum_{e\in E} c(e) y_e\\
@@ -132,7 +157,7 @@ s.t. & \sum_{e\in p} y_e \geq 1 && \forall p\in P\\
 &y_e \geq 0
 \end{align*}
 
-We want to show that the polyhedron $Q$ that is defined be the above constraints is integral by showing that it is TDI. To do that we construct the dual:
+We want to show that the polyhedron $Q$ that is defined by the above constraints is integral by showing that it is TDI. To do that we construct the dual:
 
 \begin{align*}
 \max \quad & \sum_{p\in P} x_p\\

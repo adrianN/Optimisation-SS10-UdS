@@ -1,16 +1,3 @@
-\begin{thm} For each rational polyhedron, there exists a TDI system $Ax\leq b$ with an integral matrix $A$. {\small (no proof)}
-\end{thm}
-
-The most important aspect of TDIness is the following theorem
-
-\begin{thm} If $Ax\leq b$ is TDI and $b$ is integral, then $P=\{x|Ax\leq b\}$ is integral.
-\end{thm}
-
-\begin{pr} The proof is by contradiction. Assume $P$ is not integral and take a fractional vertex $x$ of $P$. Construct an integral cost vector $c$ such that $x$ is optimal, by taking a rational one and scaling.
-
-In particular that means if $b\in \Z$ then the whole polyhedron is integral.
-\end{pr}
-
 \section{Totally unimodular matrices}
 
 TDIness is a little weird and hard to check. A much easier recognizable property that also implies integrality of the polyhedron is total unimodularity.
@@ -28,7 +15,6 @@ That means in particular that also all entries are $\in \{-1,0,1\}$.
 \[\left(A|-I\right) x \leq \left(b\atop 0\right)\]
 
 with $A'$ being a non-singular submatrix. Since $A$ is TU we have $\det A'\in \{-1,1\}$. This already implies that the polyhedron is integral, because we can compute the inverse $A'^{-1}$ using Cramer's rule. %TODO
-
 
 The following isn't completely correct yet:
 
