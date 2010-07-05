@@ -1,0 +1,130 @@
+\section{LP-based approximation algorithms}
+
+There are different approaches how to construct approximation algorithms from Linear Programs. Either we can find some suitable rounding scheme for a relaxed version of the LP or we use the LP as a bound in some other algorithm.
+
+For the first approach the hard part is usually finding a suitable LP formulation s.t. it can be solved in polynomial time and we can deduce some error bounds when generating exact solutions from the relaxed LP constraints.
+
+\subsection{Simple Rounding}
+
+The naive approach to LP approximation is to just use the relaxed version of the ILP and round the answers to get an integral solution. Which rounding scheme can be used depends on the kind of constraints we have, not every rounding will produce feasible solutions in all cases.
+
+We will study this technique using an example.
+
+\begin{Ex}[Weighted Vertex Cover] We have a graph with weighted nodes. We want to find a miminum weight subset of vertices that covers every edge, i.e. every edge has at least one endpoint in the subset of nodes we chose.
+
+One possible way to write that down as an LP is this:
+
+\begin{align*}
+\min \quad & \sum_{v\in V} x_v w_v\\
+s.t. \quad & x_u+x_v \geq 1\\
+	& x_v\in \{0,1\}
+\end{align*}
+
+We want $x_v$ to be $1$ iff the node is in our cover. Solving the relaxed version will give us some fractional solution. We round $x_v$ up, if it's larger than $\frac 12$, else we set it to zero.
+
+This is a feasible integral solution, since we have for any edge $(u,v)$ that $x_v+x_u\geq 1$. So at least one of them has to be $\geq \frac 12$ hence we will round at least one value up to $1$.
+
+This also gives us the approximation factor. It could happen that all $x_v$ are exactly $\frac 12$. We round them all up but the optimal solution may only need one of the vertices. Obviously we take twice the number of vertices in the worst case and thus this is a $2$-approximation.
+
+In fact it seems that nobody knows a better algorithm. There is however a lower bound of $1.36$.
+
+There is a nice structural insight about the polytope of this integral. We claim that it has vertices that are half-integral, i.e. $\in \{0,\frac 12,1\}$.
+
+The proof isn't difficult. Assume we have some basic feasible solution $x$ that is not half integral. There has to be at least one value that is larger than $\frac 12$ and one that is smaller. Define the following sets
+
+\[V_+ = \{v \in V | \frac 12 < x_v < 1\} \qquad V_- = \{v\in V |0 < x_v < \frac 12\}\]
+
+We construct two new solutions from $x$ and those two sets. For $\epsilon > 0$
+
+\[y_v = \begin{cases}
+x_v + \epsilon & x_v \in V_+\\
+x_v - \epsilon & x_v \in V_-\\
+x_v & \text{otherwise}\end{cases} \qquad z_v = \begin{cases}
+x_v - \epsilon & x_v \in V_+\\
+x_v + \epsilon & x_v \in V_-\\
+x_v & \text{otherwise}\end{cases}\]
+
+By choosing $\epsilon$ small enough we can make sure that this remains feasible, i.e. $0<y_z <1$. Obviously $x$ is a convex combination of those. But if $x$ was optimal it was a vertex of the polyhedron and hence it can't be a combination of two other feasible points.
+
+Note that this construction won't work for the $\frac 12$ case as we wouldn't get two different solutions
+
+\end{Ex}
+
+\subsection{Randomised Rounding}
+
+We interpret teh fractional values in the optimal solution as probabilities to set $x_j$ to $1$.
+
+Since we use randomisation our approximation bounds will use the expected value (this slightly changes the previous definition).
+
+\begin{Ex}[MAX SAT] We have a boolean formula in CNF with $m$ clauses and $n$ variables $v_j$. Each clause $C_i$ has a weight $w_i$ and we want to find an assignment of the variables such that the total weight of the satisfied clauses is maximised (note: we don't care about the truth value of the formula at all).
+
+Let $W= \sum_{i=1}^m W_i $ be the random variable that indicates the total weight of the satisfied clauses in the solution of our algorithm.
+
+The trivial algorithm sets every variable to true with probability $\frac 12$.
+
+For this algorithm we have
+
+\[\E(W_i) = \left(1-\frac{1}{2^{k(i)}}\right)w_i\]
+
+where $k(i)$ is the number of literals in the clause. This is trivially right because a clause is satisfied if not all literals in the clause are set to false. So if we have $k(i)$ literals the probability to set them all to false is $1/2^{k(i)}$.
+
+So for the expected outcome we have
+
+\[\E(W) = \sum \E(W_i) = \sum_{i=1}^m \left(1-\frac{1}{2^{k(i)}}\right) w_i \geq \left(1-\frac{1}{2^{\bar k}}\right) \sum_{i=1}^m w_i\]
+
+Where $\bar k$ is the minimal number of variables in any clause. So we have a 2-approximation
+
+\[\left(1-\frac{1}{2^{\bar k}}\right) \sum_{i=1}^m w_i \geq \frac 12 \text{OPT}\]
+
+But we can do better. 
+
+Let $J^+(i)$ ($J^-(i)$) be the set of indices of non-negated (negated) variables in $C_i$. Consider the following LP
+
+\begin{align*}
+\max \quad & \sum_{i=1}^m w_iz_i\\
+s.t. \quad \sum_{j\in J^+(i)} y_i + \sum_{j\in J^-(i)} (1-y_i) \geq z_i && \forall i\\
+&0\leq z_i, y_j \leq 1
+\end{align*}
+
+The idea is to use the variables $y_j$ for the boolean variables and the $z_i$ for the clauses. We need to make sure that a clause is only set to "satisfied" if at least one $y_j$ is set to true, if it is non-negated in the clause or false in the other case.
+
+If we solve the LP and set $y_j$ to true with probability $y_j^{LP}$ we claim a approximation guarantee of 
+
+\[\frac {e}{e-1} \approx 1.6\]
+
+To prove that we need the following:
+
+\[\E(W_i) \geq \left(1-\left(1-\frac{1}{k(i)}\right)^{k(i)}\right)w_iz_i^{LP}\]
+
+w.l.o.g. all literal in $C_i$ appear in non-negated form and $C_i=(v_i \vee v_2 \vee \ldots \vee v_{k(i)})$. Then the probability that $C_i$ is satisfied is, as before:
+
+\begin{align*}
+1-P(\text{all lit. false}) &= 1- \prod_{i=1}^{k(i)} (1-y_j^{LP})\\
+\intertext{We can bound that by using the AM-GM inequality}\\
+	&\geq 1-\left(\frac {1}{k(i)}\sum_{i=1}^{k(i)} (1-y_j^{LP})\right)^{k(i)}\\
+	&= 1-\left(1-\frac{1}{k(i)}\sum_{i=1}^{k(i)}y_j^{LP}\right)^{k(i)}\\
+\intertext{From the constraint in the LP we can bound that sum}\\
+	&\geq 1-\left(1-\frac{1}{k(i)}z_i^{LP}\right)^{k(i)}\\
+\end{align*}
+
+We looking at that thing we see that we can bound the concave function 
+
+\[g(z) = 1-\left(1-\frac zk\right)^k\]
+
+over the interval $[0,1]$ by a linear function 
+
+\[f(z) = 1-\left(1-\frac 1k\right)^k z\]
+
+Note that $f(0)=g(0)$ and $f(1)=g(1)$. Thus we get
+
+\[1-\left(1-\frac{1}{k(i)}z_i^{LP}\right)^{k(i)} \geq \left(1-\left(1-\frac{1}{k(i)}\right)^{k(i)}\right)z_i^{LP}\]
+
+And we have proven a bound on $\E(W_i)$. Then we can bound the expected value of the whole thing.
+
+\begin{align*}
+\E(W) &= \sum_{i=1}^W \E(W_i)\\
+	&\geq \sum_{i=1}^W \left(1-\left(1-\frac{1}{k(i)}\right)^{k(i)}\right) z_i w_i\\
+	&\stackrel{k\geq k(i)}{\geq} \sum_{i=1}^m \left(1-\left(1-\frac{1}{k}\right)^k\right) z_i^{LP}w_i\\
+	&\geq (1-\frac 1e)\text{OPT}
+\end{align*}
+\end{Ex}
