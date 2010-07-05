@@ -1,0 +1,118 @@
+\section{The Cutting Stock Problem}
+We're given $r$ rods of length $L$ and have a demand of $d_i$ pieces of length $l_i$. We want to cut the rods s.t. we meet the demand with a minimal number of raw rods.
+
+Clearly
+
+\[K:=\sum \frac{d_il_i}{L}\]
+
+is a lower bound for the number of rods we need.
+
+\subsection{Greedy Heuristic}
+
+We will start with a greedy approach that guarantees a $2k+1$ approximation.
+
+Initially all rods have the full length. In order to cut a piece we use an already used rod whenever possible, otherwise we start a new rod.
+
+The analysis goes as follows: Let $G$ be the number of rods used by the algorithm. For each $i$ between $1$ and $G$ let $u_i$ be the used part and $w_i$ the waste. W.l.o.g. ordered decreasingly: $w_1\geq w_2\geq \ldots$. When we started to use the $j$th rod there wasn't enough room to use the $j-1$th. Thus $u_j\geq w_{j-1}$. We can write
+
+\begin{align*}
+G\cdot L &=  \sum_{j=1}^G (u_j+w_j)\\
+	&= \sum_{j=1}^G u_j + \sum_{j=2}^G u_j +w_G\\
+	&\leq L+2\sum_{j=1}^G u_j\\
+	&\leq L + 2KL
+\end{align*}
+
+Thus $G\leq 2K+1$.
+
+An alternative analysis distinguishes between "long" pieces that are longer than $L/2$ and "small" pieces. Assigning every long piece to a single rod assures that those are at least 50\% filled. We can aggregate small pieces on one rod until it is at least 50\% full, because small pieces are smaller than $L/2$. So in both cases we have a $2K+1$ approximation.
+
+\subsection{Using an ILP}
+
+We introduce variables $z_1,z_2,\ldots , z_t$, $t = \sum_{di}$ s.t. 
+
+\[z_j=\begin{cases} 1 & \text{rod j is used}\\
+0 & \text{otherwise}\end{cases}\]
+
+we also need variables $x_{ij}$ that indicate that we can fit $x_{ij}$ many pieces of length $l_i$ into the $j$th rod (if it is used).
+
+Thus we get the ILP
+
+\begin{align*}
+\min \quad & \sum z_j\\
+\text{s.t.} \quad & \sum x_{ij}l_i \leq Lz_j\\
+	&x_{ij} \in \N, z_j \in \{0,1\}
+\end{align*}
+
+This isn't a particularly good formulation because it contains a lot of symmetry: there are many possibilities to use $k$ rods if we have to specify \emph{which} $k$ to use. Problems with many optimal solutions are hard to solve, in general.
+
+Obviously the LP relaxation of this program has the trivial optimal value $K=\sum \frac{d_il_i}{L}$, as we are allowed to cut fractionally and can thus fill our rods optimally. The following assignment to the LP variables does just that:
+
+\[z_j = \begin{cases}
+1 & 1 \leq j \leq \lfloor K\rfloor \\
+K-\lfloor K \rfloor & j=\lfloor K\rfloor +1\\
+0 & \lfloor K \rfloor +1\end{cases}\qquad x_{ij} = \frac{d_i}{K}z_j\]
+
+\subsection{Cutting Patterns}
+
+But we can get a better approximation by a more sophisticated ILP.
+
+\begin{Def}[Cutting pattern] A cutting pattern is a set of numbers $(a_1,\ldots,a_k)$ s.t. $a_i\in \N$ and $\sum a_il_i\leq L$ and the sum is maximal.
+\end{Def}
+
+Let $P$ be the set of all cutting patterns (this is a very large set). We introduce a variable $x_p$ for every $p\in P$ that indicates the number of patterns $p$ that we used.
+
+This gives us the following ILP
+
+\begin{align*}
+\min \quad & \sum x_p\\
+s.t. \quad & \sum a_{p_i}x_{p_i} \geq d_i && \forall i
+\end{align*}
+
+\begin{Ex} $L=7$, $l_1=2$ $l_2=3$
+
+\[P=\{(3,0),(2,1),(0,2)\}\]
+
+This gives us the ILP
+
+\begin{align*}
+\min \quad & x_1+x_2+x_3\\
+s.t.\quad & 3x_1+2x_2+0x_3 \geq d_1\\
+	&0x_1 + 1x_2+ 2x_3 \geq d_2
+	&x\in \N
+\end{align*}
+\end{Ex}
+
+There are different rounding strategies that produce integer solutions from the LP
+
+\begin{itemize}
+\item round up
+\item round down and use the greedy heuristic to satisfy the demands
+\item add cuts, e.g. Gomory cuts
+\item branch and bound
+\end{itemize}
+
+But how do we solve the LP anyway? $P$ may be huge.
+
+The idea is to start with a small number of patterns that guaranteees the existence of a solution, e.g. one cut per $l_i$. Let $P'\subset P$ be a set of patterns that is currently in use. We know the optimal LP solution for $P'$ and would like to know if it optimal for $P$. We can view the $P\backslash P'$ cuts to have non basic variables, i.e. they are 0. Now we can just use the normal stopping criterion of the simplex algorithm and check whether the reduced cost is $\geq 0$.
+
+The reduced cost can be computed as usual. Let $y_i$ be the multiplier of the $i$th row, i.e. the value of the corresponding dual variable. Then the reduced cost is the column $p$ is eual to
+
+\[1-\sum_{i=1}^k y_ia_i\]
+
+($1$ because the cost for all patterns is $1$) and there is a variable of negative reduced cost iff there is a vector $a_1,\ldots,a_k$ such that the constraint $\trans a l_i \leq L$ and $\sum y_ia_i \geq 1$
+
+We can find that vector by solving a knapsack problem. We want to grab some items with weight $a$, s.t. we don't exceed a bound $L$ and want to maximise the profit. 
+
+Although knapsack is NP-complete it is usually simple to solve in practice. One can use a dynamic programming based approach.
+
+\paragraph{Knapsack via Dynamic Programming} We have a table with columns from $0$ to $W$ and rows $1$ to $k$ where $W$ is the capacity and $k$ is the number of items. In cell $(i,j)$ we write the maximal value of a knapsack with capacity $j$ using only items $0,\ldots, i$. The first row is easy. Suppose we have solved the first couple of rows. Then we can compute a new cell by deciding whether we want to use item $i$ or not. 
+
+\begin{align*}
+A(1,z) &= \begin{cases} c_1 & z\geq w_1\\
+0 & \text{otherwise}\end{cases}\\
+A(i,z) &= \max (A(i-1,z), A(i-1,z-w_i)+c_i)
+\end{align*}
+
+The second term in the maximisation only exists if $z\geq w_i$.
+
+If $W$ is reasonably small, filling the table is fast.

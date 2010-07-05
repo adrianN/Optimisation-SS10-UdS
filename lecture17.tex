@@ -24,6 +24,16 @@ In most cases the ployhedron we describe with our integer linear program is not 
 
 A cutting plane algorithm tries to cut off parts of the polyhedron that are not in the integer hull of the polyhedron.
 
+The idea here is that it's easy to find the integer hull of a halfplane. 
+
+\[\trans a x \leq b \quad \Rightarrow \quad \trans a x \leq \lfloor b \rfloor\]
+
+where the inequality is scaled s.t. $a$ is integral and $\gcd(a)=1$. Rounding down the right hand side shifts the hyperplane such that it intersects with the closest feasible integer point.
+
+We could to this transformation for every valid constraint for the polyhedron. However there are quite a few and we'd need to iterate the process because the new inequalities change the set of valid constraints.
+
+Instead we just try to cut off things around the optimal solution until it becomes integral. That means we don't have to care about the other parts of the polyhedron and hopefully speeds up the process.
+
 To find the right cutting planes we first solve the linear program relaxation to get some $x^*$. The we find some hyperplane that cuts off $x^*$ without touching the integer hull, i.e. it is valid for $P_I$, and add it to our LP.
 
 \begin{lstlisting}
@@ -34,7 +44,7 @@ repeat
 	$P=P\cap H$
 \end{lstlisting}
 
-Of course we don't know how to find the cutting plane, or even how to check if a given inequality is valid for $P_I$. It's also not clear if this algorithm always terminates and if it terminates how long it takes.
+Of course we don't know how to find the cutting plane that cuts off $x^*$, or even how to check if a given inequality is valid for $P_I$. It's also not clear if this algorithm always terminates and if it terminates how long it takes.
 
 \subsection{Cutting plane proofs}
 
