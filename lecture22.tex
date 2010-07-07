@@ -82,13 +82,13 @@ Let $J^+(i)$ ($J^-(i)$) be the set of indices of non-negated (negated) variables
 
 \begin{align*}
 \max \quad & \sum_{i=1}^m w_iz_i\\
-s.t. \quad \sum_{j\in J^+(i)} y_i + \sum_{j\in J^-(i)} (1-y_i) \geq z_i && \forall i\\
+s.t. \quad &\sum_{j\in J^+(i)} y_i + \sum_{j\in J^-(i)} (1-y_i) \geq z_i && \forall i\\
 &0\leq z_i, y_j \leq 1
 \end{align*}
 
 The idea is to use the variables $y_j$ for the boolean variables and the $z_i$ for the clauses. We need to make sure that a clause is only set to "satisfied" if at least one $y_j$ is set to true, if it is non-negated in the clause or false in the other case.
 
-If we solve the LP and set $y_j$ to true with probability $y_j^{LP}$ we claim a approximation guarantee of 
+If we solve the LP and set $y_j$ to true with probability $y_j^{LP}$ we claim an approximation guarantee of 
 
 \[\frac {e}{e-1} \approx 1.6\]
 
