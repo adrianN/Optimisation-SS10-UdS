@@ -1,0 +1,92 @@
+\section{Excursus: Seidel's Linear Programming Algorithm}
+
+This is a very simple randomised geometric algorithm for linear programs in small dimensions.
+
+We have a linear program $\max cx$ s.t. $a_ix\leq b_i$, $1\leq i\leq m$ and we have bok constraints $-M\leq x_i \leq M$. $d$ is the number of the variables.
+
+The algorithm works as follows:
+
+In $d=1$ there is the special case with no constraints:
+
+\[m=0: \quad \text{set } x^* = \begin{cases} M & c\geq 0\\ -M & c<0\end{cases}\]
+
+For more constraints in one dimension we just have to find out which is the tightest constraint and set our optimal solution accordingly.
+
+For more dimensions it gets more complicated. If $d>1, m>0$ we choose one of the constraints at random and throw it away. Then we recurse on the remaining constraints. Let $x^*$ be the solution from the recursive call. We have to handle two cases:
+
+\begin{enumerate}
+\item $x^*$ is still feasible when we add the constraint back. Return $x^*$
+\item \label{seidelTwo} $x^*$ violates $\trans a_i x^*$. Then we know that the optimal solution is somewhere on the hyperplane $\trans a_i x = b$. So we can solve that equation for one of the variables, $x_i$, and replace $x_i$ with the RHS in all constraints. Also substitute in it the bound constraints. The two bounds produce two new constraints so we have $m+1$ constraints in $d-1$ variables.
+
+Then we try again and recover the value of the eliminated variable.
+\end{enumerate}
+
+The algorithm is always correct, but its running time is a random variable.
+
+Observe that the probability for the unlucky case \ref{seidelTwo} is at most $\frac dm$ because we need $d$ active constraints to define the optimal solution that we mustn't throw away. But we have $m$ constraints to choose from. Unless of course we have a degenerate LP where we have more than $d$ constraints that intersect at the optimum. In that case we can delete some of those without changing the optimal solution.
+
+The running time is $O(m)$ for $d=1$ and $O(d)$ for $m=0$. Let $T(d,m)$ be the expected running time of our algorithm. We have
+
+\[T(d,m) \leq O(1) + T(d,m-1) + O(d) + \frac dm \left(O(dm) + T(d-1,m+1)\right)\]
+
+That is, dropping one constraint $+$ recursion $+$ checking whether case 1 or 2 $+$ handling the unlucky case.
+
+\begin{thm} $T(d,m)=O(d!\max (1,m-1))$. The $m-1$ makes the inductive proof easier
+\end{thm}
+
+\begin{pr} Let $C$ be a large enough constant s.t. we can replace the $O(x)$ terms by $C\cdot x$. We prove $T(d,m)\leq C f(d)\max (1,m-1)$ where $f(d)$ is a function that is still to be determined.
+
+\begin{itemize}
+\item $d=1$. We have $T(1,m) \leq Cm \stackrel{!}{\leq} Cf(1)\max(1,m-1)$. The last inequality holds if $f(1)\geq 2$ (\ref{seidelFone}). 
+\item $m=0$. We have $T(d,m)\leq Cd \stackrel{!}{\leq} Cf(d) \max (1,m-1)$. The last inequality holds if $f(d)\geq d$ (\ref{seidelFtwo})
+\item $d>1,m=1$. 
+\begin{align*}
+T(d,1) &\leq T(d,0)+Cd+d(Cd+T(d-1,2))\\
+	&\stackrel{I.H.}{\leq} Cd\max(1,-1)+Cd +Cd^2 + df(d-1)\max(1,1) \\
+	&\leq C(3d^2+df(d-1))\\
+	&\stackrel{!}{\leq} Cf(d) \max(1,-1)\end{align*}
+
+The last inequality is true if $3d^2+df(d-1) \leq f(d)$ (\ref{seidelFthree}).
+
+\item $d>1,m>1$
+
+\begin{align*}
+T(d,m) & \leq T(d,m-1) + Cd+ \frac dm \left( C dm + T (d-1,m+1)\right)\\
+	&\leq C\left(f(d)\max(1,m-1)+2d^2+\frac{df(d-1) \max(1,m+1)}{m}\right)\\
+	&\leq Cf(d) m
+\end{align*}
+
+This is true if $2d^2+df(d-1) \leq f(d)$ (\ref{seidelFfour})
+\end{itemize}
+
+
+We collected the following properties of $f$:
+\begin{enumerate}
+\item \label{seidelFone} $f(1)\geq 2$
+\item \label{seidelFtwo} $f(d)\geq d$
+\item \label{seidelFthree} $3d^2+df(d-1) \leq f(d)$
+\item \label{seidelFfour} $2d^2+df(d-1) \leq f(d)$
+\end{enumerate}
+
+If we define 
+
+\[f(1) = 2 \qquad f(d) = 3d^2 + df(d-1)\]
+
+then all conditions are satisfied. Since we have $df(d-1)$ this is at least $O(d!)$. But the $3d^2$ termns don't add anything significant. This can easily be seen by expanding a bit
+
+\begin{align*}
+f(d) &= 3d^2 + df(d-1)\\
+	&= 3d^2+d(3(d-1)^2 + (d-1)f(d-2))\\
+	&= 3d^2+d(3(d-1)^2 + (d-1)(3(d-2)^2 + (d-2)f(d-3)))\\
+	&\hdots\\
+	&=3d^2 +3d(d-1)^2 + d(d-1)\cdot 3(d-2)^2 + d(d-1)(d-2) \cdot 3(d-3)^2 + \ldots + d(d-1)\ldots 2\cdot 3 \cdot 1^2\\
+	&=3d! (\frac{d^2}{d!} + \frac{(d-1)^2}{(d-1)!} + \frac{(d-2)^2}{(d-2)!} + \ldots + 1)\\
+	&= O(d!)
+\end{align*}
+
+Hence the theorem is proven.
+\end{pr}
+
+\section{Set Cover}
+
+
