@@ -1,26 +1,28 @@
 \section{Langrangean Relaxation}
 
-For an ILP we typically can separate the constraints in two classes, the hard constraints $A$ and the easy constraints $D$. What hard and easy mean depends on the problem, but usually the problem would be solvable in polynomial time if it were not for the hard constraints.
+For an ILP we typically can separate the constraints in two classes, the hard constraints $A$ and the easy constraints $D$\footnote{TODO: switch A and D everywhere. D for difficult :/}. What hard and easy mean depends on the problem, but usually the problem would be solvable in polynomial time if it were not for the hard constraints.
 
-The idea of langrangean relaxation is not to enforce the hard constraints exactly, but instead add a penalty into the objective function for every violated constraint
+The idea of langrangean relaxation is to relax the hard constraints, but  a penalty into the objective function for violating them.
 
 For some $\lambda>0$
 
 \begin{align*}
 \max \quad & c x + \trans{\lambda}(b-Ax)\\
-s.t. \quad & Dx \leq d
+s.t. \quad & Dx \leq d\\
 	& x\in \Z
 \end{align*}
 
+If we violated the $Ax\leq b$ constraints we subtract something from our objective value.
+
 This is called the langrangean relaxation of the problem, the $\lambda_i$ are the Langrange multipliers.
 
-This we said that the constraints in $D$ are "easy" we assume that we can solve this problem in polynomial time.
+Since we said that the constraints in $D$ are "easy" we assume that we can solve this problem in polynomial time for some fixed $\lambda$.
 
 \begin{thm} Let $\lambda \geq 0$ and $z^*,z(\lambda)$ be optimal values of the ILP, LP$_\lambda$ respectively.
 
 \begin{enumerate}
 \item the feasible region of the ILP is smaller than the feasible region of LP$_\lambda$
-\item $z(\lambda)\geq z^*$
+\item $z(\lambda)\geq z^*$, i.e. the relaxed version gives us an upper bound on the optimal value.
 \end{enumerate}
 \end{thm}
 
@@ -30,23 +32,24 @@ For the second statement let $x^*$ be an optimal solution to the ILP. Since it's
 
 \[Ax^*\leq b\]
 
-Then we have
+But in the relaxed version we also have some additive Then we have
 
 \[z(\lambda) \geq cx^* + \trans{\lambda}\underbrace{(b-Ax^*)}_{\geq 0} \geq cx^*=z^*\]
 \end{pr}
 
-So this is a relaxation for every $\lambda$. But since we want to find upper bounds that are as tight as possible, we look for a $\lambda$ that minimises $z(\lambda)-z^*$. This is called the Langrangean Dual
+So this is a relaxation for every $\lambda$. But since we want to find upper bounds that are as tight as possible, we look for a $\lambda$ that minimises $z(\lambda)-z^*$. Because we know that $z(\lambda)\geq z^*$ for all $\lambda$ we can just minimise $z(\lambda)$. This is called the Langrangean Dual
 
 \[z_{LD} = \min_{\lambda\geq 0} \{z(\lambda)\} = \min_{\lambda\geq 0} \max_{{x\in \Z}\atop {Dx\leq d}} cx+\trans{\lambda}(b-Ax) \]
 
+For a discussion on how to actually find the optimal $\lambda$ see the book by Tsitsiklis and Bertsimas.
+
 \subsection{Quality of the Langrangean}
 
-We want to investigate how good the bounds are that we get out of the langrangean relaxation.
+We want to investigate how good the bounds are that we get out of the langrangean relaxation. First we observe that in some special cases the optimal value of the langrangian dual can be optimal for the ILP too.
 
-\begin{thm}\label{thm:relaxedOptimal} Let $\lambda \geq 0 $ 
+\begin{thm}\label{thm:relaxedOptimal} Let $\lambda \geq 0 $ and let $x_\lambda$ be an optimal solution for the relaxed $LP_\lambda$. If we have
 
 \begin{enumerate}
-\item $x_\lambda$ is the optimal solution of the relaxed $LP_\lambda$
 \item $Ax_\lambda \leq b$
 \item $\trans{\lambda}(b-Ax_\lambda) = 0$
 \end{enumerate}
@@ -54,10 +57,10 @@ We want to investigate how good the bounds are that we get out of the langrangea
 then $x_\lambda$ is also an optimal solution for the ILP.
 \end{thm}
 
-\begin{pr} Let $x^*$ be an optimal solution to the ILP. By the second condition $z^*\geq c x_\lambda$. Since by the third condition $\trans{\lambda}(b-Ax_\lambda) = 0$, we can just add that to the cost function and get the cost function of the lagrangean dual.
-\end{pr}
+\begin{pr} Let $x^*$ be an optimal solution to the ILP. By the first condition our penalty term $\trans{\lambda}(b-Ax_\lambda)$ is positive in every component, so for the optimal relaxed value we know: $z_\lambda ^*\geq c x^*$. Since by the second condition we know that the penalty is actually: $\trans{\lambda}(b-Ax_\lambda) = 0$, we know we have equality.
 
-So in some special cases the value of the langrangean relaxation can be optimal.
+Note: we need the $Ax_\lambda \leq b$ condition because $\lambda$ could be 0.
+\end{pr}
 
 Next we compare the quality of the langrangean relaxation with the easier linear programming relaxation.
 
