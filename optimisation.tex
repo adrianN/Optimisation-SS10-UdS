@@ -34,7 +34,11 @@
 
 \pagestyle{fancy}
 \cfoot{\thepage}
-\rfoot{\includegraphics{./images/by-nc-sa.pdf}}
+
+\newsavebox{\footerlicence}
+\sbox{\footerlicence}{\includegraphics{./images/by-nc-sa}}
+
+\rfoot{\usebox{\footerlicence}}
 \fancyhead{}
 \lfoot{Found a mistake? Write an e-mail!}
 
@@ -62,9 +66,10 @@
 \newcommand{\nz}{\text{nz}}
 \renewcommand{\bar}{\overline}
 \renewcommand{\arraystretch}{1.5}
-\newcommand{\argmin}[1]{\underset{#1}{\operatorname{min}}}
+\newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}}
 
 \pdfcompresslevel9
+\pdfdecimaldigits2
 
 \newcommand{\trans}[1]{{#1}^\text{\upshape \sffamily T}}
 \newtheoremstyle{leplain} %name
