@@ -2,23 +2,26 @@
 
 TDIness is a little weird and hard to check. A much easier recognizable property that also implies integrality of the polyhedron is total unimodularity.
 
-\begin{Def} A matrix $A$ is totally unimodular (TU) if each subdeterminant (the determinant of a square submatrix), i.e. each \href{http://en.wikipedia.org/wiki/Minor\_\%28linear\_algebra\%29}{minor}, of $A$ is $\in \{-1,0,1\}$
+\begin{Def} A $m\times n$ matrix $A$ is totally unimodular (TU) if each subdeterminant (the determinant of a square submatrix), i.e. each \href{http://en.wikipedia.org/wiki/Minor\_\%28linear\_algebra\%29}{minor}, of $A$ is $\in \{-1,0,1\}$
 \end{Def}
 
 That means in particular that also all entries are $\in \{-1,0,1\}$.
 
-\begin{thm}[Hoffman, Kruskal '56] $A\in \Z^{m\times m}$ is TU iff $P=\{x|Ax\leq b\}$ is integral for any integral $b$
+\begin{thm}[Hoffman, Kruskal '56] $A\in \Z^{m\times n}$ is TU iff $P=\{x|Ax\leq b\}$ is integral for any integral $b$
 \end{thm}
 
-\begin{pr} $\Rightarrow$ Let $A$ be TU, $b\in \Z^m$ and let $x$ be a vertex of the induced polyhedron $P$. $x$ is a solution of $A'x=b'$ with $A'x\leq b'$ being a subsystem of 
+So if we have a TDI system the matrix is totally unimodular. A quite suprising connection between duality and the determinant, if you ask me.
 
-\[\left(A|-I\right) x \leq \left(b\atop 0\right)\]
+\begin{pr} $\Rightarrow$ Let $A$ be TU, $b\in \Z^m$ and let $x$ be a vertex of the induced polyhedron $P$. We want to show that $x$ is integral.
 
-with $A'$ being a non-singular submatrix. Since $A$ is TU we have $\det A'\in \{-1,1\}$. This already implies that the polyhedron is integral, because we can compute the inverse $A'^{-1}$ using Cramer's rule. %TODO
+Since $x$ is a basic solution there is a nonsingular $n\times n$ submatrix of $A$, let's call it $A_x$ that is the basis for $x$. We can then calculate the value of $x$ as $A_x^{-1}b'$, where $b'$ is $b$ restricted to the rows in $A_x$. 
+
+Because $A$ is totally unimodular and $A_x$ is nonsingular we know $|\det A_x|=1$. But that implies that $A_x^{-1}$ only has integral entries (to see why have a look at Cramer's rule for computing the inverse). Since $b'$ is also integral it follows that $x$ must be integral too.
+
 
 The following isn't completely correct yet:
 
-$\Leftarrow$ Suppose all vertices of $P$ are integral vectors $\forall b\in \Z^m$. We want to show that every nonsingular square submatrix has a determinant of $\{1,-1\}$. By switching rows and columns around we can assume that the submatrix $A'$ lies in the topleft corner of $A$ (that only changes the sign of the determinant). 
+$\Leftarrow$ Suppose all vertices of $P$ are integral vectors $\forall b\in \Z^m$. We want to show that every nonsingular square submatrix $A'$ has a determinant of $\{1,-1\}$. By switching rows and columns around we can assume that the submatrix $A'$ lies in the topleft corner of $A$ (switching things only changes the sign of the determinant). 
 
 We expand $A$ by the identity matrix, $(A|I)$. Then we can construct a new matrix $B\in \Z^{m\times m}$ such that $\det (A') = \det (B)$ by taking 
 
@@ -26,7 +29,7 @@ We expand $A$ by the identity matrix, $(A|I)$. Then we can construct a new matri
 
 To prove $|\det (B)| =1$ it suffices we show $B^{-1}$ is integral because
 
-\[\det(B)*\det(B^{-1}) = 1\]
+\[\det(B)\cdot\det(B^{-1}) = 1\]
 
 and our knowledge that $\det (B)$ is integral (since $B$ is integral). If $B^{-1}$ is also integral we multiply two integrals. We can only get $1$ if both are either $1$ or $-1$.
 
