@@ -1,19 +1,19 @@
-For TDI systems the cuts to form a Chvatal closure are easy to characterise
+For TDI systems the cuts to form a Chv\'{a}tal closure are easy to characterise
 
 \begin{thm} Let $P=\{x|Ax\leq b\}$ be a polyhedron with $Ax\leq b$ is TDI and $A$ integral. 
 
-The Chvatal closure is $P'=\{x|Ax\leq \lfloor b\rfloor\}$
+The Chv\'{a}tal closure is $P'=\{x|Ax\leq \lfloor b\rfloor\}$
 \end{thm}
 
-\begin{pr}[]For the case $P\neq \emptyset$. Let the Chvatal closure be $C$
+\begin{pr}[]For the case $P\neq \emptyset$. Let the Chv\'{a}tal closure be $C$
 
-$C\subset \{x|Ax\leq \lfloor b\rfloor\}$. It is clear that rounding down the right sides constitutes a Gomory-Chvatal cut. The closure may have some more, so it's smaller.
+$C\subset \{x|Ax\leq \lfloor b\rfloor\}$. It is clear that rounding down the right sides constitutes a Gomory-Chv\'{a}tal cut. The closure may have some more, so it's smaller.
 
 $\{x|Ax\leq \lfloor b\rfloor\} \subset C$. Let $y\geq 0$ such that $\trans y A$ is integral. We need to show 
 
 \[\forall x: Ax\leq \lfloor b \rfloor: \trans y A \leq \lfloor \trans y b\rfloor\]
 
-That means rounding down gives us the same solutions as we get by applying the definition of Chvatal closure. To use TDIness we look at
+That means rounding down gives us the same solutions as we get by applying the definition of Chv\'{a}tal closure. To use TDIness we look at
 
 \[\trans yb \stackrel{Ax\leq b}{\geq} \max \{\trans y Ax | Ax\leq b\} = \min \{\trans v b|v\geq 0, \trans v A = \trans y A\}\]
 
@@ -24,9 +24,9 @@ Since $\trans y A$ is integral and $Ax\leq b$ is TDI we know there is some integ
 Which proves the claim.
 \end{pr}
 
-We know that every rational polyhedron (and every bounded polyhedron) has a minimal TDI system that defines it. We can then find the Chvatal closure easily and get a new polyhedron, for which we can then again find a TDI description and repeat the procedure.
+We know that every rational polyhedron (and every bounded polyhedron) has a minimal TDI system that defines it. We can then find the Chv\'{a}tal closure easily and get a new polyhedron, for which we can then again find a TDI description and repeat the procedure.
 
-Unfortunately finding TDI descriptions is hard and the number of iterations can be arbitrarily large. The number of iterations of adding the Chvatal closure until we get the integer hull is called the \emph{Chvatal rank}.
+Unfortunately finding TDI descriptions is hard and the number of iterations can be arbitrarily large. The number of iterations of adding the Chv\'{a}tal closure until we get the integer hull is called the \emph{Chv\'{a}tal rank}.
 
 \subsection{Gomory's cutting plane algorithm}
 
@@ -36,7 +36,7 @@ The idea is to run simplex and the look at the final tableau. Find some row with
 
 Add that as a new constraint and repeat. 
 
-It is ok to round down the $\bar{a_{ij}}$ because $x\geq 0$ and rounding down makes everything smaller, so the inequality is still satisfied. Rounding down the $\bar a_{i0}$ is ok because that's just the Chvatal cut.
+It is ok to round down the $\bar{a_{ij}}$ because $x\geq 0$ and rounding down makes everything smaller, so the inequality is still satisfied. Rounding down the $\bar a_{i0}$ is ok because that's just the Chv\'{a}tal cut.
 
 The new constraint cuts off at least the optimal solution simplex found. This has the nice property that we don't add cuts in regions that aren't interesting to us.
 
@@ -107,7 +107,7 @@ A comb with handle $H$ and teeth $T_1,\ldots T_k$ consists of node sets $H$ and 
 \[\sum_{e\in E(H)} x_e +\sum_{i=1}^k\sum_{e\in E(T_i)} x_e \leq |H|+\sum_{i=1}^k(|T_i|-1)-\frac{k+1}{2}\]
 \end{thm}
 
-\begin{pr} To get the constraint from the theorem we take a linear combination of the constraints of the program and invoke the Chvatal cut theorem.
+\begin{pr} To get the constraint from the theorem we take a linear combination of the constraints of the program and invoke the Chv\'{a}tal cut theorem.
 
 Use
 

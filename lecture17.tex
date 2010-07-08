@@ -34,7 +34,7 @@ We could to this transformation for every valid constraint for the polyhedron. H
 
 Instead we just try to cut off things around the optimal solution until it becomes integral. That means we don't have to care about the other parts of the polyhedron and hopefully speeds up the process.
 
-To find the right cutting planes we first solve the linear program relaxation to get some $x^*$. The we find some hyperplane that cuts off $x^*$ without touching the integer hull, i.e. it is valid for $P_I$, and add it to our LP.
+To find the right cutting planes we first solve the linear program relaxation to get some $x^*$. Then we find some hyperplane that cuts off $x^*$ without touching the integer hull, i.e. it is valid for $P_I$, and add it to our LP.
 
 \begin{lstlisting}
 repeat
@@ -48,7 +48,7 @@ Of course we don't know how to find the cutting plane that cuts off $x^*$, or ev
 
 \subsection{Cutting plane proofs}
 
-There are many different ways to find cutting planes. In the following we will deal with Gomory-Chvatal cuts.
+There are many different ways to find cutting planes. In the following we will deal with Gomory-Chv\'{a}tal cuts.
 
 We want to prove that some inequality $\trans cx\leq \delta$ is valid for all integral solutions of $Ax\leq b$
 
@@ -76,7 +76,7 @@ In general we want to find inequalities of the form
 
 \[\trans y A x \leq \left\lfloor \trans y b \right \rfloor,\quad y\geq 0, \trans y A \text{ integral}\]
 
-These inequalities are called Gomory-Chvatal cutting planes.
+These inequalities are called Gomory-Chv\'{a}tal cutting planes.
 
 \begin{Def} Let $Ax\leq b$ system of $m$ linear inequations and $\trans cx\leq \delta$ an inequality. A sequence of linear inequalities $c_1x\leq \delta_1, c_2x\leq \delta_2,\ldots, c_mx\leq \delta_m$ is called a \emph{cuting plane proof} of $\trans c x\leq \delta$ from $Ax\leq b$ if
 \begin{itemize}
@@ -102,9 +102,9 @@ and $\delta_i=\lfloor \delta_i'\rfloor$.
 \begin{thm}[Finite Length] Let $Ax\leq s$ be a rational system of linear inequalities with at least one integral solution If $\trans cx\leq \delta$ is valid for integral $c$, then $\trans cx\leq \delta$ has a cutting plane proof of finite length.
 \end{thm}
 
-While looking for Gomory-Chvatal cuts we usually use the cuts we already added to form new cuts. If we don't do that but instead add all cuts that we can form without taking into account the new constraints we form the Chvatal closure of the polyhedron.
+While looking for Gomory-Chv\'{a}tal cuts we usually use the cuts we already added to form new cuts. If we don't do that but instead add all cuts that we can form without taking into account the new constraints we form the Chv\'{a}tal closure of the polyhedron.
 
-\begin{Def} Let $P=\{x|Ax\leq b\}$ be a rational polyhedron. Adding all Gomory-Chvatal cuts $\trans yAx\leq \lfloor \trans y b\rfloor$ for $y\geq 0$ and $\trans y A$ integral, yields the \emph{Chvatal Closure}
+\begin{Def} Let $P=\{x|Ax\leq b\}$ be a rational polyhedron. Adding all Gomory-Chv\'{a}tal cuts $\trans yAx\leq \lfloor \trans y b\rfloor$ for $y\geq 0$ and $\trans y A$ integral, yields the \emph{Chv\'{a}tal Closure}
 \end{Def}
 
-\begin{thm} The Chvatal Closure is a polyhedron\end{thm}
+\begin{thm} The Chv\'{a}tal Closure is a polyhedron\end{thm}
