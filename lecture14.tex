@@ -3,7 +3,7 @@
 
 The setting is very similar to the linear programs we already know. We just restrict the problems and the possible solutions a bit. As the name suggests we want integer solutions to our programs. In general it is hard to tell whether some constraint system naturally describes a polyhedron where all optimal solutions are integral, so we need to actively restrict the solution space. 
 
-\begin{Def}[Integer Linear Program] Given\footnote{In my oppinion $\R$ would be okay too} $A\in \Z^{m\times n}$, $b\in \Z^m$, $c\in \Z^{1\times n}$ find a $x\in \Z^n$ such that $Ax\leq b$ and $cx$ is maximal (or minimal)
+\begin{Def}[Integer Linear Program] Given\footnote{In my opinion $\R$ would be okay too} $A\in \Z^{m\times n}$, $b\in \Z^m$, $c\in \Z^{1\times n}$ find a $x\in \Z^n$ such that $Ax\leq b$ and $cx$ is maximal (or minimal)
 
 \begin{align*}
 \max \quad & cx \\
@@ -12,7 +12,7 @@ s.t. \quad & Ax \leq b\\
 \end{align*}
 \end{Def}
 
-If we just restrict some variables to be integral and allow abitrary values for the others we have a mixed integer linear program.
+If we just restrict some variables to be integral and allow arbitrary values for the others we have a mixed integer linear program.
 
 Integer linear programs allow us to model some new interesting problems that we couldn't before. The most prominent examples are 
 
@@ -80,18 +80,18 @@ Obviously if $P=P_I$ then the solution for an ILP with feasible region $P_I$ is 
 
 \begin{Def} A polyhedron $P$ is called integral if $P=P_I$\end{Def}
 
-\begin{thm}\label{Thm:polyIntegrality} A rational polyhedron $P$ is integral iff for any integral cost vector there is a integral point in the polyhedron that is maximal (or minimal).
+\begin{thm}\label{Thm:polyIntegrality} A rational polytope $P$ is integral iff for any integral cost vector $c$ the optimal point $x$ is also integral.
 
-\[\exists x\in P:\ x\in \Z^{n\times 1} \wedge \forall c\in Z^{1\times n}, y \in P:\ cx\geq cy\]
-
-and the maximum is finite. 
+\[\exists x\in P,x\in \Z^{n\times 1}\forall c\in \Z^{1\times n}, y \in P:\ cx\geq cy\] 
 \end{thm}
 
 If the cost vector $c$ is integral and the optimal solution $x$ is also integral, obviously $cx\in \Z$.
 
-\begin{pr} If the polyhedron is integral all vertices are integral. Since optimal values are always attained at vertices, the optimal solution will also be integral, so that direction is easy.
+\begin{pr} $\Rightarrow$ If the polytope is integral all vertices are integral. Since optimal values are always attained at vertices, the optimal solution will also be integral, so that direction is easy.
 
-For the other direction suppose $\max \{cx | x\in P\}\in \Z\quad \forall c\in \Z^{1\times n}$. Let $y\in P$ be a unique optimal solution for $c$. We have 
+$\Leftarrow$ For the other direction suppose $\max \{cx | x\in P\}\in \Z\quad \forall c\in \Z^{1\times n}$. We want to show that all vertices in the polytope are integral.
+
+Choose $c$ s.t. it has a unique optimal solution $y$. We have 
 
 \[cy>cx + x_1 -y_1 \quad \forall x\in P,x\neq y\]
 
@@ -107,6 +107,8 @@ We want to compute by how much the cost changed. Since we increased the first co
 
 Since we assumed that $cy$ is integral and our modification didn't impact integrality that equality forces $y_1$ to be integral too. We can do that for all components so they must all be integral. Since this must hold for all cost vectors it holds for all vertices and our polyhedron must be integral.
 \end{pr}
+
+It is possible to extend this result to arbitrary polytopes, even those that don't have vertices.
 
 
 \section{Total dual integrality}
@@ -124,16 +126,7 @@ Note that $x$ doesn't have to be integral here.
 The same works for $Ax\leq b, x\geq 0$ and $Ax=b, x\geq 0$
 \end{Def}
 
-Notable here is that TDI is not a property of the polyhedron but instead of the system that defines it. Very much like with degeneracy we may find another system that describes the same polyhedron but is in fact TDI.
-
-\begin{thm} For each rational polyhedron, there exists a TDI system $Ax\leq b$ with an integral matrix $A$. {\small (no proof)}
-\end{thm}
-
-Of course since finding feasible solutions for ILPs is NP-complete and the proof didn't make use of a nonrational constraint matrix it must be hard to find a TDI system for the polyhedron (or the TDI system is exponentially larger than the original system).
-
-This together with theorem \ref{Thm:polyIntegrality} has the following corollary: Let $A\in \Q^{n\times m}$, $b\in \Z^n$ and $Ax\leq b$ is TDI then $\{x|Ax\leq b\}$ is integral.
-
-The most important aspect of TDIness is the following theorem
+Although $x$ doesn't have to be integral in the optimal solution of a TDI system, we have the following nice result:
 
 \begin{thm} If $Ax\leq b$ is TDI and $b$ is integral, then $P=\{x|Ax\leq b\}$ is integral.
 \end{thm}
@@ -143,13 +136,49 @@ The most important aspect of TDIness is the following theorem
 In particular that means if $b\in \Z$ then the whole polyhedron is integral.
 \end{pr}
 
-TDIness is easier to check\footnote{At least that was said in the lecture. I don't know of a general way to do that}, but we don't really know how to use it yet.
+So if we can show dual integrality, we immediately get the integrality of the original polyhedron for all integral RHS $b$.
+
+It is important to note that TDI is not a property of the polyhedron but instead of the system that defines it. Very much like with degeneracy we may find another system that describes the same polyhedron but is in fact TDI. 
+
+Suprisingly there is the following theorem:
+
+\begin{thm}\label{existsTDIsystem} For each rational polyhedron $P$, there exists a TDI system $Ax\leq b$ with an integral matrix $A$. Iff $P$ is integral then $b$ can be chosen to be integral too.
+\end{thm}
+
+Since finding feasible solutions for ILPs is NP-complete and the proof didn't make use of a nonrational constraint matrix it must be hard to find a polynomial size TDI system for the polyhedron (or no such system exists). At least that's what I suspect.
+
+\begin{pr}[Theorem \ref{existsTDIsystem}] (From the book by Cook etc) Let $P=\{x | Mx\leq d\}$ and $M$ is integral. If $P$ is rational we can always scale the matrix up until it is integral. Now we take all conic combinations of the rows of $M$ that are integral
+
+\[L=\{l\in \Z^n | l = \trans y M, 0\leq y\leq 1\}\]
+
+$L$ is a finite set because we only consider only the integer points in a bounded set. Note though that $L$ is quite large in general.
+
+We now use the elements of $L$ to construct a TDI system. For $l\in L$ let $t(l) = \max\{\trans l x | x\in P\}$, i.e. $t(l)$ is the optimal value for any point in $P$ with respect to some special, integral cost vector $l$. $t(l)$ can be found by solving one LP per $l\in L$. Note that $t(l)$ is integer if $P$ is integral.
+
+Now comes the trick. Define the new system $Ax\leq b$ using the inequalities $\trans lx\leq t(l)$. This must be equal to $P$ because each $l$ is just a linear combination of old constraints and we defined $t(l)$ using points in $P$.
+
+We need to show that this system is TDI, i.e. for every integral cost vector $c$ the dual has an integral optimal solution. Let $c$ be integral and chosen s.t. $z^*:=\max \{cx|x\in P\}$ is bounded. We want to construct an integral solution to $z^*=\min \{\trans yb | \trans y A = \trans c, y\geq 0\}$.
+
+Let $y^*$ be the possibly fractional optimal dual solution for the original matrix $M$. 
+
+\[y^* = \argmin y \{\trans y d| \trans y M = \trans c\}\]
+
+Construct a new dual RHS vector $\bar c = \trans{(y^*-\lfloor y^*\rfloor)}M$. $\bar c$ is a convex combination of the rows of $M$. But it must also be integral since $\trans{(y^*-\lfloor y^*\rfloor)}M=\trans{y^*}M-\lfloor\trans{y^*}\rfloor M$ and we know $\trans{y^*}M=\trans c$ and the second part must be integral because we take an integral combination of an integral matrix.
+
+However $y^*-\lfloor y^*\rfloor$ is an optimal solution for $\min \{\trans y d| \trans yM=\trans{\bar c},y\geq 0\}$. TO BE CONTINUED
+\end{pr}
+
+This together with theorem \ref{Thm:polyIntegrality} has the following corollary: Let $A\in \Q^{n\times m}$, $b\in \Z^n$ and $Ax\leq b$ is TDI then $\{x|Ax\leq b\}$ is integral.
+
+There seems to be a polynomial method to check whether a system is TDI, but I don't know how it works. See the book by Cook.
+
+What we can do however is to have a hard look at the dual and "recognise" that it always has integral optimal solutions.
 
 \begin{Ex} Given a directed graph $G=(V,E)$, two vertices $s,t\in V$ and the set of paths $P$ between $s,t$. We're also given a cost function $c$ on the edges. The task is to assign positive weights $y_e$ to the edges s.t. each path has accumulated cost at least 1. While doing so we want to minimize
 
 \[\sum_{e\in E} c(e), y_e\]
 
-One maybe recognise this as a Min-Cut problem. Formulated as a LP that is 
+One maybe recognize this as a Min-Cut problem. Formulated as a LP that is 
 
 \begin{align*}
 \min \quad & \sum_{e\in E} c(e) y_e\\
@@ -165,5 +194,5 @@ s.t. & \sum_{p,e\in P} x_p \leq c(e) && \forall e\in E\\
  & x_p \geq 0 && p\in P
 \end{align*}
 
-By looking hard at the dual we see that it defines a maximum flow problem. As we know maximum flow problems with integer capacities have integral optimal solutions. Hence we have a TDI system.
+By looking hard at the dual we see that it defines a maximum flow problem. As we know maximum flow problems with integer capacities have integral optimal solutions. Hence we have a TDI system and the primal polyhedron must be integral, since the RHS is integral.
 \end{Ex}
