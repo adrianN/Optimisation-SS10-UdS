@@ -1,3 +1,7 @@
+\pdfcompresslevel9
+\pdfdecimaldigits2
+\pdfminorversion4
+
 \documentclass[12pt,a4paper]{book}
 \usepackage[bottom=2.5cm,top=3.5cm]{geometry}
 %\usepackage{ngerman}
@@ -12,7 +16,6 @@
 \usepackage{multirow}
 \usepackage{rotating}
 \usepackage[margin=10pt,font=small,labelfont=bf]{caption}
-%\usepackage[pdftex]{graphicx}
 \usepackage{listings}
 \usepackage{microtype}
 
@@ -68,8 +71,7 @@
 \renewcommand{\arraystretch}{1.5}
 \newcommand{\argmin}[1]{\underset{#1}{\operatorname{argmin}}}
 
-\pdfcompresslevel9
-\pdfdecimaldigits2
+
 
 \newcommand{\trans}[1]{{#1}^\text{\upshape \sffamily T}}
 \newtheoremstyle{leplain} %name
@@ -188,4 +190,7 @@
 
 \marginpar{Lecture 24}
 \input{./lecture24}
+
+\marginpar{Lecture 25}
+\input{./lecture25}
 \end{document}
