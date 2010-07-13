@@ -18,24 +18,21 @@ Since $x$ is a basic solution there is a nonsingular $n\times n$ submatrix of $A
 
 Because $A$ is totally unimodular and $A_x$ is nonsingular we know $|\det A_x|=1$. But that implies that $A_x^{-1}$ only has integral entries (to see why have a look at Cramer's rule for computing the inverse). Since $b'$ is also integral it follows that $x$ must be integral too.
 
-
-The following isn't completely correct yet:
-
 $\Leftarrow$ Suppose all vertices of $P$ are integral vectors $\forall b\in \Z^m$. We want to show that every nonsingular square submatrix $A'$ has a determinant of $\{1,-1\}$. By switching rows and columns around we can assume that the submatrix $A'$ lies in the topleft corner of $A$ (switching things only changes the sign of the determinant). 
 
-We expand $A$ by the identity matrix, $(A|I)$. Then we can construct a new matrix $B\in \Z^{m\times m}$ such that $\det (A') = \det (B)$ by taking 
+We expand $A$ by the identity matrix, $(A|I)$. Then we can construct a new matrix $B\in \Z^{m\times m}$ such that $\det (A') = \det (B)$ by taking a the first few and the last few columns of $(A|I)$ to build:
 
 \[B = \left({A' \atop *} {0\atop I}\right)\]
 
 To prove $|\det (B)| =1$ it suffices we show $B^{-1}$ is integral because
 
-\[\det(B)\cdot\det(B^{-1}) = 1\]
+\[\det(BB^{-1}) = \det(I) = \det(B)\cdot\det(B^{-1}) = 1\]
 
 and our knowledge that $\det (B)$ is integral (since $B$ is integral). If $B^{-1}$ is also integral we multiply two integrals. We can only get $1$ if both are either $1$ or $-1$.
 
-To prove $B^{-1}$ is integral we choose $i\in \{1,\ldots, m\}$ and show that $B^{-1}e_i\in \Z^m$. Take some $y\in \Z^m$ s.t. $z:= y + B^{-1}e_1\geq 0$. $z$ will later become the vertex of our polyhedron. 
+To prove $B^{-1}$ is integral we choose $i\in \{1,\ldots, m\}$ and show that $B^{-1}e_i\in \Z^m$. Take some $y\in \Z^m$ s.t. $z:= y + B^{-1}e_1\geq 0$. 
 
-By multiplying both sides with $B$ we get $b:= Bz=By+e_i$. $b$ is integral because $B$,$y$ and $e_i$ are integral. We can add $n$ zeros to the middle of $z$ such that the new $z'$ fulfills $(A|I)z'=b$. The first $n$ entries of $z'$, call them $z''$ is in $P$ since
+By multiplying both sides with $B$ we get $b:= Bz=By+e_i$. $b$ is integral because $B$,$y$ and $e_i$ are integral. We can add $n$ zeros to the middle of $z$ (in the positions of the columns we didn't choose to form $B$) such that the new $z'$ fulfills $(A|I)z'=b$. The first $n$ entries of $z'$, call them $z''$ is in $P$ since
 
 \[Az''\leq b\]
 
