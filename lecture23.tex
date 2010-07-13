@@ -28,7 +28,7 @@ An alternative analysis distinguishes between "long" pieces that are longer than
 
 \subsection{Using an ILP}
 
-We introduce variables $z_1,z_2,\ldots , z_t$, $t = \sum_{di}$ s.t. 
+We introduce variables $z_1,z_2,\ldots , z_t$, $t = \sum d_i$ s.t. 
 
 \[z_j=\begin{cases} 1 & \text{rod j is used}\\
 0 & \text{otherwise}\end{cases}\]
@@ -40,6 +40,7 @@ Thus we get the ILP
 \begin{align*}
 \min \quad & \sum z_j\\
 \text{s.t.} \quad & \sum x_{ij}l_i \leq Lz_j\\
+	& \sum_{j} l_ix_{ij} \geq d_i && \forall i
 	&x_{ij} \in \N, z_j \in \{0,1\}
 \end{align*}
 
@@ -56,7 +57,7 @@ K-\lfloor K \rfloor & j=\lfloor K\rfloor +1\\
 
 But we can get a better approximation by a more sophisticated ILP.
 
-\begin{Def}[Cutting pattern] A cutting pattern is a set of numbers $(a_1,\ldots,a_k)$ s.t. $a_i\in \N$ and $\sum a_il_i\leq L$ and the sum is maximal.
+\begin{Def}[Cutting pattern] A cutting pattern is a set of numbers $(a_1,\ldots,a_k)$ s.t. $a_i\in \N$ and $\sum a_il_i\leq L$ and the sum is maximal, i.e. there is no more room left for any $l_i$.\footnote{The book by Bertsimas doesn't make this restriction}
 \end{Def}
 
 Let $P$ be the set of all cutting patterns (this is a very large set). We introduce a variable $x_p$ for every $p\in P$ that indicates the number of patterns $p$ that we used.
