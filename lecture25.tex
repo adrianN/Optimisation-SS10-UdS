@@ -1,0 +1,146 @@
+\section{Set Cover}
+
+We have a set of sets $S=\{S_1,\ldots,S_n\}, S_i\in \mathcal{U}$ and each set $S_i$ has a cost $c(S_i)$. We want to cover the universe $\mathcal{U}$ by selecting $S_i$ s.t. the costs are minimal.
+
+\[\bigcup S_i = \mathcal{U}\qquad \min \sum c(S_i)\]
+
+For example the edge cover problem is a special instance of set cover where every edge is a $S_i$ and we want to cover all nodes.
+
+\subsection{Greedy Algorithm}
+
+It is natural to sort the sets by cost per covered item and select them greedily until the universe is covered. In each step we cover some elements. We can greatly improve the algorithm by removing the already covered items from the remaining sets and recomputing the cost per item metric.
+
+\begin{lstlisting}
+$C = \emptyset$
+$K = \emptyset$
+while $\bar C \neq \emptyset$
+	choose $S$ with minimal cost/item, add to $K$
+	for $e\in \bar C \cap S$
+		price($e$) = $\frac{C(S)}{|\bar C \cap S|}$ 
+	$C = C\cup S$
+\end{lstlisting}
+
+\begin{thm} Let OPT be the cost of an optimal cover. Then Greedy produces a solution of cost at most OPT$\cdot H_m$, where $m$ is the cardinality of $\mathcal{U}$ and $H_m$ is the $m$th harmonic number.
+\end{thm}
+
+The following example shows why the ratio is at least $H_m$
+
+\begin{Ex} We have a $\mathcal{U}$ of size $m$ and $m$ disjoint singleton sets of weight $1/m,1/(m-1),\ldots 1$ and another set of weight $1+\epsilon$. The algorithm picks the $1/m$ cost singleton instead of the $1+\epsilon$ set because the cost/item is better. In fact the algorithm covers $\mathcal{U}$ by selecting all singletons.
+\end{Ex}
+
+\begin{pr} Let $e_1,\ldots,e_m$ be the order in which the elements are covered. Ties are broken arbitrarily.
+
+Consider $e_i$. When $e_i$  is covered there are at least $m-i+1$ uncovered items.
+
+We claim there is a set $S$ which covers $e_i$ at a price of at most $OPT/(m-i+1)$. Look at the ratio $OPT/\bar C$. We want to show there must be a set that has cost/item ratio lower than that:
+
+\begin{align*}
+\frac{OPT}{|\bar C|} &= \frac{1}{|\bar C|}\sum_{S\in OPT} c(S)\\
+	&= \sum_{S\in OPT} \sum_{e\in S\cap \bar C} \frac{C(S)}{|S\cap \bar C}\\
+	&= \frac{1}{|\bar C|} \sum_{e\in \bar C} \sum_{S\in OPT: e\in S} \frac{c(S)}{|S\cap \bar C|}\\
+	&\geq \min_{e\in \bar C} \min_{S\in OPT:e\in S} \frac{c(S)}{|S\cap \bar C|}\\
+	&\geq \min_S \frac{c(S)}{|S\cap \bar C|}
+\end{align*}
+
+Therefore the total cost of Greedy is bounded by
+
+\[OPT \cdot (\frac{1}{m} + \frac{1}{m-1} + \ldots + 1) = OPT \cdot H_m\]
+\end{pr}
+
+\subsection{Connection to LP}
+
+In a linear programming formulation we introduce $x_S$ for every set $S$. We want to minimise the total cost of the picked sets, subject to the constraint that if we sum over the sets that contain $e$, at least one of the sets must be picked.
+
+\begin{align*}
+\min \quad & \sum c(S) x_S\\
+s.t. \quad & \sum_{S,e\in S} x_S \geq 1\\
+	& x_S \in \{0,1\}
+\end{align*}
+
+An LP like this is usually called a covering LP.
+
+Consider the LP relaxation and form the dual
+
+\begin{align*}
+\max \quad & \sum y_e\\
+s.t. \quad & \sum_{e\in S} y_e \leq c(S)\\
+	& y_e \geq 0
+\end{align*}
+
+In the dual we assign some values $y_e$ to the $e$ such that the sum of all values is smaller than the cost of the set. This is called a packing LP because we try to pack things under constraints. In general a packing LP is an LP in which all coefficients and RHSs are nonnegative.
+
+\begin{thm} \label{thm:greedySetCoverDual}Greedy determined for each $e\in \mathcal{U}$ a price, price($e$).
+
+For all $e\in \mathcal{U}$
+
+\[y_e= \frac{\text{price}(e)}{H_m}\]
+
+is a feasible solution to the dual
+\end{thm}
+
+\begin{pr} We need to prove that no set is overloaded. Let $S$ be any set and let $e_1,\ldots, e_k$ be the elements of the set in the order in which the elements were covered. Consider $e_i$. When it was covered there were at least $k-i+1$ uncovered elements in $S$. So the cost efficiency of $S$ at this time was 
+
+\[\leq \frac{c(S)}{k-i+1}\]
+
+Since Greedy covers $e_i$ in the cheapest possible way, the price of $e_i$ can't exceed that. If we sum that up we get
+
+\[\sum_{e_i\in S} \frac{price(e_i)}{H_m} \leq \frac{c(S)}{H_m}\left(\frac{1}{k}+\ldots+1\right) \leq c(S)\]
+\end{pr}
+
+We know by LP duality:
+
+\[z^{\text{dual}} \leq z^{LP} \leq z^{ILP}\]
+
+by theorem \ref{thm:greedeSetCoverDual} we know that the LP solution must be better than 
+
+\[\frac{1}{H_m} OPT\]
+
+and have derived the approximation bounds using the LP formulation.
+
+\subsection{Rounding}
+
+Now we consider how to extract integer solutions from LP solutions.
+
+The easy way is to round deterministically: We assume that no element is contained in more than $f$ sets. After solving the optimal LP we pick all sets whose fractional values in the optimal solution is at least $1/f$. 
+
+This is a solution to the ILP of cost at most $f\cdot OPT$, because we increase the cost of a variable by at most a factor of $f$. Covering constraints remain satisfied because we make the sums larger, so elements can only become more covered.
+
+A more sophisticated approach is randomised: After solving the LP we interpret the solution vector $x^*$ as a probability vector and pick sets accordingly.
+
+In general this method does not produce a valid covering. Thus we repeat the experiment a couple of times and take all the sets. We'll show that we can make the probability that one element is not covered $1/4$.
+
+This method gives us a solution with the same cost as the LP in expectation, because the expected value of the indicator vector ist just the LP solution, since that's the distribution we're using to choose.
+
+Now we want to show that for a single sampling the probability that one fixed element $x\in \mathcal{U}$ is not covered is 
+
+\[P(x \text{ not covered}) \leq \frac 1e\]
+
+This is because we know
+
+\[\sum_{S;x\in S} x_S^* \geq 1\]
+
+Then the probability that we don't cover $x$ is 
+
+\begin{align*}
+P(x\text{ not covered})&=\prod_{S; x\in S} (1-x_S^*)\\
+	&\leq  (1-\frac 1k)^k && \text{$x$ contained in $k$ sets}\\
+	&\leq \frac 1e
+\end{align*}
+
+If we perform the rounding process more often and take all the sets we can make the probability as small as we want. In particular we can round $d\ln m$ times s.t.
+
+\[\left(\frac 1e\right)^{d\ln m} \leq \frac {1}{4m}\]
+
+Then the probability that there is an uncovered element is, by union bound:
+
+\[P(\exists x \text{ uncovered}) \leq \frac{1}{4}\]
+
+We know that each set of sets has expected value the same as the LP solution, the solution we obtain by iteration has expected value
+
+\[\leq d\ln m z^{LP}\]
+
+By Markov's inequality the probability to have a solution that is worse than $\alpha$ times that value is $1/\alpha$. This means that the randomised rounding procedure generates a solution with approximation ratio
+
+\[ 4 d\ln m OPT \in O(\ln m \cdot OPT)\]
+
+and covers all elements with probability at least $\frac 12$. Hence, in expectation we need to run this twice to find a very good solution.
