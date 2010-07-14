@@ -99,7 +99,7 @@ and $\delta_i=\lfloor \delta_i'\rfloor$.
 \end{itemize}
 \end{Def}
 
-\begin{thm}[Existence] Let $P=\{x\in \R^n | Ax\leq b\}$ be bounded and non-empty
+\begin{thm}[Existence]\label{thm:existsCuttingProof} Let $P=\{x\in \R^n | Ax\leq b\}$ be bounded and non-empty
 
 \begin{enumerate}
 \item if $P_I\neq \emptyset$ and some inequality $\trans c x\leq \delta$ with integral $c$ is valid, then there is a cutting plane proof
@@ -107,6 +107,8 @@ and $\delta_i=\lfloor \delta_i'\rfloor$.
 \[0x\leq -1\]
 \end{enumerate}
 \end{thm}
+
+Theorem \ref{thm:existsCuttingProof} gives us an "easy" way to check if a polyhedron has no integer vertices at all. This is in spirit similar to the result we had from the Farkas lemma for arbitrary constraint systems.
 
 \begin{thm}[Finite Length] Let $Ax\leq s$ be a rational system of linear inequalities with at least one integral solution If $\trans cx\leq \delta$ is valid for integral $c$, then $\trans cx\leq \delta$ has a cutting plane proof of finite length.
 \end{thm}
