@@ -45,7 +45,7 @@ We claim there is a set $S$ which covers $e_i$ at a price of at most $OPT/(m-i+1
 Therefore the total cost of Greedy is bounded by
 
 \[OPT \cdot (\frac{1}{m} + \frac{1}{m-1} + \ldots + 1) = OPT \cdot H_m\]
-\end{pr}
+\qed \end{pr}
 
 \subsection{Connection to LP}
 
@@ -85,7 +85,7 @@ is a feasible solution to the dual
 Since Greedy covers $e_i$ in the cheapest possible way, the price of $e_i$ can't exceed that. If we sum that up we get
 
 \[\sum_{e_i\in S} \frac{price(e_i)}{H_m} \leq \frac{c(S)}{H_m}\left(\frac{1}{k}+\ldots+1\right) \leq c(S)\]
-\end{pr}
+\qed \end{pr}
 
 We know by LP duality:
 

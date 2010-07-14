@@ -22,7 +22,7 @@ Since $\trans y A$ is integral and $Ax\leq b$ is TDI we know there is some integ
 \[\trans y A x =\trans {v^*} A x \stackrel{Ax\leq \lfloor b\rfloor}{\leq} \trans{v^*} \lfloor b\rfloor \leq \lfloor \trans{v^*} b\rfloor \leq \lfloor \trans y b\rfloor\]
 
 Which proves the claim.
-\end{pr}
+\qed \end{pr}
 
 We know that every rational polyhedron (and every bounded polyhedron) has a minimal TDI system that defines it. We can then find the Chv\'{a}tal closure easily and get a new polyhedron, for which we can then again find a TDI description and repeat the procedure.
 
@@ -145,7 +145,7 @@ Summing up everything we get
 \end{align*}
 
 We replace $-k/2$ by $-(k+1)/2$ because $k$ is odd and we round everything down.
-\end{pr}
+\qed \end{pr}
 
 Unfortunately there are exponentially many comb cuts, and there is no polynomial algorithm to find one that is violated s.t. we might add it. There are however exponential time algorithms that find them and there are heuristic methods that sometimes find them.
 

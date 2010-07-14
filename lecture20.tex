@@ -35,7 +35,7 @@ For the second statement let $x^*$ be an optimal solution to the ILP. Since it's
 But in the relaxed version we also have some additive Then we have
 
 \[z(\lambda) \geq cx^* + \trans{\lambda}\underbrace{(b-Ax^*)}_{\geq 0} \geq cx^*=z^*\]
-\end{pr}
+\qed \end{pr}
 
 So this is a relaxation for every $\lambda$. But since we want to find upper bounds that are as tight as possible, we look for a $\lambda$ that minimises $z(\lambda)-z^*$. Because we know that $z(\lambda)\geq z^*$ for all $\lambda$ we can just minimise $z(\lambda)$. This is called the Langrangean Dual
 
@@ -60,7 +60,7 @@ then $x_\lambda$ is also an optimal solution for the ILP.
 \begin{pr} Let $x^*$ be an optimal solution to the ILP. By the first condition our penalty term $\trans{\lambda}(b-Ax_\lambda)$ is positive in every component, so for the optimal relaxed value we know: $z_\lambda ^*\geq c x^*$. Since by the second condition we know that the penalty is actually: $\trans{\lambda}(b-Ax_\lambda) = 0$, we know we have equality.
 
 Note: we need the $Ax_\lambda \leq b$ condition because $\lambda$ could be 0.
-\end{pr}
+\qed \end{pr}
 
 Next we compare the quality of the langrangean relaxation with the easier linear programming relaxation.
 
@@ -91,7 +91,7 @@ z_{LD} &\geq \min_{\lambda\geq 0} \max_{Dx\leq d} cx+ \trans{\lambda}(b-Ax)\\
 	&= \min_{{{\lambda \geq 0}\atop {y\geq 0}}\atop {\trans yD=c-\trans{\lambda}A}} \trans{\lambda} b+ \trans y d\\
 	&=\max_{{Ax\leq b}\atop {Dx\leq d}} cx = z_{LP}
 \end{align*}
-\end{pr}
+\qed \end{pr}
 
 \subsection{TSP --- Held-Karp-Bound}
 

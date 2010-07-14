@@ -44,7 +44,7 @@ s.t. &\sum_{j\in J^+_i} z_j + \sum_{j\in J^-_i} (1-z_j) \geq 1 && \forall i\\
 The constraints make sure that in every clause at least one positive variable is 1 or one negative variable is 0. If the feasible region of the LP is nonempty then the formula is satisfiable. The formal proof is omitted as it is rather obvious.
 
 To show NP completeness we need to show that ILP is in NP. In the 0-1 case it is rather obvious that we can use any feasible solution as a polynomial witness. In the general case we would need to show that the entries in the solution vector are polynomially bounded. This is quite complicated but follows from the polynomial running time of the ellipsoid method. We will omit that proof here.
-\end{pr}
+\qed \end{pr}
 
 NP-completeness is a worst-case statement. Some ILPs can be solved efficiently. We'll talk about conditions for that.
 
@@ -106,7 +106,7 @@ We want to compute by how much the cost changed. Since we increased the first co
 \[\bar c y = cy+y_1\]
 
 Since we assumed that $cy$ is integral and our modification didn't impact integrality that equality forces $y_1$ to be integral too. We can do that for all components so they must all be integral. Since this must hold for all cost vectors it holds for all vertices and our polyhedron must be integral.
-\end{pr}
+\qed \end{pr}
 
 It is possible to extend this result to arbitrary polytopes, even those that don't have vertices.
 
@@ -134,7 +134,7 @@ Although $x$ doesn't have to be integral in the optimal solution of a TDI system
 \begin{pr} The proof is by contradiction. Assume $P$ is not integral and take a fractional vertex $x$ of $P$. Construct an integral cost vector $c$ such that $x$ is optimal, by taking a rational one and scaling.
 
 In particular that means if $b\in \Z$ then the whole polyhedron is integral.
-\end{pr}
+\qed \end{pr}
 
 So if we can show dual integrality, we immediately get the integrality of the original polyhedron for all integral RHS $b$.
 
@@ -166,7 +166,7 @@ Let $y^*$ be the possibly fractional optimal dual solution for the original matr
 Construct a new dual RHS vector $\bar c = \trans{(y^*-\lfloor y^*\rfloor)}M$. $\bar c$ is a convex combination of the rows of $M$. But it must also be integral since $\trans{(y^*-\lfloor y^*\rfloor)}M=\trans{y^*}M-\lfloor\trans{y^*}\rfloor M$ and we know $\trans{y^*}M=\trans c$ and the second part must be integral because we take an integral combination of an integral matrix.
 
 However $y^*-\lfloor y^*\rfloor$ is an optimal solution for $\min \{\trans y d| \trans yM=\trans{\bar c},y\geq 0\}$. TO BE CONTINUED
-\end{pr}
+\qed \end{pr}
 
 This together with theorem \ref{Thm:polyIntegrality} has the following corollary: Let $A\in \Q^{n\times m}$, $b\in \Z^n$ and $Ax\leq b$ is TDI then $\{x|Ax\leq b\}$ is integral.
 

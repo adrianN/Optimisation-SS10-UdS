@@ -130,7 +130,7 @@ Hence
 \[cx \geq \sum_{i,j} y_i a_{ij} x_j \geq \trans b y\]
 
 But this isn't very surprising because we defined the dual such that this holds.
-\end{pr}
+\qed \end{pr}
 
 \begin{thm}[Strong Duality]\label{thm:strongDuality} If a linear program is feasible and bounded, then so is its dual. The value of the two LPs is the same. \end{thm}
 
@@ -168,7 +168,7 @@ b &= Ax\\
  \end{align*}
  
  For LPs which are not in standard form we first transform the primal into normal form. Some similar transformation is done on the dual. Then you prove that the transformed LPs have the same optimal value.
-\end{pr}
+\qed \end{pr}
 
 This proof gives a way to get a dual solution from a primal solution. It's $c_BA_B^{-1}$
 
@@ -186,7 +186,7 @@ y_i(a_ix-b_i) = 0 && \forall i\\
 \item[$\Leftarrow$] That follows from the proof of theorem \ref{thm:weakDuality} (replace $\leq 0$ by $=0$)
 \item[$\Rightarrow$] %TODO also follows from weakDuality proof. You get strict inequalities.
 \end{itemize}
-\end{pr}
+\qed \end{pr}
 
 When we run the simplex algorithm we have three possible answers. Let's see how they relate 
 

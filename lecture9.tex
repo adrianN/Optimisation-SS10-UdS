@@ -100,7 +100,7 @@ This is nearly what we want to prove, we just have to show that we also have a f
 \[p_j+r_i \geq c(i,j) \qquad \forall i,j\]
 
 However since we chose $r_i$ such that $c(i,j)-p_j$ was maximal when we did the assignment. So at this point in time $p_j + r_i \geq c(i,j)$. Now the $p_j$ can only increase over time, so if that condition held then, it will always hold in the future too and lemma \ref{marriageApprox} holds.
-\end{pr}
+\qed \end{pr}
 
 \begin{cor} The LP is integral. That is, every extreme point is a 0-1 vector.\end{cor}
 
@@ -120,7 +120,7 @@ where $\tau$ is an optimal assignment for $c$. By lemma \ref{marriageApprox} we 
  &\leq cx
 \end{align*}
 
-\end{pr}
+\qed \end{pr}
 
 Next we want to find a bound on the number of iterations such that we find not only an approximate solution, but the optimal one.
 
@@ -130,7 +130,7 @@ Next we want to find a bound on the number of iterations such that we find not o
 \begin{pr} The running time is easy to bound, each iteration can be done in O(n).
 
 For the optimality we see that the difference between the optimal dual costs and the solution the algorithm finds is smaller than 1 if we choose $\delta$ like that. Since we assume integer costs two different costs must have a difference of at least 1. Hence our solution must be optimal.
-\end{pr}
+\qed \end{pr}
 
 A cool application for maximum matching is "popular assignments". Again we have a set $U$ of bidders and a set $V$ of objects. For each $i\in U$ and two $j_i,j_2\in V$ we have three options
 

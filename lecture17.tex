@@ -14,7 +14,7 @@ There are two cases
 
 \item If all columns of $N$ have 2 non-zero entries (more are impossible by definition of $A$), the sum of all rows is $0$ so $N$ is singular and the determinant is $0$
 \end{itemize}
-\end{pr}
+\qed \end{pr}
 
 A nice corollary from this theorem is the fact that the node-edge incidence matrix (rows=vertices, columns=edges, $1$ if edge is at vertex) of any digraph is TU.
 
@@ -131,6 +131,6 @@ for $y$ with $0\leq y < 1$ and $\trans y A$ is integral. To do so we'll show tha
 So take some cut $\trans w x \leq \lfloor t\rfloor$ that has been derived from $A$ with some positive vector $\bar y$. Let $\bar y'= \bar y - \lfloor \bar y\rfloor$ be the fractional parts of that vector and consider $w'=\trans {\bar y'}A$. We can write $w'=w-\trans{\lfloor \bar y \rfloor}A$, so we know that $w'$ must be integral since $w$ is integral by definition of a Gomory-Chv\'atal cut and the product $\trans{\lfloor \bar y \rfloor}A$ only contains integral numbers. By a similar argument we can see that $t' = \trans{\bar y'}b$ differs from $t$ by an integral amount.
 
 So we have the constraint $\trans {w'}x\leq \lfloor t'\rfloor$ that we must have added because $w'$ is integral and a combination of the rows of $A$ and the constraint $\trans{\lfloor \bar y \rfloor} Ax\leq \trans{\lfloor \bar y\rfloor} b$ which is a linear combination of the rows of $A$. If we add them both up we get back the constraint $\trans w x\leq t$, which concludes the proof.
-\end{pr}
+\qed \end{pr}
 
 Hence there is a finite description of the Chv\'atal closure for a polyhedron.

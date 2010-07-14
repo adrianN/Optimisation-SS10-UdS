@@ -86,7 +86,7 @@ Since all the points from the beginning can be recursively written by a convex c
 %&\Rightarrow \lambda = \frac{\epsilon_2}{\epsilon_1+\epsilon_2}
 %\end{align*}
 
-\end{pr}
+\qed \end{pr}
 
 \begin{cor}\label{Cor:always_extreme_points} Let $P$ be a non-empty bounded polyhedron. Then the LP $\min cx$ s.t. $x\in P$ always has an optimal solution that is an extreme point of $P$.
 \end{cor}
@@ -112,7 +112,7 @@ c\sum_{i}\lambda_i y_i &\gneq c\sum \lambda_i x\\
 \end{align*}
 
 This would be a contradiction to the assumption $cx^*=c\sum_i y_i$. So there has to be at least one extreme point $y_i$ for which $cy_i=v$.
-\end{pr}
+\qed \end{pr}
 
 Corollary \ref{Cor:always_extreme_points} gives us the nice result that we can transform the problem of optimising an LP to a discrete problem with finitely (albeit exponentially) many candidate solutions. This will of course be very useful in designing an algorithm for solving them.
 
@@ -218,7 +218,7 @@ Therefore the constraints \ref{For:Motz1}, \ref{For:Motz2} and \ref{For:Motz3} a
 does the trick, as $(\bar x, x_n)$ then satisfies constraints \ref{For:Motz1}, \ref{For:Motz2} and \ref{For:Motz3} and therefore is in $P$.
 
 \end{enumerate}
-\end{pr}
+\qed \end{pr}
 
 There are a lot of interesting applications for these projections:
 
@@ -234,7 +234,7 @@ In 2D this is intuitively clear: applying linear transformations (the Fourier Mo
 \[Q=\{(Ax,x)\in \R^{m+n}| x\in P, P\text{ is a polyhedron in } \R^{n}, A \in \R^{m \times n}\}\]  %this is actually not that intuitive for me. Why is this a polyhedron?
 
 is a polyhedron. Then $\pi_m(Q)$ is also a polyhedron.
-\end{pr}
+\qed \end{pr}
 
 \begin{cor} Let $x_1,x_2,\ldots, x_k \in \R^n$, then CH($x_1,x_2,\ldots, x_k$) is a polyhedron\end{cor}
 
