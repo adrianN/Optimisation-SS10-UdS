@@ -52,7 +52,7 @@ Note that this construction won't work for the $\frac 12$ case as we wouldn't ge
 
 \subsection{Randomised Rounding}
 
-We interpret teh fractional values in the optimal solution as probabilities to set $x_j$ to $1$.
+We interpret the fractional values in the optimal solution as probabilities to set $x_j$ to $1$.
 
 Since we use randomisation our approximation bounds will use the expected value (this slightly changes the previous definition).
 
@@ -100,7 +100,7 @@ w.l.o.g. all literal in $C_i$ appear in non-negated form and $C_i=(v_i \vee v_2 
 
 \begin{align*}
 1-P(\text{all lit. false}) &= 1- \prod_{i=1}^{k(i)} (1-y_j^{LP})\\
-\intertext{We can bound that by using the AM-GM inequality}\\
+\intertext{We can bound that by using the AM-GM\footnote{Arithmetic mean vs. geometric mean} inequality}\\
 	&\geq 1-\left(\frac {1}{k(i)}\sum_{i=1}^{k(i)} (1-y_j^{LP})\right)^{k(i)}\\
 	&= 1-\left(1-\frac{1}{k(i)}\sum_{i=1}^{k(i)}y_j^{LP}\right)^{k(i)}\\
 \intertext{From the constraint in the LP we can bound that sum}\\

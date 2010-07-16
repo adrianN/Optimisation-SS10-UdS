@@ -57,7 +57,7 @@ K-\lfloor K \rfloor & j=\lfloor K\rfloor +1\\
 
 But we can get a better approximation by a more sophisticated ILP.
 
-\begin{Def}[Cutting pattern] A cutting pattern is a set of numbers $(a_1,\ldots,a_k)$ s.t. $a_i\in \N$ and $\sum a_il_i\leq L$ and the sum is maximal, i.e. there is no more room left for any $l_i$.\footnote{The book by Bertsimas doesn't make this restriction}
+\begin{Def}[Cutting pattern] A cutting pattern is a set of numbers $(a_1,\ldots,a_k)$ s.t. $a_i\in \N$ and $\sum a_il_i\leq L$ and the sum is "maximal", i.e. there is no more room left to increase any $l_i$.\footnote{The book by Bertsimas doesn't make this restriction}
 \end{Def}
 
 Let $P$ be the set of all cutting patterns (this is a very large set). We introduce a variable $x_p$ for every $p\in P$ that indicates the number of patterns $p$ that we used.
@@ -94,7 +94,7 @@ There are different rounding strategies that produce integer solutions from the 
 
 But how do we solve the LP anyway? $P$ may be huge.
 
-The idea is to start with a small number of patterns that guaranteees the existence of a solution, e.g. one cut per $l_i$. Let $P'\subset P$ be a set of patterns that is currently in use. We know the optimal LP solution for $P'$ and would like to know if it optimal for $P$. We can view the $P\backslash P'$ cuts to have non basic variables, i.e. they are 0. Now we can just use the normal stopping criterion of the simplex algorithm and check whether the reduced cost is $\geq 0$.
+The idea is to start with a small number of patterns that guarantees the existence of a solution, e.g. one cut per $l_i$. Let $P'\subset P$ be a set of patterns that is currently in use. We know the optimal LP solution for $P'$ and would like to know if it optimal for $P$. We can consider the cuts in $P\backslash P'$ to have non basic variables, i.e. they are 0. Now we can just use the normal stopping criterion of the simplex algorithm and check whether the reduced cost is $\geq 0$.
 
 The reduced cost can be computed as usual. Let $y_i$ be the multiplier of the $i$th row, i.e. the value of the corresponding dual variable. Then the reduced cost is the column $p$ is eual to
 

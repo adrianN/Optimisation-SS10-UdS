@@ -1,8 +1,8 @@
-\section{Langrangean Relaxation}
+\section{Lagrangean Relaxation}
 
 For an ILP we typically can separate the constraints in two classes, the hard constraints $A$ and the easy constraints $D$\footnote{TODO: switch A and D everywhere. D for difficult :/}. What hard and easy mean depends on the problem, but usually the problem would be solvable in polynomial time if it were not for the hard constraints.
 
-The idea of langrangean relaxation is to relax the hard constraints, but  a penalty into the objective function for violating them.
+The idea of lagrangean relaxation is to relax the hard constraints, but add a penalty into the objective function for violating them.
 
 For some $\lambda>0$
 
@@ -14,9 +14,9 @@ s.t. \quad & Dx \leq d\\
 
 If we violated the $Ax\leq b$ constraints we subtract something from our objective value.
 
-This is called the langrangean relaxation of the problem, the $\lambda_i$ are the Langrange multipliers.
+This is called the lagrangean relaxation of the problem, the $\lambda_i$ are the Lagrange multipliers.
 
-Since we said that the constraints in $D$ are "easy" we assume that we can solve this problem in polynomial time for some fixed $\lambda$.
+Since we said that the constraints in $D$ are "easy" we assume that we can solve this problem in polynomial time for some fixed $\lambda$, even without dropping the integrality constraints.
 
 \begin{thm} Let $\lambda \geq 0$ and $z^*,z(\lambda)$ be optimal values of the ILP, LP$_\lambda$ respectively.
 
@@ -32,20 +32,20 @@ For the second statement let $x^*$ be an optimal solution to the ILP. Since it's
 
 \[Ax^*\leq b\]
 
-But in the relaxed version we also have some additive Then we have
+But in the relaxed version we also have some additive term. Then we have
 
 \[z(\lambda) \geq cx^* + \trans{\lambda}\underbrace{(b-Ax^*)}_{\geq 0} \geq cx^*=z^*\]
 \qed \end{pr}
 
-So this is a relaxation for every $\lambda$. But since we want to find upper bounds that are as tight as possible, we look for a $\lambda$ that minimises $z(\lambda)-z^*$. Because we know that $z(\lambda)\geq z^*$ for all $\lambda$ we can just minimise $z(\lambda)$. This is called the Langrangean Dual
+So this is a relaxation for every $\lambda$. But since we want to find upper bounds that are as tight as possible, we look for a $\lambda$ that minimises $z(\lambda)-z^*$. Because we know that $z(\lambda)\geq z^*$ for all $\lambda$ we can just minimise $z(\lambda)$. This is called the Lagrangean Dual
 
 \[z_{LD} = \min_{\lambda\geq 0} \{z(\lambda)\} = \min_{\lambda\geq 0} \max_{{x\in \Z}\atop {Dx\leq d}} cx+\trans{\lambda}(b-Ax) \]
 
 For a discussion on how to actually find the optimal $\lambda$ see the book by Tsitsiklis and Bertsimas.
 
-\subsection{Quality of the Langrangean}
+\subsection{Quality of the Lagrangean}
 
-We want to investigate how good the bounds are that we get out of the langrangean relaxation. First we observe that in some special cases the optimal value of the langrangian dual can be optimal for the ILP too.
+We want to investigate how good the bounds are that we get out of the lagrangean relaxation. First we observe that in some special cases the optimal value of the lagrangian dual can be optimal for the ILP too.
 
 \begin{thm}\label{thm:relaxedOptimal} Let $\lambda \geq 0 $ and let $x_\lambda$ be an optimal solution for the relaxed $LP_\lambda$. If we have
 
@@ -62,7 +62,7 @@ then $x_\lambda$ is also an optimal solution for the ILP.
 Note: we need the $Ax_\lambda \leq b$ condition because $\lambda$ could be 0.
 \qed \end{pr}
 
-Next we compare the quality of the langrangean relaxation with the easier linear programming relaxation.
+Next we compare the quality of the lagrangean relaxation with the easier linear programming relaxation.
 
 \begin{thm} In general
 
@@ -115,7 +115,7 @@ s.t. \quad & \sum_{e\in E} x_e = n\\
 	& x_{e} \geq  0
 \end{align*}
 
-The second constraint in this program is the difficult one (as we'll see when we analyse the relaxed problem). We can form the lagrangean relaxation by takeing it into the cost function.
+The second constraint in this program is the difficult one (as we'll see when we analyse the relaxed problem). We can form the lagrangean relaxation by taking it into the cost function.
 
 For any $\lambda$\footnote{for some reason it's ok to take negative $\lambda$ too\ldots}
 
@@ -138,7 +138,7 @@ We claim that any solution for the relaxation is a 1-tree.
 \end{enumerate}
 \end{Def}
 
-The second constraint makes sure that node 1 has degree 2. The other constraints make sure that the other part of the solution forms a tree. The last constraint makes sure that there are no cycles and the first and third constraint make sure we have enough edges to form a tree.
+The second constraint makes sure that node 1 has degree 2. The other constraints make sure that the other part of the solution forms a tree: The last constraint makes sure that there are no cycles and the first and third constraint make sure we have enough edges to form a tree.
 
 We can reformulate the cost function like this, by replacing $\lambda_v$ by $-\lambda_v$
 

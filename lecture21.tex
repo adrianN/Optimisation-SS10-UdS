@@ -28,7 +28,7 @@ The easy approximation just doubles all the edges, traverses the tree and takes 
 
 The Christofides algorithm improves on this by using the observation that we just need to get rid of the nodes of odd degree in the tree. There has to be an even number of those nodes so we can just connect them using a minimum cost perfect matching (computable in polynomial time, e.g. \href{https://secure.wikimedia.org/wikipedia/en/wiki/Edmonds\%27s\_matching\_algorithm}{Edmond's algorithm} or by Linear Programming). Then the graph becomes eulerian and we can construct a tour out of it.
 
-This is a 1.5 approximation to the optimal cost. Since the MST is a lower bound on OPT we just need to argue that the matching is at most half the weight of the optimal tour.
+This is a 1.5 approximation of the optimal cost: Since the MST is a lower bound on OPT we just need to argue that the matching is at most half the weight of the optimal tour.
 
 Let $i_1,\ldots i_{2m}$ be the nodes with odd degree in the same order as in the optimal tour. Consider the two perfect matchings
 
@@ -70,14 +70,14 @@ This is a 2-approximation. We can prove this by looking at the LP relaxation of 
 
 \begin{align*}
 \max \quad & \trans c s\\
-s.t.\quad & \trans w s \leq K
+s.t.\quad & \trans w s \leq K\\
 	& s_i \in \{0,1\} && \forall i
 \end{align*}
 
-Obviously OPT$\geq z^*$ where $z^*$ is the optimal value of the relaxation. Since we also have
+Obviously OPT$\leq z^*$ where $z^*$ is the optimal value of the relaxation. Since we also have
 
 \[z^* \leq \sum_{j=1}^{k+1} c_j\]
 
 Then we have
 
-\[\max \{\sum_{j=1}^k c_j, c_{k+1}\} \geq \frac 12 \sum_{j=1}^{k+1} c_j \geq \frac 12 z^* \geq \frac 12 OPT\]
+\[\max \{\sum_{j=1}^{k+1} c_j, c_{k+1}\} \geq \frac 12 \sum_{j=1}^{k+1} c_j \geq \frac 12 z^* \geq \frac 12 OPT\]
