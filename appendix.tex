@@ -162,6 +162,14 @@ s.t.\quad & \sum_i w_i x_i \leq K\\
 	& x_i\in \{0,1\}
 \end{align*}
 
+\subsection{Maximum Clique}
+
+What size is the maximum clique in a given graph? Let $x_i$ be a variable that tells whether a vertex $i$ is in the maximum clique or not. Via the definition that a clique is a set of vertices no two of which are nonadjacent, the size of a maximum clique is
+\begin{align*}
+\max \quad & \sum_{i=1}^n x_i\\
+\text{s.\,t.} \quad & x_i + x_j \leq 1 & \forall (i,j) \notin E\\
+& x_i \in \{0,1\}
+\end{align*}
 
 \subsection{Facility Placement}
 
@@ -217,7 +225,6 @@ Let $M = \{1, \ldots, m\}$ and $N=\{1, \ldots, n\}$. Let $M_1, M_2, \ldots, M_n$
 \subsubsection{Dualities}
 We can observe the following primal-dual relations:
 
-\begin{table}[h!]
 \begin{center}
 \begin{tabular}{c|c}
 \textbf{Covering problems} & \textbf{Packing problems}\\
@@ -226,10 +233,8 @@ Minimum set cover &	Maximum set packing\\
 Minimum vertex cover & Maximum matching\\
 Minimum edge cover & Maximum independent set\\
 \end{tabular}
-\caption{Covering-packing dualities}
-\label{tbl:coveringpackingdualities}
 \end{center}
-\end{table}
+
 \subsection{Covering Problems}
 
 Weighted versions can easily be derived.
