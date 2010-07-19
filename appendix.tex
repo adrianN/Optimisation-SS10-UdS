@@ -174,6 +174,28 @@ s.t. \quad & \sum_{i} x_{ij} \leq n\cdot y_j\\
 	& x_{ij},y_j \in \{0,1\}
 \end{align*}
 
+\subsection{Sequencing with Setup Times}
+
+We have a machine that can perform $m$ different operations. Each operation needs a different tool. The machine can hold $B$ tools in its tool magazine. Changing a tool incurs a setup time $s_j$. We need to perform a set of tasks, but we can switch the order. What is the order that minimises the total time?
+
+Introduce $x_{ir}$ that indicates whether job $i$ is performed in slot $r$. $y_{jr}$ means we have tool $j$ in the toolbox at slot $r$.
+
+\begin{align*}
+\intertext{Costs only happen when we switch tools}
+\min \quad & \sum_r\sum_j s_j|y_{jr}-y_{j(r-1)}|\\
+\intertext{we can't hold infinitely many tools in our toolbox}
+s.t.\quad	& \sum_j y_{jr} \leq B && \forall r\\
+\intertext{we need some tool to complete a job}
+	& x_{ir} \leq y_{ir} && \text{easily extended to sets of tools}\\
+\intertext{One job at a time}
+	& \sum_i x_{ir} = 1 && \forall r
+	& x,y\in \{0,1\}
+\end{align*}
+
+The absolute value in the objective function can easily be replaced by some new variables $z_{jr}$
+
+\[z_{jr} \geq y_{jr} - y_{j(r-1)} \qquad z_{jr} \geq y_{j(r-1)} - y_{jr}\]
+
 \subsection{Covering Problems}
 
 Weighted versions can easily be derived.
