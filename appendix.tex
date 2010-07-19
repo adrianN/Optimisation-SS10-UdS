@@ -127,7 +127,7 @@ Thus the dual has integral optimal solutions of the same value as the primal (by
 \section{ILP formulations}
 
 \subsection{Satisfiability}
-See section\ref{sec:ilpNPcomplete}. Note: this proves ILP solving is NP-complete. It may be worthwhile to remember the proof why Satisfiability is NP-complete and use it to cheat your way around exam questions. If you can remember the name of a non-LP algorithm for the problem you are asked to solve copy down the proof, argue that \$Problem is in NP and write down this ILP:
+See section \ref{sec:ilpNPcomplete}. Note: this proves ILP solving is NP-complete. It may be worthwhile to remember the proof why Satisfiability is NP-complete and use it to cheat your way around exam questions. If you can remember the name of a non-LP algorithm for the problem you are asked to solve copy down the proof, argue that \$Problem is in NP and write down this ILP:
 
 For each variable $v_j$ in the formula we introduce $z_j \in \{0,1\}$ in our ILP, with the natural interpretation of the value of $z_j$. For every clause $C_i$ let $J^+_i$ be the number of positive and $J^-_i$ be the number of negated variables in clause $C_i$.
 
@@ -196,6 +196,40 @@ The absolute value in the objective function can easily be replaced by some new 
 
 \[z_{jr} \geq y_{jr} - y_{j(r-1)} \qquad z_{jr} \geq y_{j(r-1)} - y_{jr}\]
 
+\subsection{Covering and Packing Problems}
+\subsubsection{Overview}
+\begin{figure}[htbp]
+\begin{center}
+\includegraphics{images/coverpackingpartition}
+\caption{Illustration of a cover, a packing and a partition}
+\label{fig:coverpackingpartition}
+\end{center}
+\end{figure}
+
+Let $M = \{1, \ldots, m\}$ and $N=\{1, \ldots, n\}$. Let $M_1, M_2, \ldots, M_n$ be a given collection of subsets of $M$. We are also given a weight $c_j$ for each set $M_j$ in the collection. The weight of a subset $F$ of $N$ is defined as $\sum_{j \in F}c_j$. No we can differentiate between the following set types (cp. figure \ref{fig:coverpackingpartition}):
+
+\begin{itemize}
+	\item{A subset $F$ of $N$ is a \emph{cover} of $M$ if $\cup_{j \in F}M_j = M$. In the \textbf{set covering problem} we would like to find a cover F of \emph{minimum} weight.}
+	\item{A subset $F$ is a \emph{packing} of $M$ if $M_j \cap M_k$ is empty for all $j,k \in F, j \neq k$. In the \textbf{set packing problem} we would like to find a packing $F$ of \emph{maximum} weight.}
+	\item{A subset $F$ is a \emph{partition} of $M$ if it is both a cover and a packing of $M$. In the \textbf{set partitioning problem} both minimization and maximization versions are possible.}
+\end{itemize}
+
+\subsubsection{Dualities}
+We can observe the following primal-dual relations:
+
+\begin{table}[h!]
+\begin{center}
+\begin{tabular}{c|c}
+\textbf{Covering problems} & \textbf{Packing problems}\\
+\hline
+Minimum set cover &	Maximum set packing\\
+Minimum vertex cover & Maximum matching\\
+Minimum edge cover & Maximum independent set\\
+\end{tabular}
+\caption{Covering-packing dualities}
+\label{tbl:coveringpackingdualities}
+\end{center}
+\end{table}
 \subsection{Covering Problems}
 
 Weighted versions can easily be derived.
