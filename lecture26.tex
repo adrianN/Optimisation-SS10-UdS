@@ -118,7 +118,7 @@ while $\exists$ active set
 	for every active set $S$
 		$y_s = y_s + \epsilon$
 	$C_u$, $C_v$ become inactive and are no longer current
-	$C_u \cup C_v$ becomes current set
+	$C_u \cup C_v$ become current set
 
 $F'=\{e\in F| \text{in }F\backslash e\text{ some pair } (s_i,t_i)\text{ is not connected}\}$
 \end{lstlisting}
@@ -181,4 +181,29 @@ We can use that as a loop invariant for the algorithm. Initially it is true beca
 \[\sum_{v\text{ is red}} \deg v \leq 2 \text{\# red nodes}\]
 
 \end{lem}
+
+\marginpar{Final Lecture}
+
+The lemma is true because:
+\[\sum_{v\text{ red}} +2b \leq \sum_{v\text{ red}} \deg (v) + \sum_{v \text{ black}} \leq \sum_v \deg v \leq 2(r+b-1)\]
+
+We study the growth of 
+
+\[\underbrace{\sum_S  y_S \cdot |F'\cap \delta(S)|}_{LHS} \leq \underbrace{2\sum_S y_S}_{RHS}\]
+
+in each iteration of the algorithm. The LHS grows by 
+
+\[\epsilon \sum_{S\text{ active}} |F'\cap \delta(S)|\]
+
+The RHS grows by $2\epsilon$ times the number of active sets. We now want to apply the lemma. Consider the active sets at the beginning of an iteration and consider the following forest:
+
+The nodes are the current sets the edges are the edges in $F'$ that connect vertices in distinct current sets. We want to show that all the leaves in the forest are active, i.e. they correspond to red nodes in the lemma.
+
+\begin{lem} If S is inactive, then $|F'\cap \delta(S)|\neq 1$\end{lem}
+
+The proof is by contradiction. Assume there is a inactive set $S$ with exactly one edge $e$ in the boundary. We left that edge in the forest because it is necessary to connect two nodes on which we have a demand. But in that case $S$ is active. Hence all leaves in the forest must be active, because they have just one edge that connects them to the rest of the forest.
+
+Hence we can apply the red-black lemma to all nontrivial trees in the forest. This gives us the bound we want.
+
+\qed
 \end{pr}

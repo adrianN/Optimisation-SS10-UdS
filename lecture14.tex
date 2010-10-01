@@ -82,7 +82,7 @@ Obviously if $P=P_I$ then the solution for an ILP with feasible region $P_I$ is 
 
 \begin{thm}\label{Thm:polyIntegrality} A rational polytope $P$ is integral iff for any integral cost vector $c$ the optimal point $x$ is also integral.
 
-\[\exists x\in P,x\in \Z^{n\times 1}\forall c\in \Z^{1\times n}, y \in P:\ cx\geq cy\] 
+\[\forall c\in \Z^{1\times n}\exists x\in P,x\in \Z^{n\times 1} \forall y \in P:\ cx\geq cy\] 
 \end{thm}
 
 If the cost vector $c$ is integral and the optimal solution $x$ is also integral, obviously $cx\in \Z$.

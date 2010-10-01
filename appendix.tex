@@ -4,17 +4,27 @@
 \subsection{Maximum Flow}
 Note: this proves LP solving is P-complete.
 
-We want to maximise the flow between a source $s$ and a sink $t$ in a directed graph with edge capacities $c_e, e\in E$.
+We want to maximise the flow between a source $s$ and a sink $t$ in a directed graph with edge capacities $c_e, e\in E$. To make things easier we introduce a infinite capacity edge from $t$ to $s$.
 
 \begin{align*}
-\max \quad & \sum_{e\in O(s)} f_e\\
+\max \quad & f_{ts}\\
 \intertext{Flow conservation: $I$ for incoming edges, $O$ for outgoing edges}
-s.t.\quad	& \sum_{e\in I(v)} f_e - \sum_{e\in O(v)} f_e = 0 && \forall v\in V\backslash {s,t}\\
+s.t.\quad	& \sum_{e\in I(v)} f_e - \sum_{e\in O(v)} f_e = 0 && \forall v\in V\\
 \intertext{Capacities:}
-	& f_e \leq c_e && \forall e \in E\\
+	& f_e \leq c_e && \forall e \in E\backslash \{ts\}\\
 \end{align*}
 
 It's easy to generalise to an arbitrary number of sources/sinks by introducing supply/demand variables $b_v$ for all $v\in V$ and adding them to the RHS of the flow conservation. The dual of this program computes the minimum cut in the graph.
+
+The dual looks like this
+
+\begin{align*}
+\min \quad & \sum_e c_ey_e\\
+s.t.\quad	& y_{ji} + p_i - p_j \geq 0\\
+	& p_t - p_s \geq 1\\
+	& p_i \text{ free}\\
+	& y_{ji} \geq 0
+\end{align*}
 
 \subsection{Shortest Paths}
 
@@ -30,6 +40,13 @@ s.t. \quad & d_v \leq c_{uv} + d_u && \forall (u,v) \in E
 With $d_s$ fixed to 0. 
 
 Think about why minimising won't work. Hint: look at the two nodes case.
+
+The dual looks like this:
+
+\begin{align*}
+\min \quad & \sum_{uv\in E} c_{uv} y_{uv}\\
+s.t. \quad &  \sum_{(u,v)\in E} y_{uv} - \sum_{(x,y)\in E} y_{xy} && \forall 
+\end{align*}
 
 \subsection{Maximum Matching}
 
